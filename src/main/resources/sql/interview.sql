@@ -28,11 +28,13 @@ FROM
         JOIN
     tbl_corporation c ON i.corporation_id = c.id
         JOIN
-    tbl_notice n ON c.id = n.corporation_id
+    tbl_notice n ON n.corporation_id = c.id
         JOIN
     tbl_resume r ON i.resume_id = r.id
         JOIN
     tbl_member m ON r.member_id = m.id;
+
+# join tbl_notice n on n.corporation_id = c.id
 
 
 

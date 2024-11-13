@@ -61,7 +61,7 @@ const applyService = (() => {
         try {
             page = page || 1;
             // /position/apply 경로로 GET 요청
-            const response = await fetch(`/position/apply/${page}?keyword=${keyword}&types=${sortType}`);
+            const response = await fetch(`/admin/position/apply/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
             if (!response.ok) throw new Error('지원 현황 fetch 실패');
@@ -70,8 +70,8 @@ const applyService = (() => {
             const data = await response.json();
 
             // 콜백 함수가 있을 경우 데이터를 콜백 함수에 전달
-            if (callback && data.applys && data.pagination) {
-                callback({ applys: data.applys, pagination: data.pagination });
+            if (callback && data.applies && data.pagination) {
+                callback({ applies: data.applies, pagination: data.pagination });
             }
         } catch (error) {
             // 오류가 발생할 경우 에러 메시지 출력
@@ -84,7 +84,7 @@ const applyService = (() => {
         try {
             page = page || 1;
             // /position/interview 경로로 GET 요청
-            const response = await fetch(`/position/interview/${page}?keyword=${keyword}&types=${sortType}`);
+            const response = await fetch(`/admin/position/interview/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
             if (!response.ok) throw new Error('면접 현황 fetch 실패');
@@ -107,7 +107,7 @@ const applyService = (() => {
         try {
             page = page || 1;
             // /positoin/position 경로로 GET 요청
-            const response = await fetch(`/position/position/${page}?keyword=${keyword}&types=${sortType}`);
+            const response = await fetch(`/admin/position/position/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
             if (!response.ok) throw new Error('인턴십 현황 fetch 실패');

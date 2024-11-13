@@ -177,7 +177,7 @@
         select c.corporation_name, i.interview_date, n.notice_title, m.member_name, m.member_phone, n.notice_job_category_name, i.interview_status
         from tbl_interview i
         join tbl_corporation c on i.corporation_id = c.id
-        join tbl_notice n on i.notice_id = n.id
+        join tbl_notice n on n.corporation_id = c.id
         join tbl_resume r on i.resume_id = r.id
         join tbl_member m on r.member_id = m.id
         <include refid="InterviewSearch"/>
@@ -208,7 +208,7 @@
         select count(*)
         from tbl_interview i
         join tbl_corporation c on i.corporation_id = c.id
-        join tbl_notice n on i.notice_id = n.id
+        join tbl_notice n on n.corporation_id = c.id
         join tbl_resume r on i.resume_id = r.id
         join tbl_member m on r.member_id = m.id
     </select>
@@ -217,7 +217,7 @@
         select count(*)
         from tbl_interview i
         join tbl_corporation c on i.corporation_id = c.id
-        join tbl_notice n on i.notice_id = n.id
+        join tbl_notice n on n.corporation_id = c.id
         join tbl_resume r on i.resume_id = r.id
         join tbl_member m on r.member_id = m.id
         <include refid="InterviewSearch"/>

@@ -41,6 +41,10 @@ function goToPage(page) {
     fetchAndShowMembers(page);
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    goToPage(1);
+});
+
 // 일반 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowMembers = async (page) => {
     const keyword = memberKeywordInput.value;
@@ -84,14 +88,18 @@ const showMemberList = ( { members, pagination } ) => {
                 <div class="UserTable_cell">${member.memberAddress || ''}</div>
                 <div class="UserTable_cell">${member.memberPhone || ''}</div>
                 <div class="UserTable_cell">${member.memberStatus || ''}</div>
-                <div class="UserTable_cell"><button class="editBtn">수정</button></div>
+                <div class="UserTable_cell">
+                    <button class="editBtn">수정</button>
+                </div>
             </div>    
         `;
     });
 
     MemberListLayout.innerHTML = text;
 
-    console.log("Total pages:", pagination.totalPages);
+    // 동적으로 totalPages 계산
+    const memberTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = memberTotalPages;
 
     // 페이지 버튼 생성
     let pagingText = '';
@@ -158,7 +166,11 @@ function goToCorPage(page) {
     fetchAndShowCorporations(page);
 }
 
-// 일반 회원 목록을 서버에서 가져오고 화면에 표시
+document.addEventListener('DOMContentLoaded', () => {
+    goToCorPage(1);
+});
+
+// 기업 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowCorporations = async (page) => {
     const keyword = corporationKeywordInput.value;
     try {
@@ -205,8 +217,6 @@ const showCorporationList = ( { corporations, pagination } ) => {
     });
 
     CorporationListLayout.innerHTML = text;
-
-    console.log("Total pages:", pagination.totalPages);
 
     // 페이지 버튼 생성
     let pagingText = '';
@@ -306,6 +316,10 @@ function goToApplyPage(page) {
     fetchAndShowApply(page);
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    goToApplyPage(1);
+});
+
 // 지원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowApply = async (page) => {
     const keyword = ApplyKeywordInput.value;
@@ -325,7 +339,7 @@ const fetchAndShowApply = async (page) => {
 };
 
 // 지원 목록과 페이지네이션을 표시하는 함수
-const showApplyList = ({ applys, pagination }) => {
+const showApplyList = ({ applies, pagination }) => {
     let text = `
         <div class="ApplyTable_row ApplyTable_header">
             <div class="ApplyTable_cell"><input type="checkbox" id="selectAll"></div>
@@ -340,9 +354,9 @@ const showApplyList = ({ applys, pagination }) => {
         </div>
     `;
 
-    applys.forEach((apply) => {
+    applies.forEach((apply) => {
         text += `
-        <div class="ApplyTable_row"
+        <div class="ApplyTable_row">
             <div class="ApplyTable_cell"><input type="checkbox" id="selectAll"></div>
             <div class="ApplyTable_cell">${apply.corporationName}</div>
             <div class="ApplyTable_cell">${apply.createdDate}</div>
@@ -445,7 +459,7 @@ const fetchAndShowInterview = async (page) => {
     const keyword = InterviewKeywordInput.value;
     try {
         // 데이터를 서버에서 가져오는 요청
-        const response = await fetch(`/admin/position/apply/${page}?keyword=${keyword}`);
+        const response = await fetch(`/admin/position/apply/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
         // 페이지 데이터와 면접 현황 목록 데이터를 표시하는 함수 호출
