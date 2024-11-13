@@ -313,7 +313,7 @@ const fetchAndShowApply = async (page) => {
 
     try {
         // 데이터를 서버에서 가져오는 요청
-        const response = await fetch(`/admin/position/position/apply/${page}?keyword=${keyword}&types=${sortType}`);
+        const response = await fetch(`/admin/position/apply/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
         // 페이지 데이터와 지원 목록 데이터를 표시하는 함수 호출
@@ -324,8 +324,8 @@ const fetchAndShowApply = async (page) => {
     }
 };
 
-// 일반 회원 목록과 페이지네이션을 표시하는 함수
-const showApplyList = ({applys, pagination}) => {
+// 지원 목록과 페이지네이션을 표시하는 함수
+const showApplyList = ({ applys, pagination }) => {
     let text = `
         <div class="ApplyTable_row ApplyTable_header">
             <div class="ApplyTable_cell"><input type="checkbox" id="selectAll"></div>
@@ -457,7 +457,7 @@ const fetchAndShowInterview = async (page) => {
 };
 
 // 면접 현황 목록과 페이지 처리를 표시
-const showInterviewList = ({Interviews, pagination}) => {
+const showInterviewList = ({interviews, pagination}) => {
     let text = `
         <div class="InterviewTable_row InterviewTable_header">
             <div class="InterviewTable_cell"><input type="checkbox" id="selectAll"></div>
