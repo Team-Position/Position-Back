@@ -28,23 +28,32 @@ keywordInput.addEventListener("focus", () => {
 
 // 입력 필드에 blur 이벤트 리스너 추가
 keywordInput.addEventListener("blur", () => {
-    const keyword = document.getElementById("total-ipt-keyword").value;
-
     // blur될 때 스타일을 원래대로 복구합니다.
     keywordSection.classList.remove("on");
     // optionContentKeywordSection.classList.remove("on");
     layerSearchKeyword.classList.add("no-suggest");
-    formData = new FormData();
-    formData.append("keyword", keyword); // 검색 정보 추가
-    matchingService.getList(1, formData, showListScroll);
+    updateTotalAndFetchData(); // 직업 선택 시 total과 데이터를 업데이트
 });
 
 btnReset.addEventListener("click", () => {
     previewSelected.innerHTML = ``;
     resetText.style.display = "block";
+    // selectedCategories 초기화
+    Object.keys(selectedCategories).forEach((categoryBName) => {
+        // 체크된 항목의 체크박스를 해제
+        const checkbox = document.querySelector(`#categoryB-${categoryBName}`);
+        if (checkbox) {
+            checkbox.checked = false;
+        }
+    });
+    selectedCategories = {}; // selectedCategories 객체 초기화
+
+    const depthButtons = document.querySelectorAll(".btn-three-depth.on");
+    depthButtons.forEach(button => button.classList.remove("on"));
+
     optionContents.forEach(optionContent => {
         optionContent.classList.remove("on");
     });
     const formData=null;
     matchingService.getList(1, formData, showListScroll);
-})
+});

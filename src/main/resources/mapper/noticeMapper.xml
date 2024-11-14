@@ -200,6 +200,7 @@
         from tbl_notice n
         join tbl_corporation c on n.corporation_id = c.id
         <include refid="search"/>
+        and n.notice_end_date > current_date
         order by
             n.created_date
         desc
@@ -208,12 +209,14 @@
 
     <select id="selectAllCount">
         select count(*) from tbl_notice
+        where notice_end_date > current_date
     </select>
 
     <select id="selectSearchAllCount">
         select count(*) from tbl_notice n
         join tbl_corporation c on n.corporation_id = c.id
         <include refid="search"/>
+        and n.notice_end_date > current_date
     </select>
 
     <select id="selectTop3" resultType="com.app.positionback.domain.notice.NoticeDTO">
@@ -234,6 +237,7 @@
                c.corporation_address
         from tbl_notice n
                  join tbl_corporation c on n.corporation_id = c.id
+        where n.notice_end_date > current_date
         order by n.notice_read_count desc
             limit 3
     </select>
