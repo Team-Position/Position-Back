@@ -2,6 +2,7 @@ package com.app.positionback.domain.notice;
 
 import com.app.positionback.domain.file.FileDTO;
 import com.app.positionback.utill.Pagination;
+import com.app.positionback.utill.Search;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
