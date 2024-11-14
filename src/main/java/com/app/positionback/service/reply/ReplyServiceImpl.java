@@ -1,8 +1,10 @@
 package com.app.positionback.service.reply;
 
 import com.app.positionback.domain.reply.ReplyDTO;
+import com.app.positionback.domain.reply.ReplyListDTO;
 import com.app.positionback.domain.reply.ReplyVO;
 import com.app.positionback.repository.reply.ReplyDAO;
+import com.app.positionback.utill.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +24,15 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public List<ReplyDTO> getRepliesByPostId(Long postId) {
-        return replyDAO.getRepliesByPostId(postId);
+    public ReplyListDTO getReplies(int page, Pagination pagination, Long postId) {
+        ReplyListDTO replyListDTO = new ReplyListDTO();
+        pagination.setPage(page);
+        pagination.progress();
+        replyListDTO.setPagination(pagination);
+        replyListDTO.setReplies(replyDAO.getRepliesByPostId(pagination, postId));
+        return replyListDTO;
     }
+
 
     @Override
     public ReplyDTO getReplyById(Long id) {
@@ -39,5 +47,10 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public void deleteReply(Long id) {
         replyDAO.deleteReply(id);
+    }
+
+    @Override
+    public int getTotal(Long postId) {
+        return replyDAO.getTotal(postId);
     }
 }
