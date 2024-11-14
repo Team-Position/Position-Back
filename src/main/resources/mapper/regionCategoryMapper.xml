@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.positionback.mapper.regioncategory.RegionCategoryMapper">
+    <select id="selectRegionCategoryA">
+        select id, region_categoryA_name
+        from tbl_region_categorya
+    </select>
+
+    <select id="selectRegionCategoryAById">
+        select * from tbl_region_categorya
+        where id= #{id}
+    </select>
+
+    <select id="selectRegionCategoryB">
+        select b.id,b.region_categoryB_name, b.region_categoryA_id
+        from tbl_region_categoryb b
+        join tbl_region_categorya a on b.region_categoryA_id = a.id
+        where a.id= #{categoryAId}
+    </select>
+</mapper>
+
+

@@ -1,22 +1,24 @@
 // 관리자 회원 관리
 
-// memberService 객체 생성
 const memberService = (() => {
-    // 일반 회원 데이터를 서버에서 가져오는 비동기
-    const fetchMembers = async (page, callback) => {
+    // 일반 회원 데이터를 서버에서 가져오는 비동기 함수
+    const fetchMembers = async (page, keyword = "", sortType = "", callback) => {
         try {
-            // /admin/position/members 경로로 GET 요청
             page = page || 1;
-            const response = await fetch(`/admin/position/members/${page}`);
+            // /admin/position/members 경로로 GET 요청
+            const response = await fetch(`/admin/position/members/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
             if (!response.ok) throw new Error('회원 정보 fetch 실패');
-            // 응답 데이터를 json으로 받음
-            const members = await response.json();
 
-            // 콜백 함수가 생길 경우, 가져온 데이터를 콜백 함수에 전달
-            if (callback) {
-                callback(members);
+            // 응답 데이터를 JSON으로 받음
+            const data = await response.json();
+
+            // 데이터가 유효한 경우 콜백 호출
+            if (callback && data.members && data.pagination) {
+                callback({ members: data.members, pagination: data.pagination });
+            } else {
+                console.error("응답 데이터 형식이 올바르지 않습니다.");
             }
         } catch (error) {
             // 오류가 발생할 경우 에러 메시지를 출력
@@ -24,14 +26,22 @@ const memberService = (() => {
         }
     };
 
-    const fetchCorporationMembers = async (callback) => {
+    const fetchCorporationMembers = async (page, keyword="",callback) => {
         try {
-            const response = await fetch('/admin/position/corporation-members');
+            page = page || 1;
+            const response = await fetch(`/admin/position/corporation-members/${page}?keyword=${keyword}`);
+
+            // 응답 실패 상태일 경우 에러 메시지
             if (!response.ok) throw new Error('기업 회원 정보 fetch 실패');
 
-            const corporationMembers = await response.json();
-            if (callback) {
-                callback(corporationMembers);
+            // 응답 데이터를 JSON으로 받음
+            const data = await response.json();
+
+            // 데이터가 유효한 경우 콜백 호출
+            if (callback && data.corporations && data.pagination) {
+                callback( { corporations: data.corporations, pagination: data.pagination });
+            } else {
+                console.error("응답 데이터 형식이 올바르지 않습니다.")
             }
         } catch (error) {
             console.error("오류입니다:", error);
@@ -41,27 +51,27 @@ const memberService = (() => {
     return { fetchMembers: fetchMembers, fetchCorporationMembers: fetchCorporationMembers };
 })();
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 지원 현황 관리
 
 const applyService = (() => {
     // 지원 현황 데이터를 서버에서 가져오는 비동기 함수
-    const fetchApply = async (callback) => {
+    const fetchApply = async (page, keyword = "", sortType = "", callback) => {
         try {
+            page = page || 1;
             // /position/apply 경로로 GET 요청
-            const response = await fetch('/position/apply');
+            const response = await fetch(`/position/apply/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
             if (!response.ok) throw new Error('지원 현황 fetch 실패');
 
             // 응답 데이터를 JSON으로 변환
-            const applyData = await response.json();
+            const data = await response.json();
 
             // 콜백 함수가 있을 경우 데이터를 콜백 함수에 전달
-            if (callback) {
-                callback(applyData);
+            if (callback && data.applys && data.pagination) {
+                callback({ applys: data.applys, pagination: data.pagination });
             }
         } catch (error) {
             // 오류가 발생할 경우 에러 메시지 출력
@@ -70,20 +80,21 @@ const applyService = (() => {
     };
 
     // 면접 현황 데이터를 서버에서 가져오는 비동기 함수
-    const fetchInterview = async (callback) => {
+    const fetchInterview = async (page, keyword = "", sortType = "", callback) => {
         try {
+            page = page || 1;
             // /position/interview 경로로 GET 요청
-            const response = await fetch('/position/interview');
+            const response = await fetch(`/position/interview/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
             if (!response.ok) throw new Error('면접 현황 fetch 실패');
 
             // 응답 데이터를 JSON으로 변환
-            const interviewData = await response.json();
+            const data = await response.json();
 
             // 콜백 함수가 있을 경우 데이터를 콜백 함수에 전달
-            if (callback) {
-                callback(interviewData);
+            if (callback && data.interviews && data.pagination) {
+                callback({ interviews: data.interviews, pagination: data.pagination });
             }
         } catch (error) {
             // 오류가 발생할 경우 에러 메시지 출력
@@ -91,21 +102,22 @@ const applyService = (() => {
         }
     };
 
-    // 인턴십 현황 데이터를 서버에서 가져오는 비동기 함수
-    const fetchPosition = async (callback) => {
+    // 포지션 현황 데이터를 서버에서 가져오는 비동기 함수
+    const fetchPosition = async (page, keyword = "", sortType = "", callback) => {
         try {
+            page = page || 1;
             // /positoin/position 경로로 GET 요청
-            const response = await fetch('/position/position');
+            const response = await fetch(`/position/position/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
             if (!response.ok) throw new Error('인턴십 현황 fetch 실패');
 
             // 응답 데이터를 JSON으로 변환
-            const positionData = await response.json();
+            const data = await response.json();
 
             // 콜백 함수가 있을 경우 데이터를 콜백 함수에 전달
-            if (callback) {
-                callback(positionData);
+            if (callback && data.positions && data.pagination) {
+                callback({ positions: data.positions, pagination: data.pagination });
             }
         } catch (error) {
             // 오류가 발생할 경우 에러 메시지 출력
@@ -114,115 +126,10 @@ const applyService = (() => {
     };
 
     // 각 함수들을 객체로 반환하여 외부에서 사용할 수 있도록 함
-    return {
-        fetchApply: fetchApply,
-        fetchInterview: fetchInterview,
-        fetchPosition: fetchPosition
-    };
+    return { fetchApply: fetchApply, fetchInterview: fetchInterview, fetchPosition: fetchPosition };
 })();
 
-// 지원 현황 데이터를 표시하는 함수
-const displayApplys = (applys) => {
-    // 지원 현황이 표시될 컨테이너 선택
-    const applyListDiv = document.querySelector('#apply-section .ApplyTable_container');
-
-    // 기존 데이터 제거 (헤더 행 제외)
-    const existingRows = applyListDiv.querySelectorAll('.ApplyTable_row:not(.ApplyTable_header)');
-    existingRows.forEach(row => row.remove());
-
-    // `applys` 배열 내의 각 지원 데이터를 반복하여 새 행 생성
-    applys.forEach(apply => {
-        const applyRow = document.createElement('div');
-        applyRow.classList.add('ApplyTable_row');
-
-        // 각 지원 데이터 (기업명, 신청일, 공고 제목, 신청자, 전화번호, 지원 분야, 상태)를 포함하는 HTML 작성
-        applyRow.innerHTML = `
-            <div class="ApplyTable_cell"><input type="checkbox" class="ApplyCheckbox" /></div>
-            <div class="ApplyTable_cell">${apply.corporationName || ''}</div>
-            <div class="ApplyTable_cell">${apply.applicationDate || ''}</div>
-            <div class="ApplyTable_cell">${apply.noticeTitle || ''}</div>
-            <div class="ApplyTable_cell">${apply.applicantName || ''}</div>
-            <div class="ApplyTable_cell">${apply.applicantPhone || ''}</div>
-            <div class="ApplyTable_cell">${apply.applyType || ''}</div>
-            <div class="ApplyTable_cell">${apply.applyStatus || ''}</div>
-            <div class="ApplyTable_cell"><button class="editBtn">환불하기</button></div>
-        `;
-
-        // 새로 생성한 지원 행을 컨테이너에 추가
-        applyListDiv.appendChild(applyRow);
-    });
-};
-
-// 면접 현황 데이터를 표시하는 함수
-const displayInterviews = (interviews) => {
-    // 면접 현황이 표시될 컨테이너 선택
-    const interviewListDiv = document.querySelector('#Interview-section .ApplyTable_container');
-
-    // 기존 데이터 제거 (헤더 행 제외)
-    const existingRows = interviewListDiv.querySelectorAll('.ApplyTable_row:not(.ApplyTable_header)');
-    existingRows.forEach(row => row.remove());
-
-    // `interviews` 배열 내의 각 면접 데이터를 반복하여 새 행 생성
-    interviews.forEach(interview => {
-        const interviewRow = document.createElement('div');
-        interviewRow.classList.add('ApplyTable_row');
-
-        // 각 면접 데이터 (기업명, 면접일, 공고 제목, 면접자, 전화번호, 면접 상태)를 포함하는 HTML 작성
-        interviewRow.innerHTML = `
-            <div class="ApplyTable_cell"><input type="checkbox" class="ApplyCheckbox" /></div>
-            <div class="ApplyTable_cell">${interview.corporationName || ''}</div>
-            <div class="ApplyTable_cell">${interview.interviewDate || ''}</div>
-            <div class="ApplyTable_cell">${interview.noticeTitle || ''}</div>
-            <div class="ApplyTable_cell">${interview.intervieweeName || ''}</div>
-            <div class="ApplyTable_cell">${interview.intervieweePhone || ''}</div>
-            <div class="ApplyTable_cell">${interview.intervieweeType || ''}</div>
-            <div class="ApplyTable_cell">${interview.interviewStatus || ''}</div>
-            <div class="ApplyTable_cell"><button class="editBtn">수정</button></div>
-        `;
-
-        // 새로 생성한 면접 행을 컨테이너에 추가
-        interviewListDiv.appendChild(interviewRow);
-    });
-};
-
-// 인턴십 현황 데이터를 표시하는 함수
-const displayPositions = (positions) => {
-    // 인턴십 현황이 표시될 컨테이너 선택
-    const positionListDiv = document.querySelector('#Position-section .ApplyTable_container');
-
-    // 기존 데이터 제거 (헤더 행 제외)
-    const existingRows = positionListDiv.querySelectorAll('.ApplyTable_row:not(.ApplyTable_header)');
-    existingRows.forEach(row => row.remove());
-
-    // `positions` 배열 내의 각 인턴십 데이터를 반복하여 새 행 생성
-    positions.forEach(position => {
-        const positionRow = document.createElement('div');
-        positionRow.classList.add('ApplyTable_row');
-
-        // 각 인턴십 데이터 (기업명, 인턴십 시작일, 공고 제목, 인턴 이름, 전화번호, 인턴십 상태)를 포함하는 HTML 작성
-        positionRow.innerHTML = `
-            <div class="ApplyTable_cell"><input type="checkbox" class="ApplyCheckbox" /></div>
-            <div class="ApplyTable_cell">${position.corporationName || ''}</div>
-            <div class="ApplyTable_cell">${position.startDate || ''}</div>
-            <div class="ApplyTable_cell">${position.noticeTitle || ''}</div>
-            <div class="ApplyTable_cell">${position.internName || ''}</div>
-            <div class="ApplyTable_cell">${position.internPhone || ''}</div>
-            <div class="ApplyTable_cell">${position.internType || ''}</div>
-            <div class="ApplyTable_cell">${position.positionStatus || ''}</div>
-            <div class="ApplyTable_cell"><button class="editBtn">수정</button></div>
-        `;
-
-        // 새로 생성한 인턴십 행을 컨테이너에 추가
-        positionListDiv.appendChild(positionRow);
-    });
-};
-
-applyService.fetchApply(displayApplys);
-applyService.fetchInterview(displayInterviews);
-applyService.fetchPosition(displayPositions);
-
-
-// // // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 결제 관리
 // 지원료 결제

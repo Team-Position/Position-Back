@@ -2,27 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.positionback.mapper.admin.AdminMapper">
     <!-- 회원 관리 -->
+    <!-- 일반 회원 목록 -->
+    <sql id="MemberSearch">
+        <where>
+            <if test="search.keyword != null and search.keyword != ''">
+                and (
+                member_name like concat('%', #{search.keyword}, '%')
+                or member_email like concat('%', #{search.keyword}, '%')
+                or member_address like concat('%', #{search.keyword}, '%')
+                or member_phone like concat('%', #{search.keyword}, '%')
+                )
+            </if>
+        </where>
+    </sql>
 
-    <!-- 일반 회원 목록 페이징 -->
     <select id="selectAllMembers" resultType="memberDTO">
         select id,
-               member_name,
-               CASE WHEN member_email IS NOT NULL THEN member_email ELSE member_kakao_email END AS memberEmail,
-               member_address,
-               member_phone,
-               member_status,
-               created_date
+        member_name,
+        coalesce(member_email, member_kakao_email) as memberEmail,
+        member_address,
+        member_phone,
+        member_status,
+        created_date
         from tbl_member
-        order by created_date desc
+        <include refid="MemberSearch"/>
+        <choose>
+            <when test="search.types[0] == 'recent'">
+                order by created_date desc
+            </when>
+            <when test="search.types[0] == 'active'">
+                order by (member_status = '활동중') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'suspended'">
+                order by (member_status = '정지') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'withdrawn'">
+                order by (member_status = '탈퇴') desc, created_date desc
+            </when>
+            <otherwise>
+                order by created_date desc
+            </otherwise>
+        </choose>
         limit #{pagination.startRow}, #{pagination.rowCount}
     </select>
-
 
     <select id="selectMemberTotal">
         select count(*) from tbl_member
     </select>
 
+    <select id="selectTotalWithMemberSearch">
+        select count(*) from tbl_member
+        <include refid="MemberSearch"/>
+    </select>
+
     <!-- 기업 회원 목록 페이징 -->
+    <sql id="CorporationSearch">
+        <where>
+            <if test="search.keyword != null and search.keyword != ''">
+                and (
+                corporation_name like concat('%', #{search.keyword}, '%')
+                or corporation_email like concat('%', #{search.keyword}, '%')
+                or corporation_address like concat('%', #{search.keyword}, '%')
+                or corporation_gen like concat('%', #{search.keyword}, '%')
+                or corporation_code like concat('%', #{search.keyword}, '%')
+                )
+            </if>
+        </where>
+    </sql>
+
     <select id="selectAllCorporationMembers" resultType="corporationDTO">
         select id,
                corporation_name,
@@ -32,6 +79,7 @@
                corporation_code,
                created_date
         from tbl_corporation
+        <include refid="CorporationSearch"/>
         order by created_date desc
         limit #{pagination.startRow}, #{pagination.rowCount}
     </select>
@@ -39,26 +87,230 @@
     <select id="selectCorporationTotal">
         select count(*) from tbl_corporation
     </select>
+    
+    <select id="selectTotalWithCorporationSearch">
+        select count(*) from tbl_corporation
+        <include refid="CorporationSearch"/>
+    </select>
+
+    <!-- 지원 현황 관리 -->
+    <!-- 지원 현황 -->
+    <sql id="ApplySearch">
+        <where>
+            <if test="search.keyword != null and search.keyworkd != ''">
+                and (
+                c.corporation_name like concat('%', #{search.keyword}, '%')
+                or m.member_name like concat('%', #{search.keyword}, '%')
+                or m.member_phone like concat('%', #{search.keyword}, '%')
+                or a.apply_type like cconcat('%', ##{search.keyword}, '%')
+                )
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectAllApply">
+        select c.corporation_name, a.created_date, n.notice_title, m.member_name, m.member_phone, a.apply_type, a.apply_status
+        from tbl_apply a
+        join tbl_notice n on a.notice_id = n.id
+        join tbl_corporation c on n.corporation_id = c.id
+        join tbl_resume r on a.resume_id = r.id
+        join tbl_member m on r.member_id = m.id
+        <include refid="ApplySearch"/>
+        <choose>
+            <when test="search.types[0] == 'recent'">
+                order by created_date desc
+            </when>
+            <when test="search.types[0] == 'applycomplete'">
+                order by (apply_status = '지원 완료') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'applycancel'">
+                order by (apply_status = '지원 취소') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'applypass'">
+                order by (apply_status = '지원 합격') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'applyfail'">
+                order by (apply_status = '지원 불합격') desc, created_date desc
+            </when>
+            <otherwise>
+                order by created_date desc
+            </otherwise>
+        </choose>
+        limit #{pagination.startRow}, #{pagination.rowCount}
+    </select>
+
+    <select id="selectApplyTotal">
+        select count(*)
+        from tbl_apply a
+        join tbl_notice n on a.notice_id = n.id
+        join tbl_corporation c on n.corporation_id = c.id
+        join tbl_resume r on a.resume_id = r.id
+        join tbl_member m on r.member_id = m.id
+    </select>
+
+    <select id="selectTotalWithApplySearch">
+        select count(*)
+        from tbl_apply a
+        join tbl_notice n on a.notice_id = n.id
+        join tbl_corporation c on n.corporation_id = c.id
+        join tbl_resume r on a.resume_id = r.id
+        join tbl_member m on r.member_id = m.id
+        <include refid="ApplySearch"/>
+    </select>
+
+    <!-- 면접 현황 기업명, 공고제목, 면접자, 전화번호, 지원 분야-->
+    <sql id="InterviewSearch">
+        <where>
+            <if test="search.keyword != null and search.keyword != ''">
+                and (
+                c.corporation_name like concat('%', #{search.keyword}, '%')
+                or n.notice_title like concat('%', #{search.keyword}, '%')
+                or m.member_name like concat('%', #{search.keyword}, '%')
+                or m.member_phone concat('%', #{search.keyword}, '%')
+                or n.notice_job_category_nameconcat('%', #{search.keyword}, '%')
+                )
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectAllInterview">
+        select c.corporation_name, i.interview_date, n.notice_title, m.member_name, m.member_phone, n.notice_job_category_name, i.interview_status
+        from interview i
+        join corporation c on i.corporation_id = c.id
+        join notice n on i.notice_id = n.id
+        join resume r on i.resume_id = r.id
+        join member m on r.member_id = m.id
+        <include refid="InterviewSearch"/>
+        <choose>
+            <when test="search.types[0] == 'recent'">
+                order by i.interview_date desc
+            </when>
+            <when test="search.types[0] == 'interviewexpected'">
+                order by (interview_status = '면접 예정') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'interviewcancel'">
+                order by (interview_status = '면접 취소') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'interviewpass'">
+                order by (interview_status = '면접 합격') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'interviewfail'">
+                order by (interview_status = '면접 불합격') desc, created_date desc
+            </when>
+            <otherwise>
+                order by i.interview_date desc
+            </otherwise>
+        </choose>
+        limit #{pagination.startRow}, #{pagination.rowCount}
+    </select>
+
+    <select id="selectInterviewTotal">
+        select count(*)
+        from tbl_interview i
+        join corporation c on i.corporation_id = c.id
+        join notice n on i.notice_id = n.id
+        join resume r on i.resume_id = r.id
+        join member m on r.member_id = m.id
+    </select>
+
+    <select id="selectTotalWithInterviewSearch">
+        select count(*)
+        from tbl_interview i
+        join corporation c on i.corporation_id = c.id
+        join notice n on i.notice_id = n.id
+        join resume r on i.resume_id = r.id
+        join member m on r.member_id = m.id
+        <include refid="InterviewSearch"/>
+    </select>
+
+    <!-- 포지션 현황 -->
+    <sql id="PositionSearch">
+        <where>
+            <if test="search.keyword != null and search.keyword != ''">
+                and (
+                c.corporation_name like concat('%', #{search.keyword}, '%')
+                or n.notice_work_start_date like concat('%', #{search.keyword}, '%')
+                or m.member_name like concat('%', #{search.keyword}, '%')
+                or m.member_phone like concat('%', #{search.keyword}, '%')
+                or n.notice_job_category_name like concat('%', #{search.keyword}, '%')
+                )
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectAllPosition">
+        select c.corporation_name, n.notice_work_start_date, n.notice_title, m.member_name, m.member_phone, n.notice_job_category_name, p.position_status
+        from position p
+        join notice n on p.notice_id = n.id
+        join corporation c on n.corporation_id = c.id
+        join member m on p.member_id = m.id
+        <include refid="PositionSearch"/>
+        <choose>
+            <when test="search.types[0] == 'recent'">
+                order by n.notice_work_start_date desc
+            </when>
+            <when test="search.types[0] == 'positionschedule'">
+                order by (position_status = '포지션 예정') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'positioncompletion'">
+                order by (position_status = '포지션 수료') desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'positionnotcompleted'">
+                order by (position_status = '포지션 미수료') desc, created_date desc
+            </when>
+            <otherwise>
+                order by n.notice_work_start_date desc
+            </otherwise>
+        </choose>
+        limit #{pagination.startRow}, #{pagination.rowCount}
+    </select>
+
+    <select id="selectPositionTotal">
+        select count(*)
+        from tbl_position p
+        join notice n on p.notice_id = n.id
+        join corporation c on n.corporation_id = c.id
+        join member m on p.member_id = m.id
+    </select>
+
+    <select id="selectTotalWithPositionSearch">
+        select count(*)
+        from tbl_position p
+        join notice n on p.notice_id = n.id
+        join corporation c on n.corporation_id = c.id
+        join member m on p.member_id = m.id
+        <include refid="PositionSearch"/>
+    </select>
 
     <!-- 문의 관리 -->
-
     <!-- 일반 문의 목록 페이징 -->
+    <sql id="MemberInquirySearch">
+        <where>
+            <if test="search.keyword != null and search.keyword != ''">
+                and (
+                inquiry_category like concat('%', #{search.keyword}, '%')
+                or inquiry_title like concat('%', #{search.keyword}, '%')
+                or inquiry_content like concat('%', #{search.keyword}, '%')
+                or member_email like concat('%', #{search.keyword}, '%')
+                )
+            </if>
+        </where>
+    </sql>
+
     <select id="selectAllMemberInquiry" resultType="inquiryDTO">
-        SELECT id,
+        select id,
                inquiry_type,
                inquiry_category,
+               created_date as createdDate,
                inquiry_title,
                inquiry_content,
-               created_date AS createdDate,
-               updated_date AS updatedDate,
-               CASE
-                   WHEN member_email IS NOT NULL THEN member_email
-                   ELSE member_kakao_email
-                   END AS memberEmail
-        FROM tbl_inquiry
-        WHERE inquiry_type = '개인'
-        ORDER BY createdDate DESC
-            LIMIT #{pagination.startRow}, #{pagination.rowCount}
+               coalesce(member_email, member_kakao_email) as memberEmail,
+               inquiry_status
+        from tbl_inquiry
+        <include refid="MemberInquirySearch"/>
+        where inquiry_type = '개인'
+        order by createdDate desc
+        limit #{pagination.startRow}, #{pagination.rowCount}
     </select>
 
     <!-- 기업 문의 목록 페이징 -->
@@ -79,14 +331,5 @@
         ORDER BY createdDate DESC
             LIMIT #{pagination.startRow}, #{pagination.rowCount}
     </select>
-
-<!--    <select id="selectAllApply" resultType="ApplyDTO">-->
-<!--        select apply.id, apply.apply_type, apply.apply_status, apply.created_date,-->
-<!--               c.corporation_name, n.notice_title-->
-<!--        from tbl_apply apply-->
-<!--                 join tbl_notice n on apply.notice_id = n.id-->
-<!--                 join tbl_corporation c on n.corporation_id = c.id-->
-<!--        order by apply.created_date desc-->
-<!--    </select>-->
 
 </mapper>

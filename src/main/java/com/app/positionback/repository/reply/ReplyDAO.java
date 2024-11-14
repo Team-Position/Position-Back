@@ -3,6 +3,7 @@ package com.app.positionback.repository.reply;
 import com.app.positionback.domain.reply.ReplyDTO;
 import com.app.positionback.domain.reply.ReplyVO;
 import com.app.positionback.mapper.reply.ReplyMapper;
+import com.app.positionback.utill.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,8 +18,8 @@ public class ReplyDAO {
         replyMapper.insertReply(replyVO);
     }
 
-    public List<ReplyDTO> getRepliesByPostId(Long postId) {
-        return replyMapper.selectRepliesByPostId(postId);
+    public List<ReplyDTO> getRepliesByPostId(Pagination pagination, Long postId) {
+        return replyMapper.selectRepliesByPostId(postId, pagination);
     }
 
     public ReplyDTO getReplyById(Long id) {
@@ -32,4 +33,9 @@ public class ReplyDAO {
     public void deleteReply(Long id) {
         replyMapper.deleteReply(id);
     }
+
+    public int getTotal(Long postId){
+        return replyMapper.selectCount(postId);
+    }
+
 }

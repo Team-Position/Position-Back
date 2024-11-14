@@ -57,3 +57,6 @@ INSERT INTO tbl_education (
              NULL,                            -- education_university (대학 구분, 고등학교일 경우 NULL)
              0                                -- education_transferred (편입 여부, 0 = 미편입)
          );
+
+
+

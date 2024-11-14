@@ -1,23 +1,23 @@
 package com.app.positionback.service.admin;
 
-import com.app.positionback.domain.apply.ApplyDTO;
+
+import com.app.positionback.domain.apply.ApplyListDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
-import com.app.positionback.domain.corporation.CorporationDTO;
+import com.app.positionback.domain.corporation.CorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationDTO;
 import com.app.positionback.domain.evaluation.EvaluationPositionerDTO;
-import com.app.positionback.domain.inquiry.InquiryDTO;
-import com.app.positionback.domain.interview.InterviewDTO;
+import com.app.positionback.domain.inquiry.InquiryListDTO;
+import com.app.positionback.domain.interview.InterviewListDTO;
 import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
-import com.app.positionback.domain.member.MemberDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.payment.PaymentDTO;
-import com.app.positionback.domain.position.PositionDTO;
+import com.app.positionback.domain.position.PositionListDTO;
 import com.app.positionback.domain.post.PostDTO;
 import com.app.positionback.domain.reply.ReplyDTO;
-import com.app.positionback.mapper.admin.AdminMapper;
 import com.app.positionback.repository.admin.AdminDAO;
 import com.app.positionback.utill.Pagination;
+import com.app.positionback.utill.Search;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -31,48 +31,129 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class AdminServiceImpl implements AdminService {
     private final AdminDAO adminDAO;
+    private final InquiryListDTO inquiryListDTO;
 
     // 회원 관리
     // 일반 회원 정보 조회
-    public MemberListDTO getMembers(int page, Pagination pagination) {
+    @Override
+    public MemberListDTO getMembers(int page, Pagination pagination, Search search) {
         MemberListDTO memberListDTO = new MemberListDTO();
         pagination.setPage(page);
         pagination.setTotal(adminDAO.getMemberTotal());
         pagination.progress();
         memberListDTO.setPagination(pagination);
-        memberListDTO.setMembers(adminDAO.memberInformation(pagination));
+        memberListDTO.setMembers(adminDAO.memberInformation(pagination, search));
         return memberListDTO;
     }
 
     // 일반 회원 전체 인원
+    @Override
     public int getMemberTotal() {
         return adminDAO.getMemberTotal();
     }
 
+    // 일반 회원 검색 결과 전체 조회
+    @Override
+    public int getTotalWithMemberSearch(Search search) {
+        return adminDAO.getTotalWithMemberSearch(search);
+    }
+
     // 기업 회원 정보 조회
-    public List<CorporationDTO> getCorporationMembers(Pagination pagination) {
+    @Override
+    public CorporationListDTO getCorporationMembers(int page, Pagination pagination, Search search) {
+        CorporationListDTO corporationListDTO = new CorporationListDTO();
+        pagination.setPage(page);
         pagination.setTotal(adminDAO.getCorporationTotal());
-        return adminDAO.corporationInformation(pagination);
+        pagination.progress();
+        corporationListDTO.setPagination(pagination);
+        corporationListDTO.setCorporations(adminDAO.corporationInformation(pagination, search));
+        return corporationListDTO;
     }
 
     // 기업 회원 전체 인원
+    @Override
     public int getCorporationTotal() {
         return adminDAO.getCorporationTotal();
     }
 
+    // 기업 회원 검색 결과 전체 조회
+    @Override
+    public int getTotalWithCorporationSearch(Search search) {
+        return adminDAO.getTotalWithCorporationSearch(search);
+    }
+
 
     // 지원 현황 관리
-    // 지원 현황
-    public List<ApplyDTO> getApplys() {
-        return adminDAO.applyInformation();
+    // 지원 현황 조회
+    @Override
+    public ApplyListDTO getApplys(int page, Pagination pagination, Search search) {
+        ApplyListDTO applyListDTO = new ApplyListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getApplyTotal());
+        pagination.progress();
+        applyListDTO.setPagination(pagination);
+        applyListDTO.setApplies(adminDAO.applyInformation(pagination, search));
+        return applyListDTO;
     }
-    // 면접 현황
-    public List<InterviewDTO> getInterviews() {
-        return adminDAO.interviewInformation();
+
+    // 지원 현황 전체 인원 조회
+    @Override
+    public int getApplyTotal() {
+        return adminDAO.getApplyTotal();
     }
-    // 인턴십 현황
-    public List<PositionDTO> getPositions() {
-        return adminDAO.positionInformation();
+
+    // 지원 현황 검색 결과 전체 조회
+    @Override
+    public int getTotalWithApplySearch(Search search) {
+        return adminDAO.getTotalWithApplySearch(search);
+    }
+
+    // 면접 현황 조회
+    @Override
+    public InterviewListDTO getInterviews(int page, Pagination pagination, Search search) {
+        InterviewListDTO interviewListDTO = new InterviewListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getInterviewTotal());
+        pagination.progress();
+        interviewListDTO.setPagination(pagination);
+        interviewListDTO.setInterviews(adminDAO.interviewInformation(pagination, search));
+        return interviewListDTO;
+    }
+
+    // 면접 현황 전체 인원 조회
+    @Override
+    public int getInterviewTotal() {
+        return adminDAO.getInterviewTotal();
+    }
+
+    // 면접 현황 검색 결과 전체 조회
+    @Override
+    public int getTotalWithInterviewSearch(Search search) {
+        return adminDAO.getTotalWithInterviewSearch(search);
+    }
+
+    // 포지션 현황 조회
+    @Override
+    public PositionListDTO getPositions(int page, Pagination pagination, Search search) {
+        PositionListDTO positionListDTO = new PositionListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getPositionTotal());
+        pagination.progress();
+        positionListDTO.setPagination(pagination);
+        positionListDTO.setPositions(adminDAO.positionInformation(pagination, search));
+        return positionListDTO;
+    }
+
+    // 포지션 현황 전체 인원 조회
+    @Override
+    public int getPositionTotal() {
+        return adminDAO.getPositionTotal();
+    }
+
+    // 포지션 현황 검색 결과 전체 조회
+    @Override
+    public int getTotalWithPositionSearch(Search search) {
+        return adminDAO.getTotalWithPositionSearch(search);
     }
 
     // 결제 관리
@@ -110,17 +191,54 @@ public class AdminServiceImpl implements AdminService {
     }
 
     // 문의 관리
-    // 일반 문의
-    public List<InquiryDTO> getMemberInquiry(Pagination pagination) {
+    // 일반 회원 문의
+    @Override
+    public InquiryListDTO getMemberInquiry(int page, Pagination pagination, Search search) {
+        InquiryListDTO inquiryDTO = new InquiryListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getMemberInquiryTotal());
         pagination.progress();
-        return adminDAO.memberInquiry(pagination);
+        inquiryListDTO.setPagination(pagination);
+        inquiryListDTO.setInquiries(adminDAO.memberInquiry(pagination, search));
+        return inquiryListDTO;
     }
 
-    // 기업 문의
-    public List<InquiryDTO> getCorporationInquiry(Pagination pagination) {
-        pagination.progress();
-        return adminDAO.corporationInquiry(pagination);
+    // 일반 회원 전체 문의 수
+    @Override
+    public int getMemberInquiryTotal() {
+        return adminDAO.getMemberInquiryTotal();
     }
+
+    // 일반 회원 검색 문의 수
+    @Override
+    public int getTotalWithMemberInquirySearch(Search search) {
+        return  adminDAO.getTotalWithMemberInquirySearch(search);
+    }
+
+    // 기업 회원 문의
+    @Override
+    public InquiryListDTO getCorporationInquiry(int page, Pagination pagination, Search search) {
+        InquiryListDTO inquiryDTO = new InquiryListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getCorporationInquiryTotal());
+        pagination.progress();
+        inquiryListDTO.setPagination(pagination);
+        inquiryListDTO.setInquiries(adminDAO.corporationInquiry(pagination, search));
+        return inquiryListDTO;
+    }
+
+    // 기업 회원 전체 문의 수
+    @Override
+    public int getCorporationInquiryTotal() {
+        return adminDAO.getCorporationInquiryTotal();
+    }
+
+    // 기업 회원 검색 문의 수
+    @Override
+    public int getTotalWithCorporationInquirySearch(Search search) {
+        return  adminDAO.getTotalWithCorporationInquirySearch(search);
+    }
+
 
     // 신고 관리
     // 기업 후기 신고

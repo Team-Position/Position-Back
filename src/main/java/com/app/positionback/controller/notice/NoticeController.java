@@ -2,14 +2,12 @@ package com.app.positionback.controller.notice;
 
 import com.app.positionback.domain.corporation.CorporationVO;
 import com.app.positionback.domain.file.FileDTO;
-import com.app.positionback.domain.member.MemberVO;
 import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.notice.NoticeListDTO;
 import com.app.positionback.service.corporation.CorporationService;
-import com.app.positionback.service.file.CorporationFileService;
-import com.app.positionback.service.member.MemberService;
 import com.app.positionback.service.notice.NoticeService;
 import com.app.positionback.utill.Pagination;
+import com.app.positionback.utill.Search;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Controller
 @RequiredArgsConstructor
@@ -94,11 +93,25 @@ public class NoticeController {
         return noticeService.getNoticesByCorporationId(page,pagination,corporationVO.getId()); // corporationId에 맞게 조정
     }
     // 공고 전체 목록
-    @GetMapping("notices/all-list/{page}")
+    @PostMapping("notices/all-list/{page}")
     @ResponseBody
-    public NoticeListDTO getNoticeAllList(@PathVariable("page") Integer page, Pagination pagination) {
+    public NoticeListDTO getNoticeAllList(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        log.info("검색어: " + search.getKeyword());
 
-        return noticeService.getAll(page,pagination); // corporationId에 맞게 조정
+        // getJobs()가 null이 아닌지 확인하고 로그 출력
+        if (search.getJobs() != null) {
+            log.info("직업 목록: " + Arrays.toString(search.getJobs())); // 배열 내용을 출력
+        } else {
+            log.warn("직업 목록이 null입니다.");
+        }
+
+        // getLocations()가 null이 아닌지 확인하고 로그 출력
+        if (search.getLocations() != null) {
+            log.info("위치 목록: " + Arrays.toString(search.getLocations())); // 배열 내용을 출력
+        } else {
+            log.warn("위치 목록이 null입니다.");
+        }
+        return noticeService.getAll(page, pagination, search); // corporationId에 맞게 조정
     }
 
     @GetMapping("notices/total")

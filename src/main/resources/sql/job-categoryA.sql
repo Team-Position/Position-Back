@@ -12,3 +12,5 @@ VALUES ('고객상담·TM');
 
 select *
 from tbl_job_categoryA;
+
+

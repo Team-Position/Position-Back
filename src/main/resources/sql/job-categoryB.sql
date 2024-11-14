@@ -16,3 +16,5 @@ VALUES ('직무·직업', 9),
 -- 담당분야 (ID = 21)
 INSERT INTO tbl_job_categoryB (job_categoryB_name, job_categoryA_id)
 VALUES ('담당분야', 9);  -- '고객상담·TM'의 ID인 9로 설정
+
+

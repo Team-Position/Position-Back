@@ -17,7 +17,7 @@ public class ApplyController {
     @GetMapping("/matching")
     public String matchingMain(Model model) {
         // 상위 4개의 공고와 파일 정보 가져오기
-        NoticeListDTO top4Notices = noticeService.getTop4();
+        NoticeListDTO top4Notices = noticeService.getTop3();
 
         // 모델에 추가하여 뷰에서 사용할 수 있도록 설정
         model.addAttribute("top4Notices", top4Notices);

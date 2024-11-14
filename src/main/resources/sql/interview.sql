@@ -10,4 +10,5 @@ create table tbl_interview(
         references tbl_resume(id)
 );
 
+select * from tbl_interview;
 

@@ -220,6 +220,7 @@ a {
     color: #5c667b;
     font-size: 13px;
     line-height: 16px;
+    margin-left: 700px;
 }
 
 .post-view-wrap .post-infos .post-data-wrap {
@@ -472,6 +473,7 @@ input, button, textarea, select, optgroup, option {
 
 .comment-lists .comment-view {
     padding: 24px 16px;
+    border-bottom: 1px solid lightgray;
 }
 
 .comment-lists .comment-txt {
@@ -515,16 +517,15 @@ input, button, textarea, select, optgroup, option {
     background: url(/static/images/community/icons.png) no-repeat;
 }
 
-.comment-lists .btn-comment-etc {
+.btn-comment-etc {
     display: block;
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 24px;
-    height: 24px;
+    width: 24px !important;
+    height: 24px !important;
     border-radius: 4px;
     font-size: 0;
-    background: url(/static/images/community/icons.png) no-repeat -90px -200px;
 }
 
 .comment-lists .comment-modify-wrap.on {
@@ -589,13 +590,8 @@ input, button, textarea, select, optgroup, option {
 
 .comment-lists-wrap .btn-comments span:after {
     display: inline-block;
-    position: absolute;
-    top: 3px;
-    right: 0;
-    width: 16px;
-    height: 16px;
-    background: url(/static/images/community/icons.png) no-repeat 0 -240px;
-    content: "";
+    position: relative;
+    height: 24px;
 }
 
 
@@ -635,7 +631,6 @@ input, button, textarea, select, optgroup, option {
     position: relative;
     height: 35px;
     margin-top: 24px;
-    padding-right: 44px;
     text-align: right;
 }
 
@@ -659,7 +654,17 @@ input, button, textarea, select, optgroup, option {
     table-layout: fixed;
 }
 
-.comment-lists .btn-comment-etc {
+.comment-lists .btn-comment-etc-modi {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    font-size: 0;
+}
+.comment-lists .btn-comment-etc-del{
     display: block;
     position: absolute;
     top: 20px;
@@ -668,7 +673,7 @@ input, button, textarea, select, optgroup, option {
     height: 24px;
     border-radius: 4px;
     font-size: 0;
-    background: url(/static/images/community/icons.png) no-repeat -90px -200px;
+
 }
 
 .comment-lists .profile-pic {
@@ -695,14 +700,7 @@ input, button, textarea, select, optgroup, option {
     font-size: 14px;
     line-height: 24px;
     text-align: left;
-}
-
-.comment-lists .comment-txt {
-    display: block;
-    color: #373f57;
-    font-size: 14px;
-    line-height: 24px;
-    text-align: left;
+    margin-top: 10px;
 }
 
 .comment-lists .comment-data-wrap {
@@ -849,4 +847,26 @@ input, button, textarea, select, optgroup, option {
     position: relative;
     padding: 24px 24px 24px 56px;
     border-top: 1px solid #eaedf4;
+}
+.modify-icon, .delete-icon{
+    width: 24px;
+    height: 24px;
+}
+.btn-comment-etc-modi img,
+.btn-comment-etc-del img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+.modify-comment{
+    margin-top: 12px;
+    width: 95%;
+    height: 98px;
+    border: 0;
+    box-sizing: border-box;
+    color: #373f57;
+    font-size: 14px;
+    line-height: 24px;
+    background-color: #fff;
+    resize: none;
 }

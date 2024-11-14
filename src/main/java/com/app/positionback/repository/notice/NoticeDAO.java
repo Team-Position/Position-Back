@@ -1,13 +1,12 @@
 package com.app.positionback.repository.notice;
 
-import com.app.positionback.domain.file.FileDTO;
-import com.app.positionback.domain.file.NoticeFileDTO;
 import com.app.positionback.domain.notice.NoticeCategoryRankDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.notice.NoticeMonthRankDTO;
 import com.app.positionback.domain.notice.NoticeVO;
 import com.app.positionback.mapper.notice.NoticeMapper;
 import com.app.positionback.utill.Pagination;
+import com.app.positionback.utill.Search;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -72,8 +71,8 @@ public class NoticeDAO {
     }
 
     // 공고 전체 목록(더보기)
-    public List<NoticeDTO> findAll(Pagination pagination) {
-        return noticeMapper.selectAll(pagination);
+    public List<NoticeDTO> findAll(Pagination pagination, Search search) {
+        return noticeMapper.selectAll(pagination, search);
     }
 
     // 공고 전체 개수
@@ -81,9 +80,14 @@ public class NoticeDAO {
         return noticeMapper.selectAllCount();
     }
 
+    // 공고 검색 개수
+    public int getSearchAllTotal(Search search) {
+        return noticeMapper.selectSearchAllCount(search);
+    }
+
     // 공고 인기순 4개
-    public List<NoticeDTO> findTop4(){
-        return noticeMapper.selectTop4();
+    public List<NoticeDTO> findTop3(){
+        return noticeMapper.selectTop3();
     }
 
 }

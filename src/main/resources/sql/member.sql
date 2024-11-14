@@ -1,6 +1,5 @@
 create database positionback;
 use positionback;
-
 create table tbl_member(
     id bigint unsigned auto_increment primary key,
     member_name varchar(255) not null,

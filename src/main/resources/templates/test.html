@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>체크박스 예시</title>
+</head>
+<body>
+<h3>직업 선택</h3>
+<form id="jobForm" method="post">
+    <input type="checkbox" name="jobs" value="개발자" id="developer"> 개발자<br>
+    <input type="checkbox" name="jobs" value="디자이너" id="designer"> 디자이너<br>
+    <input type="checkbox" name="jobs" value="마케터" id="marketer"> 마케터<br>
+    <br>
+
+    <h3>지역 선택</h3>
+    <input type="checkbox" name="regions" value="서울" id="seoul"> 서울<br>
+    <input type="checkbox" name="regions" value="부산" id="busan"> 부산<br>
+    <input type="checkbox" name="regions" value="대구" id="daegu"> 대구<br>
+    <br>
+
+    <label for="searchKeyword">검색어:</label>
+    <input type="text" id="searchKeyword" name="searchKeyword" placeholder="검색어 입력"><br><br>
+
+    <button type="button" onclick="submitForm()">제출</button>
+</form>
+
+</body>
+
+<script>
+    async function submitForm() {
+        const formData = new FormData();
+
+        // 체크박스에서 선택된 직업 추가
+        const jobCheckboxes = document.querySelectorAll('input[name="jobs"]:checked');
+        if (jobCheckboxes.length > 0) {
+            jobCheckboxes.forEach(checkbox => formData.append("jobs", checkbox.value));
+        }
+
+        // 체크박스에서 선택된 지역 추가
+        const regionCheckboxes = document.querySelectorAll('input[name="regions"]:checked');
+        if (regionCheckboxes.length > 0) {
+            regionCheckboxes.forEach(checkbox => formData.append("regions", checkbox.value));
+        }
+
+        // 검색어 추가
+        const searchKeyword = document.getElementById('searchKeyword').value;
+        formData.append("searchKeyword", searchKeyword);
+
+        // 서버로 데이터 전송
+        const response = await fetch("/test", {
+            method: "POST",
+            body: formData
+        });
+
+        // 응답을 JSON으로 파싱
+        const data = await response.json();
+
+        // 응답 데이터를 처리할 콜백이 있다면 호출
+        if (callback) {
+            callback(data);
+        }
+    }
+</script>
+</html>

@@ -82,3 +82,24 @@ from
     tbl_evaluation_positioner ep on pr.id = ep.positioner_review_id
         left join
     tbl_evaluation e on ep.id = e.id;
+
+SELECT
+    corp.corporation_name,
+    a.created_date,
+    n.notice_title,
+    m.member_name,
+    m.member_phone,
+    a.apply_type,
+    a.apply_status
+FROM
+    tbl_apply a
+        JOIN
+    tbl_notice n ON a.notice_id = n.id
+        JOIN
+    tbl_resume r ON a.resume_id = r.id
+        JOIN
+    tbl_member m ON r.member_id = m.id
+        JOIN
+    tbl_corporation corp ON n.corporation_id = corp.id;
+
+

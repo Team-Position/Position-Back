@@ -169,9 +169,6 @@ ulElement.addEventListener("scroll", () => {
 
 
 
-
-
-
 // 검색할때 검색창
 const input = document.getElementById("job-category-ipt-keyword");
 const resultWrapper = document.querySelector('.wrap-result.has-result');
@@ -236,11 +233,7 @@ document.querySelector('.box-detail-jobs').addEventListener('click', (event) => 
         const parent = rowItem.closest('.box-detail-depth');
         updateParentHeight(parent);
     }
-    if (event.target.classList.contains('first-depth')||event.target.classList.contains('txt')) {
-        // depth1-btn-wrapper 클릭 시 높이만 업데이트
-        // const parent = document.querySelector('.box-detail-depth');
-        // updateParentHeight(parent);
-    }
+
 });
 
 /**

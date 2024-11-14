@@ -78,9 +78,9 @@ function renderPosts(data) {
 
             listItem.innerHTML = `
                 <div class="qna-subject-wrap">
-                    <span class="qna-subject">${escapeHtml(post.postTitle)}</span>
+                    <span class="qna-subject">${post.postTitle}</span>
                 </div>
-                <span class="qna-desc">${escapeHtml(post.postContent)}</span>
+                <span class="qna-desc">${post.postContent}</span>
                 <div class="qna-data-infos">
                     <span class="qna-info qna-reply">댓글 <strong>${post.postReplyCount || 0}</strong></span>
                     <span class="qna-info qna-view">조회 <strong>${post.postReadCount || 0}</strong></span>
@@ -101,23 +101,6 @@ function renderPosts(data) {
     if (pagination) {
         renderPagination(pagination, totalCount); // 페이지네이션 생성
     }
-}
-
-// HTML 이스케이프 함수 (보안 강화)
-function escapeHtml(text) {
-    if (typeof text !== 'string') return text;
-    return text.replace(/[&<>"'`=\/]/g, function (s) {
-        return ({
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#39;',
-            '/': '&#x2F;',
-            '`': '&#x60;',
-            '=': '&#x3D;'
-        })[s];
-    });
 }
 
 // 페이지네이션 렌더링 함수

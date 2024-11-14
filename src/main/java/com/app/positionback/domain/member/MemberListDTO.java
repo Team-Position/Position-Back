@@ -1,6 +1,7 @@
 package com.app.positionback.domain.member;
 
 import com.app.positionback.utill.Pagination;
+import com.app.positionback.utill.Search;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,4 +14,5 @@ import java.util.List;
 public class MemberListDTO {
     private List<MemberDTO> members;
     private Pagination pagination;
+    private Search search;
 }

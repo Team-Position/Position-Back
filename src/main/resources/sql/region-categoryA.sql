@@ -3,3 +3,5 @@ create table tbl_region_categoryA(
   region_categoryA_name varchar(255)
 );
 
+select *
+from tbl_region_categoryA;

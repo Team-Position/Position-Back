@@ -23,3 +23,5 @@ INSERT INTO tbl_resume (
              1,    -- education_id (tbl_education 테이블의 교육 ID)
              1     -- job_categoryC_id (tbl_job_categoryC 테이블의 직업 분류 ID)
          );
+
+

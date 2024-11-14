@@ -16,7 +16,9 @@ import com.app.positionback.domain.post.PostDTO;
 import com.app.positionback.domain.reply.ReplyDTO;
 import com.app.positionback.mapper.admin.AdminMapper;
 import com.app.positionback.utill.Pagination;
+import com.app.positionback.utill.Search;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,8 +30,8 @@ public class AdminDAO {
 
     // 회원 관리
     // 일반 회원 조회
-    public List<MemberDTO> memberInformation(Pagination pagination) {
-        return adminMapper.selectAllMembers(pagination);
+    public List<MemberDTO> memberInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllMembers(pagination, search);
     }
 
     // 일반 회원 전체 인원 조회
@@ -37,9 +39,14 @@ public class AdminDAO {
         return adminMapper.selectMemberTotal();
     }
 
+    // 일반 회원 검색 결과 전체 조회
+    public int getTotalWithMemberSearch(Search search) {
+        return adminMapper.selectTotalWithMemberSearch(search);
+    }
+
     // 기업 회원 조회
-    public List<CorporationDTO> corporationInformation(Pagination pagination) {
-        return adminMapper.selectAllCorporationMembers(pagination);
+    public List<CorporationDTO> corporationInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllCorporationMembers(pagination, search);
     }
 
     // 기업 회원 전체 인원 조회
@@ -47,18 +54,55 @@ public class AdminDAO {
         return adminMapper.selectCorporationTotal();
     }
 
+    // 기업 회원 검색 결과 전체 조회
+    public int getTotalWithCorporationSearch(Search search) {
+        return adminMapper.selectTotalWithCorporationSearch(search);
+    }
+
     // 지원현황 관리
     // 지원 현황 조회
-    public List<ApplyDTO> applyInformation() {
-        return adminMapper.selectAllApply();
+    public List<ApplyDTO> applyInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllApply(pagination, search);
     }
+
+    // 지원 현황 전체 개수 조회
+    public int getApplyTotal() {
+        return adminMapper.selectApplyTotal();
+    }
+
+    // 지원 현황 검색 결과 전체 조회
+    public int getTotalWithApplySearch(Search search) {
+        return adminMapper.selectTotalWithApplySearch(search);
+    }
+
     // 면접 현황 조회
-    public List<InterviewDTO> interviewInformation() {
-        return adminMapper.selectAllInterview();
+    public List<InterviewDTO> interviewInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllInterview(pagination, search);
     }
-    // 인턴십 현황 조회
-    public List<PositionDTO> positionInformation() {
-        return adminMapper.selectAllPosition();
+
+    // 면접 현황 전체 개수 조회
+    public int getInterviewTotal() {
+        return adminMapper.selectInterviewTotal();
+    }
+
+    // 면접 현황 검색 결과 전체 조회
+    public int getTotalWithInterviewSearch(Search search) {
+        return adminMapper.selectTotalWithInterviewSearch(search);
+    }
+
+    // 포지션 현황 조회
+    public List<PositionDTO> positionInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllPosition(pagination, search);
+    }
+
+    // 포지션 현황 전체 인원 조회
+    public int getPositionTotal() {
+        return adminMapper.selectPositionTotal();
+    }
+
+    // 포지션 현황 검색 결과 전체 조회
+    public int getTotalWithPositionSearch(Search search) {
+        return adminMapper.selectTotalWithPositionSearch(search);
     }
 
     // 결제 관리
@@ -96,13 +140,34 @@ public class AdminDAO {
     }
 
     // 문의 관리
-    // 일반 회원 문의 전체 조회 memberInquiry
-    public List<InquiryDTO> memberInquiry(Pagination pagination) {
-        return adminMapper.selectAllMemberInquiry(pagination);
+    // 일반 회원 문의 조회
+    public List<InquiryDTO> memberInquiry(Pagination pagination, Search search) {
+        return adminMapper.selectAllMemberInquiry(pagination, search);
     }
-    // 기업 회원 문의 전체 조회
-    public List<InquiryDTO> corporationInquiry(Pagination pagination) {
-        return adminMapper.selectAllCorporationInquiry(pagination);
+
+    // 일반 회원 전체 문의 수
+    public int getMemberInquiryTotal() {
+        return adminMapper.selectMemberInquiryTotal();
+    }
+
+    // 일반 회원 문의 검색 결과 전체 조회
+    public int getTotalWithMemberInquirySearch(Search search) {
+        return adminMapper.selectTotalWithMemberInquirySearch(search);
+    }
+
+    // 기업 회원 문의 조회
+    public List<InquiryDTO> corporationInquiry(Pagination pagination, Search search) {
+        return adminMapper.selectAllCorporationInquiry(pagination, search);
+    }
+
+    // 기업 회원 전체 문의 수
+    public int getCorporationInquiryTotal() {
+        return adminMapper.selectCorporationInquiryTotal();
+    }
+
+    // 기업 회원 문의 검색 결과 전체 조회
+    public int getTotalWithCorporationInquirySearch(Search search) {
+        return adminMapper.selectTotalWithCorporationInquirySearch(search);
     }
 
     // 신고 관리
