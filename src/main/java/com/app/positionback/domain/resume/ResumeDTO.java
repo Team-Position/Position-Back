@@ -6,10 +6,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class ResumeVO {
+public class ResumeDTO {
     @EqualsAndHashCode.Include
     private Long id;
     private Long memberId;
@@ -19,4 +18,8 @@ public class ResumeVO {
     private String resumeTitle;
     private String createdDate;
     private String updatedDate;
+
+    public ResumeVO toVO() {
+        return new ResumeVO(id, memberId, educationId, jobCategoryId, resumeStatus, resumeTitle,createdDate,updatedDate);
+    }
 }

@@ -27,3 +27,9 @@ document.querySelector(".btn-share").addEventListener('click', ()=> {
         alert('URL이 클립보드에 복사되었습니다.');
     })
 })
+
+const changeResumeBtn = document.getElementById("change-resume");
+
+changeResumeBtn.addEventListener("click", () => {
+    location.href="/my-page/resume-management";
+})

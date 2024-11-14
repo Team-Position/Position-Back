@@ -128,12 +128,12 @@ header, footer, section, nav, article {
     overflow: hidden;
     width: 134px;
     height: 34px;
-    background: url('/static/images/my-page/position-logo-small.svg') no-repeat;
+    background: url('/images/my-page/position-logo-small.svg') no-repeat;
 }
 #header.fixed .bi .frame, #header.simple.bubble .bi .frame {
     width: 36px;
     height: 20px;
-    background-image: url('/static/images/main/home.png');
+    background-image: url('/images/main/home.png');
     background-repeat: no-repeat;
 }
 /* 네비게이션 */

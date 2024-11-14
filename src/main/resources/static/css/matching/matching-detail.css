@@ -1669,7 +1669,10 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.box-choice .area-inpsel > select {
+.box-choice .area-inpsel > p {
+    display: flex;
+    text-align: center;
+    align-items: center;
     padding-left: 16px;
     width: 100%;
     height: 48px;
@@ -1678,8 +1681,8 @@ body {
     color: #222;
     font-size: 15px;
     background: none;
-    background: url(//www.saraminimage.co.kr/sri/common/ico/ico_select_arr.png)
-        no-repeat 100% 6px;
+    /*background: url(//www.saraminimage.co.kr/sri/common/ico/ico_select_arr.png)*/
+    /*    no-repeat 100% 6px;*/
     cursor: pointer;
     -webkit-appearance: none;
 }

@@ -99,7 +99,7 @@ public class MemberController {
                 throw new LoginFailException();
             });
             session.setAttribute("member", memberVO);
-            return new RedirectView("/");
+            return new RedirectView("/matching");
         }
         Optional<CorporationVO> foundCorporation = corporationService.login(memberDTO);
         CorporationVO corporationVO = foundCorporation.orElseThrow(() -> {
@@ -118,7 +118,7 @@ public class MemberController {
 
     @GetMapping("/")
     public String goToMain(MemberDTO memberDTO, HttpSession session){
-        session.invalidate();
+//        session.invalidate();
         return "main/body";
     }
 }

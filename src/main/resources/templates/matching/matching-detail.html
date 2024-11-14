@@ -9,6 +9,7 @@
         />
         <link rel="stylesheet" href="/css/main.css" />
         <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a1e0bdeafd8a8a27e472648b06cdfefc&libraries=services"></script>
+        <script src="https://js.bootpay.co.kr/bootpay-5.0.1.min.js" type="application/javascript"></script>
 
 
         <title>매칭 상세보기</title>
@@ -725,20 +726,19 @@
                                 <!-- 모달 헤더 -->
                                 <div class="head-apply">
                                     <h2 class="title">
-                                        <span class="company-name">
+                                        <span class="company-name" th:text="${notice.corporationName}">
                                             (주)도그지어
                                         </span>
                                         입사지원
                                     </h2>
                                     <h3 class="title-apply">
-                                        <a href="">
+                                        <a href="" th:text="${notice.noticeTitle}">
                                             [dogsear] 광고 캠페인 기획 AE 채용
                                         </a>
                                     </h3>
                                     <div class="desc">
-                                        <span> 신입/경력 </span>
-                                        <span> 학력무관</span>
-                                        <span> 서울</span>
+                                        <span th:text="${notice.noticeEducation}"> 학력무관</span>
+                                        <span th:text="${notice.corporationAddress}"> 서울</span>
                                     </div>
                                     <span class="badges"></span>
                                 </div>
@@ -756,11 +756,9 @@
                                             </label>
                                         </h4>
                                         <div class="area-inpsel">
-                                            <select id="inpApply">
-                                                <option>
-                                                    광고 캠페인 기획 AE
-                                                </option>
-                                            </select>
+                                            <p id="inpApply" th:text="${notice.noticeJobCategoryName}">
+
+                                            </p>
                                         </div>
                                         <em
                                             class="msgInvalid"
@@ -771,8 +769,8 @@
                                     <div class="box-round-shadow">
                                         <div class="box-head">
                                             선택된 이력서
-                                            <button type="button" class="btn">
-                                                이력서 변경
+                                            <button type="button" class="btn" id="change-resume">
+                                                <span th:text="${resume != null ? '이력서 변경' : '이력서 작성'}"></span>
                                                 <svg
                                                     data-v-48d32dce=""
                                                     viewBox="0 0 16 16"
@@ -791,14 +789,11 @@
                                         </div>
                                         <div class="box-inner">
                                             <div class="row">
-                                                <p class="date">
+                                                <p class="date" th:text="${resume != null ? resume.createdDate + ' 수정' : ''}">
                                                     2024.10.07 (월) 10:24 저장
                                                 </p>
                                                 <strong class="title-resume"
-                                                    ><a href=" "
-                                                        ><!---->하민지의 이력서
-                                                        입니다
-                                                    </a>
+                                                    ><a href=" " th:text="${resume != null ? resume.resumeTitle : '작성된 이력서가 없습니다.'}"></a>
                                                 </strong>
                                                 <div
                                                     id="resume-files"
@@ -830,14 +825,14 @@
                                                             </g>
                                                         </g>
                                                     </svg>
-                                                    첨부파일이 없습니다
+                                                    <span th:text="${resume != null ? '대표 이력서 입니다.' : '이력서를 작성해주세요'}"></span>
                                                 </div>
                                             </div>
                                             <p
                                                 class="no-result"
                                                 style="display: none"
                                             >
-                                                첨부된 파일이 없습니다.
+                                                대표 이력서 입니다.
                                             </p>
                                         </div>
                                     </div>
@@ -1159,6 +1154,15 @@
                 ></rect>
             </symbol>
         </svg>
+            <input type="hidden" class="layout"
+                   th:data-work-id="${notice.id}"
+                   th:data-member-id="${member.id}"
+                   th:data-profile-name="${member.memberName}"
+                   th:data-profile-phone="${member.memberPhone}"
+                   th:data-profile-email="${member.memberEmail != null ? member.memberEmail : member.memberKakaoEmail}"
+                   th:data-work-title="${notice.noticeTitle}"
+            >
+
     </body>
     <script th:inline="javascript">
         // Thymeleaf를 사용하여 noticeEndDate 값을 JavaScript 변수에 할당
@@ -1216,4 +1220,88 @@
     <script src="/js/matching/matching-detail.js"></script>
     <script src="/js/matching/detail/detail-layout.js"></script>
     <script src="/js/matching/detail/detail-event.js"></script>
+    <script>
+        // 결제 버튼 클릭 이벤트
+        document.querySelector(".meta-pixel-event").addEventListener("click", () => {
+            const workId = document.querySelector(".layout").getAttribute("data-work-id");
+            const memberProfileId = document.querySelector(".layout").getAttribute("data-member-id");
+            const profileName = document.querySelector(".layout").getAttribute("data-profile-name");
+            const profilePhone = document.querySelector(".layout").getAttribute("data-profile-phone");
+            const profileEmail = document.querySelector(".layout").getAttribute("data-profile-email");
+            const workTitle = document.querySelector(".layout").getAttribute("data-work-title");
+            // const workPrice = document.querySelector(".work-price .price-detail").textContent.replace("원", "").trim();
+            // const workTitle = document.querySelector(".title").textContent;
+
+            // console.log("workPrice:", workPrice);
+            console.log("workTitle:", workTitle);
+            console.log("memberProfileId:", memberProfileId);
+            console.log("profileName:", profileName);
+            console.log("profilePhone:", profilePhone);
+            console.log("profileEmail:", profileEmail);
+
+            Bootpay.requestPayment({
+                application_id: "66c6a758cc5274a3ac3fc099",
+                price: 100,
+                order_name: workTitle,
+                order_id: workId,
+                pg: "카카오페이",
+                method: "간편",
+                tax_free: 0,
+                user: {
+                    id: memberProfileId,
+                    username: profileName,
+                    phone: profilePhone,
+                    email: profileEmail
+                },
+                items: [
+                    {
+                        id: workId,
+                        name: workTitle,
+                        qty: 1,
+                        price: 100
+                    }
+                ],
+                extra: {
+                    open_type: "iframe",
+                    card_quota: "0,2,3",
+                    escrow: false
+                }
+            })
+                .then(async (response) => {
+                    console.log("결제 응답:", response); // 결제 성공 응답 로그 출력
+                    // 결제 성공 시 서버에 데이터 전송
+                    // await completePayment(workId, memberProfileId);
+                    alert("결제가 성공적으로 완료되었습니다.");
+                    window.location.href = `/my-page`;
+                })
+                .catch((error) => {
+                    console.error("결제 요청 중 오류 발생:", error.message);
+                    alert("결제 중 오류가 발생했습니다. 다시 시도해주세요.");
+                });
+        });
+
+        // // 결제 완료 시 서버로 데이터 전송 함수
+        // async function completePayment(workId, memberProfileId) {
+        //     try {
+        //         const response = await fetch("/text/order", {
+        //             method: "POST",
+        //             headers: { "Content-Type": "application/json" },
+        //             body: JSON.stringify({
+        //                 workId: workId,
+        //                 memberProfileId: memberProfileId
+        //             })
+        //         });
+        //
+        //         if (!response.ok) {
+        //             console.error("서버에 결제 정보 전송 실패:", await response.text());
+        //             alert("결제 정보 저장에 실패했습니다.");
+        //         } else {
+        //             console.log("서버에 결제 정보 전송 성공");
+        //         }
+        //     } catch (error) {
+        //         console.error("결제 완료 데이터 전송 중 오류 발생:", error);
+        //     }
+        // }
+
+    </script>
 </html>
