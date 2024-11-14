@@ -7,7 +7,7 @@
         VALUES (#{memberId}, #{postId}, #{replyContent}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </insert>
 
-    <select id="selectRepliesByPostId" resultType="replyDTO" parameterType="Long">
+    <select id="selectRepliesByPostId" resultType="replyDTO" parameterType="map">
         SELECT
         r.id,
         r.member_id,
@@ -19,7 +19,8 @@
         FROM tbl_reply r
         INNER JOIN tbl_member m ON r.member_id = m.id
         WHERE r.post_id = #{postId}
-        ORDER BY r.created_date asc
+        ORDER BY r.created_date desc
+        LIMIT #{pagination.startRow}, #{pagination.moreRowcount}
     </select>
 
     <select id="selectReplyById" resultType="replyDTO" parameterType="Long">
@@ -45,6 +46,11 @@
     <delete id="deleteReply" parameterType="Long">
         DELETE FROM tbl_reply WHERE id = #{id}
     </delete>
+
+    <select id="selectCount">
+        select count(*) from tbl_reply
+        where post_id = #{postId}
+    </select>
 </mapper>
 
 

@@ -1,309 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/css/main.css" />
-        <link
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link
             rel="stylesheet"
             href="/css/community/community-details.css"
-        />
-        <title>상세보기</title>
-    </head>
-    <body>
-        <div id="sri-section" class="layout-full">
-            <div id="sri-wrap">
-                <div id="content">
-                    <div class="company-honest-qna">
-                        <div class="contents-container detail-wrap">
-                            <a
-                                href="/community/community-post-list"
-                                class="btn-type size-s btn-gray btn-back-list"
-                                ><span>전체 게시글</span></a
-                            >
-                            <div class="post-view-wrap">
-                                <div class="post-top">
-                                    <h1 class="qna-subject" id="post-title">
-                                    </h1>
-                                    <div class="post-btns">
-                                        <button
-                                            type="button"
-                                            class="btns btn-type size-xs"
+    />
+    <title>상세보기</title>
+</head>
+<body>
+<div id="sri-section" class="layout-full">
+    <div id="sri-wrap">
+        <div id="content">
+            <div class="company-honest-qna">
+                <div class="contents-container detail-wrap">
+                    <a
+                            href="/community/community-post-list"
+                            class="btn-type size-s btn-gray btn-back-list"
+                    ><span>전체 게시글</span></a
+                    >
+                    <div class="post-view-wrap">
+                        <div class="post-top">
+                            <h1 class="qna-subject" id="post-title">
+                            </h1>
+
+                        </div>
+                        <div class="post-infos">
+                            <div class="post-profile">
+                                <div class="profile-pic-wrap">
+                                    <a href="" target="_blank">
+                                        <div
+                                                class="profile-pic profile1"
                                         >
-                                            신고
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="post-infos">
-                                    <div class="post-profile">
-                                        <div class="profile-pic-wrap">
-                                            <a href="" target="-blank"
-                                                ><div
-                                                    class="profile-pic profile1"
-                                                >
-                                                    <svg>
-                                                        <use
-                                                            xlink:href="#profile-pic1"
-                                                        ></use>
-                                                    </svg></div
-                                            ></a>
+                                            <svg>
+                                                <use
+                                                        xlink:href="#profile-pic1"
+                                                ></use>
+                                            </svg>
                                         </div>
-                                        <a href="" target="-blank">
-                                            <span class="nickname" id="post-author"
-                                                ></span
-                                            >
-                                        </a>
-                                        <span class="post-date" id="post-date">3일 전</span>
-                                    </div>
-                                    <div class="post-data-wrap">
+                                    </a>
+                                </div>
+                                <a href="" target="_blank">
+                                            <span class="nickname" id="post-author">
+                                            </span>
+                                </a>
+                                <span class="post-date" id="post-date">3일 전</span>
+                            </div>
+                            <div class="post-data-wrap">
                                         <span class="tip-box">
                                             <button
-                                                type="button"
-                                                class="btn-qna-bookmark repute-scrap on"
-                                                data-idx="81294"
-                                                data-value="n"
-                                            >
-                                                <span class="blind"
-                                                    >스크랩</span
-                                                >
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <!-- // 게시글 정보 -->
-
-                                <!-- 게시글 내용 -->
-                                <div class="post-cont">
-                                    <div id="post-content">
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <form
-                                class="qna-answer-form"
-                                name="qna-answer-form"
-                                enctype="multipart/form-data"
-                            >
-                                <input
-                                    type="hidden"
-                                    name="qust-idx"
-                                    value="81294"
-                                    id="qust-idx"
-                                />
-                                <input
-                                    type="hidden"
-                                    name="csn"
-                                    value=""
-                                    id="csn"
-                                />
-                                <div class="comment-input-wrap">
-                                    <div class="comment-input img-add">
-                                        <span class="nickname"
-                                            >uUPHjiAGdXf6ghf</span
-                                        >
-                                        <textarea
-                                            name="contents"
-                                            id="contents"
-                                            class="scrollbar"
-                                            placeholder="“나도 이런 고민했었지, 라떼는 말이야~” 위 고민과 같은 경험이 있거나, 알고 계신 정보가 있다면 조언 부탁드려요!"
-                                            rows="24"
-                                            cols="80"
-                                        ></textarea>
-                                        <ul
-                                            class="add-img-list"
-                                            style="display: none"
-                                        >
-                                            <li>
-                                                <div class="thumb">
-                                                    <img
-                                                        id="reply-preview"
-                                                        src="http://www.saraminimage.co.kr/sri/company-review/dummy-pic1.png"
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <button
                                                     type="button"
-                                                    class="img-delete"
-                                                ></button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="comment-input-bot info-write">
-                                        <div class="image-add-wrap">
-
-                                        </div>
-                                        <span class="comment-count bytes">
-                                            <em>0</em>/1000자
-                                        </span>
-                                    </div>
-                                    <button
-                                        type="button"
-                                        class="btn-type size-l comment-submit btn-anwr-register"
-                                        name="btn-anwr-register"
-                                    >
-                                        댓글 등록
-                                    </button>
-                                </div>
-                            </form>
-
-                            <div class="comment-lists-wrap" id="qna-answer-box">
-                                <div class="comment-lists-sort">
-                                    <div class="inp-box">
-                                        <select
-                                            id="reply-sort"
-                                            name="reply-sort"
-                                            title="댓글 정렬 선택"
-                                        >
-                                            <option value="last" selected="">
-                                                최신 댓글순
-                                            </option>
-                                            <option value="like">
-                                                인기 댓글순
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="list-answer paywall">
-                                    <input type="hidden" id="reply-edit-idx" />
-                                    <input
-                                        type="hidden"
-                                        id="reply-edit-upper-idx"
-                                    />
-
-                                    <ul class="comment-lists">
-                                        <li>
-                                            <div class="wrap-comment">
-                                                <div class="comment-view">
-                                                    <span class="comment-txt"
-                                                        >요즘 같은 취업난에
-                                                        상당히 고민이 되실것
-                                                        같네요.사실 자발적
-                                                        퇴사도 아닌 권고사직을
-                                                        당한 회사에 재취업하는게
-                                                        쉽지는 않습니다.더욱이
-                                                        경영난 문제라면 지금
-                                                        같은 시장 경기에
-                                                        좋아졌다고 보기는
-                                                        어려울것 같네요.단지
-                                                        퇴사한 인원이 많아
-                                                        대체자가 필요해서 권유를
-                                                        했을 수도 있습니다.물론
-                                                        당장 취업이 어렵기
-                                                        때문에 퇴사 전보다 더
-                                                        좋은 제안을 한다면
-                                                        고려해 보겠지만 그렇지
-                                                        않다면 저는 다른 곳을
-                                                        계속 찾아볼것
-                                                        같네요.최선의 선택을
-                                                        하시기 바랍니다.</span
-                                                    >
-                                                    <span
-                                                        id="comment-txt-original-949382"
-                                                        style="display: none"
-                                                        >요즘 같은 취업난에
-                                                        상당히 고민이 되실것
-                                                        같네요.사실 자발적
-                                                        퇴사도 아닌 권고사직을
-                                                        당한 회사에 재취업하는게
-                                                        쉽지는 않습니다.더욱이
-                                                        경영난 문제라면 지금
-                                                        같은 시장 경기에
-                                                        좋아졌다고 보기는
-                                                        어려울것 같네요.단지
-                                                        퇴사한 인원이 많아
-                                                        대체자가 필요해서 권유를
-                                                        했을 수도 있습니다.물론
-                                                        당장 취업이 어렵기
-                                                        때문에 퇴사 전보다 더
-                                                        좋은 제안을 한다면
-                                                        고려해 보겠지만 그렇지
-                                                        않다면 저는 다른 곳을
-                                                        계속 찾아볼것
-                                                        같네요.최선의 선택을
-                                                        하시기 바랍니다.</span
-                                                    >
-
-                                                    <div
-                                                        class="comment-data-wrap"
-                                                    >
-                                                    </div>
-                                                    <div class="comment-info">
-                                                        <span
-                                                            class="comment-from"
-                                                        >
-                                                            <span
-                                                                class="nickname mark-expert"
-                                                            >
-                                                                프로-섞어섞어 </span
-                                                            >님이 3일 전
-                                                        </span>
-                                                        <div
-                                                            class="profile-pic-wrap"
-                                                        >
-                                                            <a
-                                                                href="/zf-user/company-review-qst-and-ans/profile?idx=230578"
-                                                                target="-blank"
-                                                                ><div
-                                                                    class="profile-pic"
-                                                                >
-                                                                    <svg>
-                                                                        <use
-                                                                            xlink:href="#profile-expert"
-                                                                        ></use>
-                                                                    </svg></div
-                                                            ></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <button
-                                                type="button"
-                                                class="btn-comment-etc"
+                                                    class="btn-qna-bookmark repute-scrap on"
+                                                    data-idx="81294"
+                                                    data-value="n"
                                             >
-                                                수정 및 삭제
+                                                <span class="blind">스크랩</span>
                                             </button>
-                                            <div class="comment-modify-wrap">
-                                                <button
-                                                    class="btn-comment-mnd comment-report"
-                                                    onmousedown="DETAILPAGE.Detail.reportLayerShow('949382', 'anwr', 'reload')"
-                                                >
-                                                    신고
-                                                </button>
-                                            </div>
-
-
-                                        </li>
-
-                                        <div
-                                            class="add-list-answer-contents"
-                                        ></div>
-                                    </ul>
-
-                                    <button
-                                        class="btn-type btn-type-rd size-l btn-gray btn-comments answer-more"
-                                        data-qust-idx="81294"
-                                        data-reply-sort=""
-                                    >
-                                        <span>댓글 더보기</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- 게시글 하단 -->
-                            <div class="post-detail-footer">
-                                <a
-                                    href=""
-                                    class="btn-type size-s btn-gray bnt-post-all"
-                                    ><span>목록</span></a
-                                >
+                                        </span>
                             </div>
                         </div>
+                        <div class="post-cont">
+                            <div id="post-content">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <form
+                            class="qna-answer-form"
+                            name="qna-answer-form"
+                            enctype="multipart/form-data"
+                    >
+                        <input
+                                type="hidden"
+                                name="qust-idx"
+                                value="81294"
+                                id="qust-idx"
+                        />
+                        <input
+                                type="hidden"
+                                name="csn"
+                                value=""
+                                id="csn"
+                        />
+                        <div class="comment-input-wrap">
+                            <div class="comment-input img-add">
+                                <span class="nickname" id="current-user-nickname">uUPHjiAGdXf6ghf</span>
+                                <textarea
+                                        name="contents"
+                                        id="contents"
+                                        class="scrollbar"
+                                        placeholder="“나도 이런 고민했었지, 라떼는 말이야~” 위 고민과 같은 경험이 있거나, 알고 계신 정보가 있다면 조언 부탁드려요!"
+                                        rows="24"
+                                        cols="80"
+                                ></textarea>
+                                <ul
+                                        class="add-img-list"
+                                        style="display: none"
+                                >
+                                    <li>
+                                        <div class="thumb">
+                                            <img
+                                                    id="reply-preview"
+                                                    src="http://www.saraminimage.co.kr/sri/company-review/dummy-pic1.png"
+                                                    alt=""
+                                            />
+                                        </div>
+                                        <button
+                                                type="button"
+                                                class="img-delete"
+                                        ></button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="comment-input-bot info-write">
+                                <div class="image-add-wrap">
+
+                                </div>
+                                <span class="comment-count bytes">
+                                            <em>0</em>/1000자
+                                        </span>
+                            </div>
+                            <button
+                                    type="button"
+                                    class="btn-type size-l comment-submit btn-anwr-register"
+                                    name="btn-anwr-register"
+                            >
+                                댓글 등록
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="comment-lists-wrap" id="qna-answer-box">
+
+                        <div class="list-answer paywall">
+                            <input type="hidden" id="reply-edit-idx" />
+                            <input
+                                    type="hidden"
+                                    id="reply-edit-upper-idx"
+                            />
+
+                            <ul class="comment-lists">
+                                <!-- 댓글 목록은 JavaScript를 통해 동적으로 추가됩니다 -->
+                            </ul>
+
+                            <button
+                                    class="btn-type btn-type-rd size-l btn-gray btn-comments answer-more"
+                                    data-qust-idx="81294"
+                                    data-reply-sort=""
+                            >
+                                <span>댓글 더보기</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 게시글 하단 -->
+                    <div class="post-detail-footer">
+                        <a
+                                href="/community/community-post-list"
+                                class="btn-type size-s btn-gray bnt-post-all"
+                        ><span>목록</span></a
+                        >
                     </div>
                 </div>
             </div>
         </div>
-    </body>
-    <script src="/js/community/community-post-details.js"></script>
+    </div>
+</div>
+
+<div id="comment-edit-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeEditModal()">&times;</span>
+        <h2>댓글 수정</h2>
+        <textarea id="edit-reply-content" rows="5" cols="50"></textarea>
+        <button onclick="submitEditReply()">수정 완료</button>
+    </div>
+</div>
+</body>
+<script src="/js/community/community-post-details.js"></script>
 </html>

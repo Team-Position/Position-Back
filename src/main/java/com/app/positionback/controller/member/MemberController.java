@@ -14,6 +14,8 @@ import com.app.positionback.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -153,5 +155,25 @@ public class MemberController {
 //        }
 //        return member;
 //    }
+
+    @GetMapping("/")
+    public String goToMain(MemberDTO memberDTO, HttpSession session){
+//        session.invalidate();
+        return "main/body";
+    }
+    // 로그인한 멤버 정보 확인
+    @GetMapping("/member/info")
+    @ResponseBody
+    public ResponseEntity<Object> getMemberInfo() {
+        Object memberInfo = session.getAttribute("member");
+
+        if (memberInfo != null) {
+            log.info("세션에서 가져온 회원 정보: {}", memberInfo);
+            return ResponseEntity.ok(memberInfo);
+        } else {
+            log.warn("세션에 로그인 정보가 없습니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
 }
 
