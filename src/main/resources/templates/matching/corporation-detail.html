@@ -8,9 +8,14 @@
             href="/static/css/matching/corporation-detail.css"
         />
         <link rel="stylesheet" href="/static/css/main.css" />
+        <link
+                rel="stylesheet"
+                href="/css/corporation/corporation-login-header.css"
+        />
         <title>기업 메인페이지</title>
     </head>
     <body>
+    <header th:replace="~{/corporation/corporation-login-header :: #header}"></header>
         <div id="position-section" class="layout-full">
             <div id="position-wrap">
                 <div id="content">
@@ -1017,13 +1022,11 @@
                                             <div class="btn-immediately-wrap">
                                                 <button
                                                     class="position-btn-sm"
-                                                    title="클릭하면 입사지원할 수 있는 창이 뜹니다."
-                                                    onclick="try{quickApplyForm('48995399','','t-category=company-info-view&amp;t-content=ing-intro&amp;t-ref-content=ing-intro', ''); return false;} catch (e) {}; return false;"
-                                                    onmousedown="try{n_trackEvent('apply','list','quick-apply');}catch(e){}"
+                                                    title="미리보기는 지원이 불가능 합니다."
                                                 >
                                                     <span
                                                         class="position-btn-immediately"
-                                                        >입사지원</span
+                                                        >미리보기</span
                                                     >
                                                 </button>
                                             </div>
@@ -2602,4 +2605,5 @@
         </div>
     </body>
     <script src="/static/js/matching/corporation-detail.js"></script>
+    <script src="/js/corporation/corporation-login-header.js"></script>
 </html>

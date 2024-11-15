@@ -154,6 +154,7 @@ public class NoticeController {
     // 공고 상세 조회(기업 미리보기)
     @GetMapping("notice-preview")
     public String getNoticeCorporationPreview(@RequestParam("id")Long id, Model model) {
+        CorporationVO corporationVO = (CorporationVO) session.getAttribute("member");
 
         NoticeDTO noticeDTO = noticeService.getNoticeById(id);
         FileDTO fileDTO = noticeService.getNoticeFileById(id);
@@ -162,6 +163,7 @@ public class NoticeController {
         model.addAttribute("notice", noticeDTO);
         model.addAttribute("file", fileDTO);
         model.addAttribute("logoFile", fileLogo);
+        model.addAttribute("corporation", corporationVO);
         return "matching/matching-detail-corporation";
     }
 
