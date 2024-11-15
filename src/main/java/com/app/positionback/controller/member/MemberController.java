@@ -6,11 +6,13 @@ import com.app.positionback.domain.file.CorporationFileDTO;
 import com.app.positionback.domain.member.MemberDTO;
 //import com.app.positionback.service.member.MemberService;
 import com.app.positionback.domain.member.MemberVO;
+import com.app.positionback.domain.resume.ResumeDTO;
 import com.app.positionback.exception.LoginFailException;
 import com.app.positionback.repository.file.CorporationFileDAO;
 import com.app.positionback.service.corporation.CorporationService;
 import com.app.positionback.service.file.FileService;
 import com.app.positionback.service.member.MemberService;
+import com.app.positionback.service.resume.ResumeService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -34,6 +37,7 @@ import java.util.Optional;
 public class MemberController {
     private final MemberService memberService;
     private final CorporationService corporationService;
+    private final ResumeService resumeService;
     private final HttpSession session;
 
     @GetMapping("/join/member")
@@ -136,6 +140,20 @@ public class MemberController {
         } else {
             return "login/login-combine";
         }
+    }
+
+    @GetMapping("/resume/management")
+    public String goToResumeManagement(Model model, HttpSession session) {
+        MemberVO member = (MemberVO) session.getAttribute("member");
+        List<ResumeDTO> resumes = resumeService.getAllByMemberId(member.getId());
+
+        model.addAttribute("resumes", resumes);
+        return "my-page/resume-management";
+    }
+
+    @GetMapping("/resume/write")
+    public String goToResumeWrite() {
+        return "my-page/resume-write";
     }
 
     @GetMapping("/my-page/my-info-kakao-detail")

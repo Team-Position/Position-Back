@@ -1,3 +1,13 @@
+const userName = document.querySelector(".user-name");
+const userEmail = document.querySelector(".user-email");
+const userPhone = document.querySelector(".user-phone");
+const userAddress = document.querySelector(".user-address");
+
+userName.innerText = member.memberName;
+userEmail.innerText = member.memberEmail;
+userPhone.innerText = member.memberPhone;
+userAddress.innerText = member.memberAddress + member.memberAddressDetail;
+
 // 파일 소개 글자수 증가/감소
 function calculateByteLength(str) {
     let byteCount = 0;
@@ -113,6 +123,7 @@ closeModalBtns.forEach((button) => {
 // 파일 등록시 버튼 disable 삭제(활성화)
 const fileInput = document.getElementById("dumi-file-res");
 const uploadButton = document.getElementById("uploadBtn");
+const uploadCancelButton = document.getElementById("uploadCancelBtn");
 const modalUpload = document.getElementById("resume-file-uploaded-layer");
 const btnConfirm = document.querySelector(".btn-confirm"); //파일 등록 완료시 모달창 확인 버튼
 const fileSuccessModal = document.getElementById("resume-file-uploaded-layer");
@@ -133,7 +144,15 @@ uploadButton.addEventListener("click", () => {
     previewFile.style.display = "block";
     addFileArea.style.display = "none";
     dimmed.style.display = "block";
+    fileInput.value = "";
 });
+uploadCancelButton.addEventListener("click", () => {
+    wrapResumeNudge.style.display = "none";
+    previewFile.style.display = "block";
+    addFileArea.style.display = "none";
+    dimmed.style.display = "block";
+    fileInput.value = "";
+})
 // 등록 완료시 모달 창에서 확인 버튼 클릭시
 btnConfirm.addEventListener("click", () => {
     fileSuccessModal.style.display = "none";

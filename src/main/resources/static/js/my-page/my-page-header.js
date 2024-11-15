@@ -85,12 +85,12 @@ document.querySelectorAll(".tab-btns li").forEach((tab) => {
     });
 });
 
-document.querySelector(".btn-toggle-gnb").addEventListener("click", () => {
+btnToggleGnb.addEventListener("click", () => {
     const section = document.getElementById("position-section");
     section.classList.toggle("closed");
 });
 
-document.querySelectorAll(".btn-expand").forEach((button) => {
+btnExpands.forEach((button) => {
     button.addEventListener("click", (e) => {
         e.preventDefault(); // <a> 태그의 기본 동작 막기
         button.closest("li").classList.toggle("expanded");
@@ -98,7 +98,7 @@ document.querySelectorAll(".btn-expand").forEach((button) => {
 });
 
 // ul.gnb 내부의 li 클릭 시 selected 클래스 추가
-document.querySelectorAll(".gnb li").forEach((li) => {
+gnbLists.forEach((li) => {
     li.addEventListener("click", () => {
         // 기존 선택된 요소에서 selected 제거
         li.parentElement.querySelectorAll(".selected").forEach((selected) => {

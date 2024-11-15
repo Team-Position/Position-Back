@@ -133,7 +133,7 @@ public class NoticeController {
     public String getNoticeDetail(@RequestParam("id")Long id, Model model) {
         MemberVO memberVO = (MemberVO) session.getAttribute("member");
 
-        ResumeDTO resumeDTO = resumeService.getResumeByMemberId(memberVO.getId());
+        ResumeDTO resumeDTO = resumeService.getRepresentativeByMemberId(memberVO.getId());
         NoticeDTO noticeDTO = noticeService.getNoticeById(id);
         FileDTO fileDTO = noticeService.getNoticeFileById(id);
         FileDTO fileLogo = corporationService.getCorporationFileById(noticeDTO.getCorporationId());
