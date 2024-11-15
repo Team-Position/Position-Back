@@ -56,4 +56,10 @@
         set member_complain_count = member_complain_count + 1
         where id = #{id};
     </update>
+
+    <update id="updateName">
+        update tbl_member
+        set member_name = #{memberName}
+        where id = #{id}
+    </update>
 </mapper>

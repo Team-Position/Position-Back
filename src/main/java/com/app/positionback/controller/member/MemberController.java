@@ -11,6 +11,7 @@ import com.app.positionback.repository.file.CorporationFileDAO;
 import com.app.positionback.service.corporation.CorporationService;
 import com.app.positionback.service.file.FileService;
 import com.app.positionback.service.member.MemberService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -143,6 +141,15 @@ public class MemberController {
     @GetMapping("/my-page/my-info-kakao-detail")
     public void goToMypageDetail(){
         log.info("이동 레츠고");
+    }
+
+    @PostMapping("/change/name")
+    public void changeName(@RequestParam("memberId") Long memberId, @RequestParam("changedName") String changedName) {
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(memberId);
+        memberDTO.setMemberName(changedName);
+        memberService.changeName(memberDTO.toVO());
+        log.info("작업 끝");
     }
 
 //    @GetMapping("/find-password/{memberId}")

@@ -195,4 +195,9 @@ public class MemberServiceImpl implements MemberService {
     private String getPath(){
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
+
+    @Override
+    public void changeName(MemberVO memberVO) {
+        memberDAO.updateName(memberVO);
+    }
 }
