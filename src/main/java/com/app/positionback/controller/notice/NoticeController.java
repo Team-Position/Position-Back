@@ -130,8 +130,13 @@ public class NoticeController {
 
     // 공고 상세 조회
     @GetMapping("notice-detail")
-    public String getNoticeDetail(@RequestParam("id")Long id, Model model) {
+    public Object  getNoticeDetail(@RequestParam("id")Long id, Model model) {
         MemberVO memberVO = (MemberVO) session.getAttribute("member");
+
+        // 로그인 여부 확인
+        if (memberVO == null) {
+            return new RedirectView("/login");  // 로그인 페이지로 리다이렉트
+        }
 
         ResumeDTO resumeDTO = resumeService.getResumeByMemberId(memberVO.getId());
         NoticeDTO noticeDTO = noticeService.getNoticeById(id);
