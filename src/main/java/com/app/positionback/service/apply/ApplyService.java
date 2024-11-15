@@ -14,4 +14,5 @@ public interface ApplyService {
     public void setApplyStatus(ApplyVO applyVO);
     public void uploadCertificationFile(MultipartFile file, Long applyId) throws IOException;
     public ApplyDTO getApplyById(Long applyId);
+    public void saveApply(ApplyVO applyVO);
 }

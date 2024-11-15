@@ -1430,7 +1430,7 @@ label {
 .-file-down-resume{
     display:flex;
     margin-right: 61px;
-    padding: 4px 4px 4px 6px;
+    padding: 4px 4px 4px 19px;
     color: var(--gray80);
     font-size: 13px;
     line-height: 18px;
@@ -1439,8 +1439,7 @@ label {
 }
 .resume-btn:after {
     position: absolute;
-    top: 5px;
-    right: 106px;
+    top: 29px;
     width: 16px;
     height: 16px;
     background: url(/images/corporation/regist.svg);

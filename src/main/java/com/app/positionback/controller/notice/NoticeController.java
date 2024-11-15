@@ -133,9 +133,22 @@ public class NoticeController {
     public String getNoticeDetail(@RequestParam("id")Long id, Model model) {
         MemberVO memberVO = (MemberVO) session.getAttribute("member");
 
-            ResumeDTO resumeDTO = resumeService.getResumeByMemberId(memberVO.getId());
-            model.addAttribute("resume", resumeDTO);
+        ResumeDTO resumeDTO = resumeService.getResumeByMemberId(memberVO.getId());
+        NoticeDTO noticeDTO = noticeService.getNoticeById(id);
+        FileDTO fileDTO = noticeService.getNoticeFileById(id);
+        FileDTO fileLogo = corporationService.getCorporationFileById(noticeDTO.getCorporationId());
 
+        model.addAttribute("resume", resumeDTO);
+        model.addAttribute("notice", noticeDTO);
+        model.addAttribute("file", fileDTO);
+        model.addAttribute("logoFile", fileLogo);
+        model.addAttribute("member", memberVO);
+        return "matching/matching-detail";
+    }
+
+    // 공고 상세 조회(기업 미리보기)
+    @GetMapping("notice-preview")
+    public String getNoticeCorporationPreview(@RequestParam("id")Long id, Model model) {
 
         NoticeDTO noticeDTO = noticeService.getNoticeById(id);
         FileDTO fileDTO = noticeService.getNoticeFileById(id);
@@ -144,8 +157,7 @@ public class NoticeController {
         model.addAttribute("notice", noticeDTO);
         model.addAttribute("file", fileDTO);
         model.addAttribute("logoFile", fileLogo);
-        model.addAttribute("member", memberVO);
-        return "matching/matching-detail";
+        return "matching/matching-detail-corporation";
     }
 
 //    // 공고 수정 페이지 이동

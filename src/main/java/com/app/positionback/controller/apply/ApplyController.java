@@ -1,5 +1,6 @@
 package com.app.positionback.controller.apply;
 
+import com.app.positionback.domain.apply.ApplyVO;
 import com.app.positionback.domain.member.MemberVO;
 import com.app.positionback.domain.notice.NoticeListDTO;
 import com.app.positionback.service.apply.ApplyService;
@@ -10,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,6 +35,12 @@ public class ApplyController {
     @GetMapping("/my-page/resume-management")
     public String goToResumeManagement() {
         return "my-page/resume-management";
+    }
+
+    @PostMapping("/apply/submit")
+    @ResponseBody
+    public void saveApply(@RequestBody ApplyVO applyVO){
+        applyService.saveApply(applyVO);
     }
 
 }

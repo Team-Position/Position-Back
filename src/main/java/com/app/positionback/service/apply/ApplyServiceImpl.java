@@ -159,6 +159,11 @@ public class ApplyServiceImpl implements ApplyService{
         return applyDTO;
     }
 
+    @Override
+    public void saveApply(ApplyVO applyVO) {
+        applyDAO.saveApply(applyVO);
+    }
+
     private String getPath(){
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }

@@ -52,16 +52,16 @@ document.querySelector(".btn_service").addEventListener("click", function () {
 
 // 스크롤바 내리면 fixed 추가
 // 스크롤 이벤트 리스너 추가
-// window.addEventListener("scroll", function () {
-//     const body = document.getElementById("main");
-//     const header = document.getElementById("header");
-//
-//     // 스크롤 위치가 50px 이상인지 확인
-//     if (window.scrollY > 50) {
-//         body.classList.add("fixed");
-//         header.classList.add("fixed");
-//     } else {
-//         body.classList.remove("fixed");
-//         header.classList.remove("fixed");
-//     }
-// });
+window.addEventListener("scroll", function () {
+    const body = document.getElementById("main");
+    const header = document.getElementById("header");
+
+    // 스크롤 위치가 50px 이상인지 확인
+    if (window.scrollY > 50) {
+        body.classList.add("fixed");
+        header.classList.add("fixed");
+    } else {
+        body.classList.remove("fixed");
+        header.classList.remove("fixed");
+    }
+});

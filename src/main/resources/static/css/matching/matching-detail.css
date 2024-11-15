@@ -31,18 +31,13 @@
 #content {
     position: relative;
     z-index: 1;
-    margin: 0;
+    margin: -5px auto 80px auto;
     padding: 39px 0 40px;
     width: 100%;
     min-height: 2000px;
     background: #f1f3f9;
 }
-#content {
-    position: relative;
-    z-index: 1;
-    margin: 56px auto 80px auto;
-    /* width: 960px; */
-}
+
 .wrap-jview {
     position: relative;
     z-index: 1;
