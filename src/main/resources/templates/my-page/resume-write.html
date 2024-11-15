@@ -28,7 +28,7 @@
                                             <span class="blind">진행률</span>
                                         </div>
                                         <p class="txt">
-                                            <em>석상훈</em>
+                                            <em class="member-name-wrap">석상훈</em>
                                             회원님의<br />이력서가 완성됐어요!
                                         </p>
                                         <ul class="item-list">
@@ -1186,5 +1186,8 @@
             </symbol>
         </svg>
     </body>
+    <script th:inline="javascript">
+        const member = [[${session.member}]];
+    </script>
     <script src="/js/my-page/resume-write.js"></script>
 </html>
