@@ -3053,7 +3053,7 @@
     <script src="/js/main/body.js"></script>
     <script src="/js/main/other-login-header.js"></script>
     <script th:inline="javascript">
-        [[${session.member}]];
+        member = [[${session.member}]];
     </script>
     <script>
         const logoutButton = document.querySelector(".logout")

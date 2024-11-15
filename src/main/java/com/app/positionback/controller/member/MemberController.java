@@ -6,11 +6,13 @@ import com.app.positionback.domain.file.CorporationFileDTO;
 import com.app.positionback.domain.member.MemberDTO;
 //import com.app.positionback.service.member.MemberService;
 import com.app.positionback.domain.member.MemberVO;
+import com.app.positionback.domain.resume.ResumeDTO;
 import com.app.positionback.exception.LoginFailException;
 import com.app.positionback.repository.file.CorporationFileDAO;
 import com.app.positionback.service.corporation.CorporationService;
 import com.app.positionback.service.file.FileService;
 import com.app.positionback.service.member.MemberService;
+import com.app.positionback.service.resume.ResumeService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ import java.util.Optional;
 public class MemberController {
     private final MemberService memberService;
     private final CorporationService corporationService;
+    private final ResumeService resumeService;
     private final HttpSession session;
 
     @GetMapping("/join/member")
@@ -140,8 +143,11 @@ public class MemberController {
     }
 
     @GetMapping("/resume/management")
-    public String goToResumeManagement(Model model) {
-        List<ResumeVO>
+    public String goToResumeManagement(Model model, HttpSession session) {
+        MemberVO member = (MemberVO) session.getAttribute("member");
+        List<ResumeDTO> resumes = resumeService.getAllByMemberId(member.getId());
+
+        model.addAttribute("resumes", resumes);
         return "my-page/resume-management";
     }
 

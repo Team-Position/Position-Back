@@ -54,39 +54,6 @@
                                         </li>
                                     </ul>
                                     <ul class="control-group">
-                                        <li>
-                                            <a
-                                                href="/zf-user/member/suggest/status-list"
-                                                class="BtnType SizeM resume-btn common ga-event"
-                                                >스크랩한 공고</a
-                                            >
-                                            <span class="badge-count">0</span>
-                                        </li>
-                                        <!-- <li>
-                                            <a
-                                                href="/zf-user/member/resume-manage/lookup-status"
-                                                class="BtnType SizeM resume-btn common ga-event"
-                                                data-layer="lookup-history"
-                                                >이력서 열람 현황</a
-                                            >
-                                            <span class="badge-count">0</span>
-                                        </li> -->
-                                        <li>
-                                            <button
-                                                type="button"
-                                                class="BtnType SizeM resume-btn common btn-layer-open ga-event"
-                                            >
-                                                입사 지원 내역
-                                            </button>
-                                            <span class="badge-count">0</span>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="/zf-user/persons/scrap-recruit"
-                                                class="BtnType SizeM resume-btn my-link ga-event"
-                                                >내 공고활동 보러가기</a
-                                            >
-                                        </li>
                                         <li class="control">
                                             <button
                                                 type="button"
@@ -603,7 +570,10 @@
         </svg>
     </body>
     <script th:inline="javascript">
-        resumes = [[${resumes}]];
+        const resumes = [[${resumes}]];
+        const btnToggleGnb = document.querySelector(".btn-toggle-gnb");
+        const btnExpands = document.querySelectorAll(".btn-expand");
+        const gnbLists = document.querySelectorAll(".gnb li");
     </script>
     <script src="/js/my-page/my-page-header.js"></script>
     <script src="/js/my-page/resume-management.js"></script>
