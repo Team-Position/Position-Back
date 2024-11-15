@@ -9,10 +9,15 @@
         />
         <link rel="stylesheet" href="/css/matching/matching-main.css" />
         <link rel="stylesheet" href="/css/main.css" />
+        <link
+                rel="stylesheet"
+                href="/css/main/other-logout-header.css"
+        />
         <title>매칭 페이지</title>
     </head>
-    <body>
-        <div id="position-section" class="layout-wide has-banner">
+    <body id="main">
+    <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    <div id="position-section" class="layout-wide has-banner">
             <div id="position-wrap">
                 <div id="content">
                     <div class="wrap-title-recruit">
@@ -569,15 +574,12 @@
                                             <span>
                                                 <span class="count"
                                                     ><span id="search-count-txt"
-                                                        >선택된 </span
-                                                    ><b
-                                                        id="sp-preview-total-cnt"
-                                                        >362</b
-                                                    >건</span
-                                                >
+                                                        >검색된 결과 </span
+                                                    >
+                                                </span>
                                                 <span id="search-btn-txt"
-                                                    >검색하기</span
-                                                >
+                                                    >총 </span
+                                                ><b id="sp-preview-total-cnt">0</b>건
                                             </span>
                                             <span class="ripple drop"></span>
                                         </button>
@@ -1329,4 +1331,5 @@
     <script src="/js/matching/main/matching-service.js"></script>
     <script src="/js/matching/main/matching-layout.js"></script>
     <script src="/js/matching/main/matching-event.js"></script>
+    <script src="/js/main/other-logout-header.js"></script>
 </html>

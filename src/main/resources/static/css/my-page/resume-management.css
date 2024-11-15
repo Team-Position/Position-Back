@@ -120,7 +120,7 @@
 }
 
 .resume-item .option-list li.career:before {
-    background: url('/static/images/my-page/bag.svg') no-repeat center center;
+    background: url('/images/my-page/bag.svg') no-repeat center center;
 }
 
 .resume-item .option-list li:before {
@@ -146,11 +146,11 @@
 }
 
 .resume-item .option-list li.jobtype:before {
-    background: url('/static/images/my-page/equipment.svg') no-repeat center center;
+    background: url('/images/my-page/equipment.svg') no-repeat center center;
 }
 
 .resume-item .option-list li.income:before {
-    background: url('/static/images/my-page/won.svg') no-repeat center center;
+    background: url('/images/my-page/won.svg') no-repeat center center;
 }
 
 .resume-item .control-group {
@@ -256,7 +256,7 @@
     color: var(--gray100);
     font-size: 14px;
     line-height: 20px;
-    background: url('/static/images/my-page/refresh.svg') no-repeat left center;
+    background: url('/images/my-page/refresh.svg') no-repeat left center;
 }
 .resume-item .menu-box {
     position: absolute;
@@ -267,7 +267,7 @@
     width: 24px;
     height: 24px;
     border-radius: 4px;
-    background: url('/static/images/my-page/three-spot.svg') no-repeat center center / 24px 24px;
+    background: url('/images/my-page/three-spot.svg') no-repeat center center / 24px 24px;
 }
 .resume-item .menu-box .more-btn.on, .resume-item .menu-box .more-btn:hover {
     background-color: #f4f6fa;
@@ -354,7 +354,7 @@
     width: 17px;
     height: 22px;
     vertical-align: bottom;
-    background: center url('/static/images/my-page/download.svg') no-repeat;
+    background: center url('/images/my-page/download.svg') no-repeat;
     content: "";
 }
 .resume-list-wrap .desc .BtnType:hover {
@@ -420,7 +420,7 @@
 }
 
 .resume-list-wrap .desc .BtnType.url-btn:before {
-    background-image: url('/static/images/my-page/url.svg');
+    background-image: url('/images/my-page/url.svg');
 }
 .resume-list-wrap .desc .BtnType[data-action="write"] {
     position: relative;
@@ -469,7 +469,7 @@
     line-height: 20px;
     text-align: left;
     vertical-align: top;
-    background: var(--white) url('/static/images/my-page/drop-down.svg') no-repeat right 12px top 50%;
+    background: var(--white) url('/images/my-page/drop-down.svg') no-repeat right 12px top 50%;
     cursor: pointer;
     -webkit-appearance: none;
 }
@@ -544,7 +544,7 @@
     color: var(--blue90);
     font-size: 15px;
     font-weight: bold;
-    background: url('/static/images/my-page/next-button.svg') no-repeat right center;
+    background: url('/images/my-page/next-button.svg') no-repeat right center;
 }
 
 .resume-item .InpBox.position-select {
@@ -575,7 +575,7 @@
     padding: 0 24px 0 0;
     height: 24px;
     font-size: 14px;
-    background: url('/static/images/my-page/drop-down2.svg') right center no-repeat;
+    background: url('/images/my-page/drop-down2.svg') right center no-repeat;
 }
 
 .resume-item .memo-box.empty {
@@ -701,7 +701,7 @@
     margin-right: 15px;
     width: 20px;
     height: 20px;
-    background: url('/static/images/my-page/note.svg') 0 0 no-repeat;
+    background: url('/images/my-page/note.svg') 0 0 no-repeat;
     content: "";
 }
 
@@ -739,7 +739,7 @@
     margin-left: 3px;
     width: 16px;
     height: 18px;
-    background: url('/static/images/my-page/next-arrow2.svg') no-repeat center center;
+    background: url('/images/my-page/next-arrow2.svg') no-repeat center center;
     transform: translateY(3px);
     content: "";
 }

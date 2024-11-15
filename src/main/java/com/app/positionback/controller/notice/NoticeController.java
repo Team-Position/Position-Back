@@ -2,10 +2,13 @@ package com.app.positionback.controller.notice;
 
 import com.app.positionback.domain.corporation.CorporationVO;
 import com.app.positionback.domain.file.FileDTO;
+import com.app.positionback.domain.member.MemberVO;
 import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.notice.NoticeListDTO;
+import com.app.positionback.domain.resume.ResumeDTO;
 import com.app.positionback.service.corporation.CorporationService;
 import com.app.positionback.service.notice.NoticeService;
+import com.app.positionback.service.resume.ResumeService;
 import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +30,7 @@ import java.util.Arrays;
 public class NoticeController {
     private final NoticeService noticeService;
     private final CorporationService corporationService;
+    private final ResumeService resumeService;
     private final HttpSession session;
 
 //    공고 작성 페이지 이동
@@ -127,6 +131,25 @@ public class NoticeController {
     // 공고 상세 조회
     @GetMapping("notice-detail")
     public String getNoticeDetail(@RequestParam("id")Long id, Model model) {
+        MemberVO memberVO = (MemberVO) session.getAttribute("member");
+
+        ResumeDTO resumeDTO = resumeService.getResumeByMemberId(memberVO.getId());
+        NoticeDTO noticeDTO = noticeService.getNoticeById(id);
+        FileDTO fileDTO = noticeService.getNoticeFileById(id);
+        FileDTO fileLogo = corporationService.getCorporationFileById(noticeDTO.getCorporationId());
+
+        model.addAttribute("resume", resumeDTO);
+        model.addAttribute("notice", noticeDTO);
+        model.addAttribute("file", fileDTO);
+        model.addAttribute("logoFile", fileLogo);
+        model.addAttribute("member", memberVO);
+        return "matching/matching-detail";
+    }
+
+    // 공고 상세 조회(기업 미리보기)
+    @GetMapping("notice-preview")
+    public String getNoticeCorporationPreview(@RequestParam("id")Long id, Model model) {
+
         NoticeDTO noticeDTO = noticeService.getNoticeById(id);
         FileDTO fileDTO = noticeService.getNoticeFileById(id);
         FileDTO fileLogo = corporationService.getCorporationFileById(noticeDTO.getCorporationId());
@@ -134,9 +157,9 @@ public class NoticeController {
         model.addAttribute("notice", noticeDTO);
         model.addAttribute("file", fileDTO);
         model.addAttribute("logoFile", fileLogo);
-        return "matching/matching-detail";
+        return "matching/matching-detail-corporation";
     }
-//
+
 //    // 공고 수정 페이지 이동
 //    @GetMapping("corporation-login-main-update-posting/{id}")
 //    public String goToUpdateNotice(Long id, Model model) {
