@@ -31,18 +31,13 @@
 #content {
     position: relative;
     z-index: 1;
-    margin: 0;
+    margin: -5px auto 80px auto;
     padding: 39px 0 40px;
     width: 100%;
     min-height: 2000px;
     background: #f1f3f9;
 }
-#content {
-    position: relative;
-    z-index: 1;
-    margin: 56px auto 80px auto;
-    /* width: 960px; */
-}
+
 .wrap-jview {
     position: relative;
     z-index: 1;
@@ -1669,7 +1664,10 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.box-choice .area-inpsel > select {
+.box-choice .area-inpsel > p {
+    display: flex;
+    text-align: center;
+    align-items: center;
     padding-left: 16px;
     width: 100%;
     height: 48px;
@@ -1678,8 +1676,8 @@ body {
     color: #222;
     font-size: 15px;
     background: none;
-    background: url(//www.saraminimage.co.kr/sri/common/ico/ico_select_arr.png)
-        no-repeat 100% 6px;
+    /*background: url(//www.saraminimage.co.kr/sri/common/ico/ico_select_arr.png)*/
+    /*    no-repeat 100% 6px;*/
     cursor: pointer;
     -webkit-appearance: none;
 }

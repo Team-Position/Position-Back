@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.positionback.mapper.payment.PaymentMapper">
+    <insert id="insertPayment">
+        insert into tbl_payment (payment_amount, payment_status, payment_method, notice_id, member_id)
+        values (#{paymentAmount}, #{paymentStatus}, #{paymentMethod}, #{noticeId}, #{memberId})
+    </insert>
+</mapper>
+
+

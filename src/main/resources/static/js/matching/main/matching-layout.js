@@ -16,25 +16,32 @@ const showListScroll = ({notices, pagination}) =>{
         notices.pop();
     }
     notices.forEach((notice) => {
+        // 마감일까지 남은 일수 계산
+        const daysLeft = calculateDaysLeft(notice.noticeEndDate); // noticeWorkEndDate를 사용하여 남은 일수 계산
         const fileDTO = notice.fileDTO;
         const logoUrl =`/file/display?fileName=${fileDTO.filePath}/${fileDTO.fileName}`;
 
         text += `
         <li class="item">
-            <a href="" target="-blank" title="${notice.noticeTitle}">
+            <a href="/corporation/notice-detail?id=${notice.id}" target="-blank" title="${notice.noticeTitle}">
                 <span class="logo">
                     <img src="${logoUrl}" alt="${notice.corporationName}">
                 </span>
                 <strong class="tit">${notice.noticeTitle}</strong>
                 <span class="corp">${notice.corporationName}</span>
                 <ul class="desc">
-                    <li class="company-local ellipsis">${notice.corporationAddress}</li>
-                    <li>${notice.noticeCareer}</li>
-                    <li>${notice.noticeEducation}
-                        <span class="above">이상</span>
+                    <li class="company-local ellipsis">${notice.corporationAddress} | </li>
+                    <li> &nbsp; ${notice.noticeEducation}
+                        <span class="above">${notice.noticeEducation !== '무관' ? '이상' : ''}</span>
                     </li>
                 </ul>
-                <span class="date">D-2</span>
+                 ${
+                    daysLeft > 0
+                        ? `<span class="date">D-${daysLeft}</span>`
+                        : daysLeft === 0
+                            ? `<span class="date">D-DAY</span>`
+                            : ""
+                        }
             </a>
             <button type="button" class="btn-scrap scrap-${notice.id}" title="스크랩">
                 <img src="//www.saraminimage.co.kr/common/bul_sri_star.png" alt="스크랩">
@@ -47,26 +54,33 @@ const showListScroll = ({notices, pagination}) =>{
 
 let text=``;
 top4Notices.notices.forEach((notice) =>{
+    // 마감일까지 남은 일수 계산
+    const daysLeft = calculateDaysLeft(notice.noticeEndDate); // noticeWorkEndDate를 사용하여 남은 일수 계산
 
     const fileDTO = notice.fileDTO;
     const logoUrl =`/file/display?fileName=${fileDTO.filePath}/${fileDTO.fileName}`;
 
     text+=`
     <li class="item">
-            <a href="" target="-blank" title="${notice.noticeTitle}">
+            <a href="/corporation/notice-detail?id=${notice.id}" target="-blank" title="${notice.noticeTitle}">
                 <span class="logo">
                     <img src="${logoUrl}" alt="${notice.corporationName}">
                 </span>
                 <strong class="tit">${notice.noticeTitle}</strong>
                 <span class="corp">${notice.corporationName}</span>
                 <ul class="desc">
-                    <li class="company-local ellipsis">${notice.corporationAddress}</li>
-                    <li>${notice.noticeCareer}</li>
-                    <li>${notice.noticeEducation}
-                        <span class="above">이상</span>
+                    <li class="company-local ellipsis">${notice.corporationAddress} | </li>
+                    <li> &nbsp; ${notice.noticeEducation}
+                        <span class="above">${notice.noticeEducation !== '무관' ? '이상' : ''}</span>
                     </li>
                 </ul>
-                <span class="date">D-2</span>
+                ${
+                    daysLeft > 0
+                        ? `<span class="date">D-${daysLeft}</span>`
+                        : daysLeft === 0
+                            ? `<span class="date">D-DAY</span>`
+                            : ""
+                }
             </a>
             <button type="button" class="btn-scrap scrap-${notice.id}" title="스크랩">
                 <img src="//www.saraminimage.co.kr/common/bul_sri_star.png" alt="스크랩">
@@ -150,8 +164,16 @@ function updateTotalAndFetchData() {
     // 데이터를 가져오고 total 값을 업데이트
     matchingService.getList(globalThis.page, formData, showListScroll);
 }
+function calculateDaysLeft(endDate) {
+    const today = new Date();
+    const end = new Date(endDate);
 
+    // 마감일까지의 차이를 밀리초로 계산
+    const difference = end - today;
 
+    // 차이를 일수로 계산
+    return Math.ceil(difference / (1000 * 60 * 60 * 24));
+}
 // const searchBtn = document.getElementById("search-btn");
 // // 버튼 클릭시마다 formData 새로 생성
 // searchBtn.addEventListener("click", () => {
