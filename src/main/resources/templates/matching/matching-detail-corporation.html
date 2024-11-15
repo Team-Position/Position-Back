@@ -10,15 +10,13 @@
         <link rel="stylesheet" href="/css/main.css" />
         <link
                 rel="stylesheet"
-                href="/css/main/other-logout-header.css"
+                href="/css/corporation/corporation-login-header.css"
         />
         <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a1e0bdeafd8a8a27e472648b06cdfefc&libraries=services"></script>
-        <script src="https://js.bootpay.co.kr/bootpay-5.0.1.min.js" type="application/javascript"></script>
-
-        <title>매칭 상세보기</title>
+        <title>매칭 상세보기(기업)</title>
     </head>
-    <body id="main">
-    <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    <body>
+    <header th:replace="~{/corporation/corporation-login-header :: #header}"></header>
             <div id="position-section">
                 <div id="position-wrap">
                     <div id="content">
@@ -722,232 +720,7 @@
                 </div>
             </div>
 
-            <div class="wrap-quick-apply-layer" style="display: none">
-                <div class="quick_apply_layer_frame">
-                    <div class="content">
-                        <div class="app">
-                            <div class="wrap-global-apply">
-                                <!-- 모달 헤더 -->
-                                <div class="head-apply">
-                                    <h2 class="title">
-                                        <span class="company-name" th:text="${notice.corporationName}">
-                                            (주)도그지어
-                                        </span>
-                                        입사지원
-                                    </h2>
-                                    <h3 class="title-apply">
-                                        <a href="" th:text="${notice.noticeTitle}">
-                                            [dogsear] 광고 캠페인 기획 AE 채용
-                                        </a>
-                                    </h3>
-                                    <div class="desc">
-                                        <span th:text="${notice.noticeEducation}"> 학력무관</span>
-                                        <span th:text="${notice.corporationAddress}"> 서울</span>
-                                    </div>
-                                    <span class="badges"></span>
-                                </div>
-                                <!--  모달 바디 -->
-                                <div class="area-scroll">
-                                    <div class="box-miss-notice">
-                                        <ul class="notice">
-                                            <!----><!---->
-                                        </ul>
-                                    </div>
-                                    <div class="box-choice">
-                                        <h4 class="row-title">
-                                            <label for="inpApply">
-                                                지원부문
-                                            </label>
-                                        </h4>
-                                        <div class="area-inpsel">
-                                            <p id="inpApply" th:text="${notice.noticeJobCategoryName}">
 
-                                            </p>
-                                        </div>
-                                        <em
-                                            class="msgInvalid"
-                                            style="display: none"
-                                        ></em>
-                                    </div>
-                                    <!----><!----><!---->
-                                    <div class="box-round-shadow">
-                                        <div class="box-head">
-                                            선택된 이력서
-                                            <button type="button" class="btn" id="change-resume">
-                                                <span th:text="${resume != null ? '이력서 변경' : '이력서 작성'}"></span>
-                                                <svg
-                                                    data-v-48d32dce=""
-                                                    viewBox="0 0 16 16"
-                                                    class="ic"
-                                                >
-                                                    <path
-                                                        d="M6 13.657L11.657 8 6 2.343"
-                                                        stroke="#444"
-                                                        fill="none"
-                                                        fill-rule="evenodd"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                    ></path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div class="box-inner">
-                                            <div class="row">
-                                                <p class="date" th:text="${resume != null ? resume.createdDate + ' 수정' : ''}">
-                                                    2024.10.07 (월) 10:24 저장
-                                                </p>
-                                                <strong class="title-resume"
-                                                    ><a href=" " th:text="${resume != null ? resume.resumeTitle : '작성된 이력서가 없습니다.'}"></a>
-                                                </strong>
-                                                <div
-                                                    id="resume-files"
-                                                    class="add-files"
-                                                >
-                                                    <svg
-                                                        data-v-04f3a60d=""
-                                                        data-v-2af7fb3d=""
-                                                        width="16"
-                                                        height="16"
-                                                        viewBox="0 0 16 16"
-                                                        class="ic"
-                                                    >
-                                                        <g
-                                                            data-v-04f3a60d=""
-                                                            fill="none"
-                                                            fill-rule="evenodd"
-                                                        >
-                                                            <g
-                                                                data-v-04f3a60d=""
-                                                                fill="#AFBAC8"
-                                                                fill-rule="nonzero"
-                                                            >
-                                                                <path
-                                                                    data-v-04f3a60d=""
-                                                                    d="M9.5.5c1.054 0 1.918.816 1.995 1.85l.005.15v3c1.105 0 2 .895 2 2v5c0 1.105-.895 2-2 2h-9c-1.054 0-1.918-.816-1.995-1.85L.5 12.5v-10C.5 1.446 1.316.582 2.35.505L2.5.5h7zm.998 1.973L9.72 3.772c-.244.406-.664.68-1.13.728H3.567c-.474 0-.917-.224-1.198-.598l-.088-.13-.779-1.298L1.5 2.5v10c0 .513.386.936.883.993l.117.007 3.268.001c-.17-.294-.268-.636-.268-1.001v-5c0-1.105.895-2 2-2h3v-3l-.002-.027zM11.5 6.5h-4c-.552 0-1 .448-1 1v5c0 .552.448 1 1 1h4c.552 0 1-.448 1-1v-5c0-.552-.448-1-1-1zm-.5 4c.276 0 .5.224.5.5 0 .245-.177.45-.41.492L11 11.5H9c-.276 0-.5-.224-.5-.5 0-.245.177-.45.41-.492L9 10.5h2zm0-2c.276 0 .5.224.5.5 0 .245-.177.45-.41.492L11 9.5H8c-.276 0-.5-.224-.5-.5 0-.245.177-.45.41-.492L8 8.5h3zm-1.5-7h-7c-.132 0-.258.026-.373.072l1.01 1.685c.076.126.201.218.343.243h4.954c.146 0 .284-.064.378-.172l.05-.07 1.011-1.686c-.08-.033-.167-.055-.256-.065L9.5 1.5z"
-                                                                    transform="translate(-92 -457) translate(52 170) translate(24 150) translate(0 56) translate(16 37) translate(0 8) translate(0 36) translate(1.5 .5)"
-                                                                ></path>
-                                                            </g>
-                                                        </g>
-                                                    </svg>
-                                                    <span th:text="${resume != null ? '대표 이력서 입니다.' : '이력서를 작성해주세요'}"></span>
-                                                </div>
-                                            </div>
-                                            <p
-                                                class="no-result"
-                                                style="display: none"
-                                            >
-                                                대표 이력서 입니다.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="box-round-shadow box-files">
-                                        <div class="box-head">
-                                            첨부파일 0건
-                                            <button type="button" class="btn">
-                                                파일추가
-                                                <svg class="ic">
-                                                    <g
-                                                        fill="#444"
-                                                        fill-rule="evenodd"
-                                                    >
-                                                        <rect
-                                                            width="1"
-                                                            height="11"
-                                                            x="7"
-                                                            y="2"
-                                                            rx=".5"
-                                                        ></rect>
-                                                        <rect
-                                                            width="11"
-                                                            height="1"
-                                                            x="2"
-                                                            y="7"
-                                                            rx=".5"
-                                                        ></rect>
-                                                    </g>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <p
-                                            class="txt-case-include"
-                                            style="display: none"
-                                        >
-                                            사람인 인적성검사가 첨부된 이력서를
-                                            선호하는 기업입니다.
-                                        </p>
-                                        <div class="box-inner">
-                                            <p class="no-result">
-                                                첨부된 파일이 없습니다.
-                                            </p>
-                                        </div>
-                                    </div> -->
-                                    <!---->
-                                    <div class="box-toggle">
-                                        <!---->
-                                        <p class="desc">
-                                            제출서류는 90일까지 지원기업에게
-                                            제공됩니다.
-                                        </p>
-                                        <p class="desc">
-                                            채용절차법상, 사람인 홈페이지로
-                                            제출한 경우이므로 채용 서류는 별도로
-                                            반환하지 않으며, 구인사는 채용이
-                                            종료되는 경우 개인정보보호법을
-                                            준수하여 채용 서류를 즉시
-                                            파기합니다.
-                                        </p>
-                                        <!---->
-                                    </div>
-                                    <div
-                                        class="box-toast"
-                                        style="display: none"
-                                    ></div>
-                                </div>
-                                <!-- 모달 버튼 -->
-                                <div class="area-btns">
-                                    <button
-                                        class="btn kakao-pixel-event meta-pixel-event"
-                                    >
-                                        <span class="name"></span>
-                                        입사지원
-                                    </button>
-                                </div>
-                                <button
-                                    type="button"
-                                    class="btn-apply-form-close"
-                                >
-                                    <svg
-                                        data-v-22e4f8a9=""
-                                        data-v-14f0c143=""
-                                        viewBox="0 0 24 24"
-                                        class="ic"
-                                    >
-                                        <title>레이어 닫기</title>
-                                        <g
-                                            data-v-22e4f8a9=""
-                                            stroke="#444"
-                                            stroke-width="2"
-                                            fill="none"
-                                            fill-rule="evenodd"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        >
-                                            <path
-                                                data-v-22e4f8a9=""
-                                                d="M4.929 5L12 12.071 19.071 5"
-                                            ></path>
-                                            <path
-                                                data-v-22e4f8a9=""
-                                                d="M4.929 19L12 11.929 19.071 19"
-                                            ></path>
-                                        </g>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         <!-- 아이콘들 -->
         <svg xmlns="http://www.w3.org/2000/svg">
@@ -1158,15 +931,6 @@
                 ></rect>
             </symbol>
         </svg>
-            <input type="hidden" class="layout"
-                   th:data-work-id="${notice.id}"
-                   th:data-member-id="${member.id}"
-                   th:data-profile-name="${member.memberName}"
-                   th:data-profile-phone="${member.memberPhone}"
-                   th:data-profile-email="${member.memberEmail != null ? member.memberEmail : member.memberKakaoEmail}"
-                   th:data-work-title="${notice.noticeTitle}"
-                   th:data-resume-id="${resume.id}"
-            >
 
     </body>
     <script th:inline="javascript">
@@ -1180,8 +944,8 @@
         img.src=`/file/display?fileName=${fileDTO.filePath}/${fileDTO.fileName}`;
         logoImg.src =`/file/display?fileName=${logoFile.filePath}/${logoFile.fileName}`;
     </script>
-    <script src="/js/matching/matching-detail.js"></script>
+    <script src="/js/matching/matching-detail-corporation.js"></script>
     <script src="/js/matching/detail/detail-layout.js"></script>
-    <script src="/js/matching/detail/detail-event.js"></script>
-    <script src="/js/main/other-logout-header.js"></script>
+    <script src="/js/matching/detail/detail-corporation-event.js"></script>
+    <script src="/js/corporation/corporation-login-header.js"></script>
 </html>
