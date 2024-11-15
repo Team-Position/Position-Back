@@ -25,4 +25,5 @@ public interface MemberService {
     public void updateKakaoMember(MemberVO memberVO);
     public Long getLastInsertId();
     public Optional<MemberVO> getMember(Long id);
+    public void changeName(MemberVO memberVO);
 }

@@ -24,6 +24,7 @@ public class MemberVO implements Serializable {
     private String memberPhone;
     private String memberKakaoProfileUrl;
     private String memberKakaoEmail;
+    private String memberBirthDay;
     private String createdDate;
     private String updatedDate;
 }

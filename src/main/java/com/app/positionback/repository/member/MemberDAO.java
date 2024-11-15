@@ -47,4 +47,5 @@ public class MemberDAO {
     public void incrementComplaintCount(Long id){
         memberMapper.incrementComplainCount(id);
     }
+    public void updateName(MemberVO memberVO){ memberMapper.updateName(memberVO); }
 }

@@ -18,4 +18,7 @@ public interface MemberMapper {
     public Long selectLastInsertId();
     public Optional<MemberVO> selectById(Long id);
     public void incrementComplainCount(Long id);
+    public void updateName(MemberVO memberVO);
+    public void updateBirthDay(MemberVO memberVO);
+    public void updateAddress(MemberVO memberVO);
 }

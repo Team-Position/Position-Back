@@ -26,6 +26,7 @@ public class MemberDTO {
     private String memberPhone;
     private String memberKakaoProfileUrl;
     private String memberKakaoEmail;
+    private String memberBirthDay;
     private String memberLoginType;
     private String createdDate;
     private String updatedDate;
@@ -50,7 +51,7 @@ public class MemberDTO {
 
     public MemberVO toVO() {
         return new MemberVO(id, memberName,memberEmail,memberPassword,memberAddress,memberAddressDetail,memberNickname,memberStatus,
-                memberComplainCount,memberPhone,memberKakaoProfileUrl,memberKakaoEmail,createdDate,updatedDate);
+                memberComplainCount,memberPhone,memberKakaoProfileUrl,memberKakaoEmail,memberBirthDay,createdDate,updatedDate);
     }
 }
 
