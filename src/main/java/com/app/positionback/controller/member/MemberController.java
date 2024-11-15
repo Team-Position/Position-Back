@@ -118,7 +118,7 @@ public class MemberController {
 
     @GetMapping("/")
     public String goToMain(MemberDTO memberDTO, HttpSession session){
-        session.invalidate();
+//        session.invalidate();
         return "main/body";
     }
 }
