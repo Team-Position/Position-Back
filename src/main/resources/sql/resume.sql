@@ -1,4 +1,4 @@
-# 이력서 테이블
+ # 이력서 테이블
 create table tbl_resume(
     id bigint unsigned auto_increment primary key ,
     member_id bigint unsigned not null,

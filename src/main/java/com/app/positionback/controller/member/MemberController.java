@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -134,6 +135,17 @@ public class MemberController {
         } else {
             return "login/login-combine";
         }
+    }
+
+    @GetMapping("/resume/management")
+    public String goToResumeManagement(Model model) {
+        List<ResumeVO>
+        return "my-page/resume-management";
+    }
+
+    @GetMapping("/resume/write")
+    public String goToResumeWrite() {
+        return "my-page/resume-write";
     }
 
     @GetMapping("/my-page/my-info-kakao-detail")

@@ -4,11 +4,11 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>My Page</title>
-        <link rel="stylesheet" href="/static/css/main.css" />
-        <link rel="stylesheet" href="/static/css/my-page/my-page-header.css" />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/my-page/my-page-header.css" />
     </head>
     <body id="container" class="layout-home vsc-initialized">
-        <header id="position-header" class="position-header">
+        <header id="position-header" class="position-header" th:fragment="my-page-header">
             <div class="wrap-top-btns">
                 <!-- <div class="rewards-point">
                     <a
@@ -1422,5 +1422,5 @@
             </symbol>
         </svg>
     </body>
-    <script src="/static/js/my-page/my-page-header.js"></script>
+    <script src="/js/my-page/my-page-header.js"></script>
 </html>
