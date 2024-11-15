@@ -3,7 +3,6 @@ create table tbl_apply(
         id bigint unsigned auto_increment primary key,
         notice_id bigint unsigned not null,
         resume_id bigint unsigned not null ,
-        apply_type varchar(255) not null,  #지원 부문
         apply_status varchar(255) default '지원 완료',
         created_date datetime default current_timestamp,
         updated_date datetime default  current_timestamp,
@@ -15,6 +14,8 @@ create table tbl_apply(
 
 select *
 from tbl_apply;
+
+alter table tbl_apply drop column apply_type;
 
 ALTER TABLE tbl_apply
     ADD COLUMN created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -47,7 +48,6 @@ select
     m.member_email,
     m.member_nickname,
     a.id as apply_id,
-    a.apply_type ,
     a.apply_status as apply_status,
     a.created_date,
     a.updated_date,

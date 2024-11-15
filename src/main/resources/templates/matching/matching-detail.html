@@ -1161,6 +1161,7 @@
                    th:data-profile-phone="${member.memberPhone}"
                    th:data-profile-email="${member.memberEmail != null ? member.memberEmail : member.memberKakaoEmail}"
                    th:data-work-title="${notice.noticeTitle}"
+                   th:data-resume-id="${resume.id}"
             >
 
     </body>
@@ -1229,6 +1230,7 @@
             const profilePhone = document.querySelector(".layout").getAttribute("data-profile-phone");
             const profileEmail = document.querySelector(".layout").getAttribute("data-profile-email");
             const workTitle = document.querySelector(".layout").getAttribute("data-work-title");
+            const resumeId = document.querySelector(".layout").getAttribute("data-resume-id");
             // const workPrice = document.querySelector(".work-price .price-detail").textContent.replace("원", "").trim();
             // const workTitle = document.querySelector(".title").textContent;
 
@@ -1269,8 +1271,32 @@
             })
                 .then(async (response) => {
                     console.log("결제 응답:", response); // 결제 성공 응답 로그 출력
-                    // 결제 성공 시 서버에 데이터 전송
-                    // await completePayment(workId, memberProfileId);
+                    const paymentData = {
+                        paymentStatus: response.data.status_locale,
+                        paymentMethod: response.data.pg,
+                        paymentAmount: response.data.price,
+                        noticeId: workId,
+                        memberId: memberProfileId
+                    };
+                    // 첫 번째 요청: 결제 정보 저장
+                    await fetch("/payment/complete", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(paymentData)
+                    });
+
+                    // 두 번째 요청: 지원 정보 저장
+                    const applyData = {
+                        noticeId: workId,
+                        resumeId: resumeId,  // resumeId 값 설정
+                    };
+
+                    await fetch("/apply/submit", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(applyData)
+                    });
+
                     alert("결제가 성공적으로 완료되었습니다.");
                     window.location.href = `/my-page`;
                 })
@@ -1279,6 +1305,18 @@
                     alert("결제 중 오류가 발생했습니다. 다시 시도해주세요.");
                 });
         });
+        //         .then(async (response) => {
+        //             console.log("결제 응답:", response); // 결제 성공 응답 로그 출력
+        //             // 결제 성공 시 서버에 데이터 전송
+        //             // await completePayment(workId, memberProfileId);
+        //             alert("결제가 성공적으로 완료되었습니다.");
+        //             window.location.href = `/my-page`;
+        //         })
+        //         .catch((error) => {
+        //             console.error("결제 요청 중 오류 발생:", error.message);
+        //             alert("결제 중 오류가 발생했습니다. 다시 시도해주세요.");
+        //         });
+        // });
 
         // // 결제 완료 시 서버로 데이터 전송 함수
         // async function completePayment(workId, memberProfileId) {

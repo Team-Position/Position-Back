@@ -90,4 +90,9 @@
         where apply_id = #{applyId}
     </select>
 
+    <insert id="insertApply">
+        insert into tbl_apply (notice_id, resume_id,apply_status)
+        values (#{noticeId},#{resumeId}, '지원 완료')
+    </insert>
+
 </mapper>
