@@ -53,6 +53,12 @@ document.querySelector(".meta-pixel-event").addEventListener("click", () => {
     console.log("profilePhone:", profilePhone);
     console.log("profileEmail:", profileEmail);
 
+    // 이력서가 없는 경우 경고창을 띄우고 결제 요청 중지
+    if (!resumeId) {
+        alert("이력서를 작성해야 지원할 수 있습니다.");
+        return;
+    }
+
     Bootpay.requestPayment({
         application_id: "66c6a758cc5274a3ac3fc099",
         price: 100,
