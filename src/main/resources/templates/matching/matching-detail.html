@@ -705,13 +705,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a
-                                                href=""
-                                                class="btn-more ga-data-layer"
-                                                ><span
-                                                    >기업정보 전체보기</span
-                                                ></a
-                                            >
+
                                         </div>
                                     </div>
                                     <div class="jv-ads bottom-nest"></div>
@@ -772,7 +766,7 @@
                                     <!----><!----><!---->
                                     <div class="box-round-shadow">
                                         <div class="box-head">
-                                            선택된 이력서
+                                            <span th:text="${resume != null ? '선택된 이력서' : '대표 이력서가 없습니다'}"></span>
                                             <button type="button" class="btn" id="change-resume">
                                                 <span th:text="${resume != null ? '이력서 변경' : '이력서 작성'}"></span>
                                                 <svg
@@ -791,7 +785,7 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <div class="box-inner">
+                                        <div class="box-inner" th:if="${resume != null}">
                                             <div class="row">
                                                 <p class="date" th:text="${resume != null ? resume.createdDate + ' 수정' : ''}">
                                                     2024.10.07 (월) 10:24 저장
@@ -898,10 +892,7 @@
                                         </p>
                                         <!---->
                                     </div>
-                                    <div
-                                        class="box-toast"
-                                        style="display: none"
-                                    ></div>
+
                                 </div>
                                 <!-- 모달 버튼 -->
                                 <div class="area-btns">
@@ -1165,8 +1156,8 @@
                    th:data-profile-phone="${member.memberPhone}"
                    th:data-profile-email="${member.memberEmail != null ? member.memberEmail : member.memberKakaoEmail}"
                    th:data-work-title="${notice.noticeTitle}"
-                   th:data-resume-id="${resume.id}"
-            >
+                   th:data-resume-id="${resume != null && resume.id != null ? resume.id : ''}"
+            />
 
     </body>
     <script th:inline="javascript">
