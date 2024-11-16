@@ -138,7 +138,7 @@ public class NoticeController {
             return new RedirectView("/login");  // 로그인 페이지로 리다이렉트
         }
 
-        ResumeDTO resumeDTO = resumeService.getResumeByMemberId(memberVO.getId());
+        ResumeDTO resumeDTO = resumeService.getRepresentativeByMemberId(memberVO.getId());
         NoticeDTO noticeDTO = noticeService.getNoticeById(id);
         FileDTO fileDTO = noticeService.getNoticeFileById(id);
         FileDTO fileLogo = corporationService.getCorporationFileById(noticeDTO.getCorporationId());
