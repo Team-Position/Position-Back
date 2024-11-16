@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.positionback.mapper.resume.ResumeMapper">
-    <select id="selectByMemberId">
+    <select id="selectResumeById">
         select id, member_id,education_id,job_categoryC_id,resume_status, resume_title, created_date, updated_date
         from tbl_resume
-        where member_id = #{memberId}
+        where id = #{id}
+    </select>
+
+    <select id="selectRepresentativeByMemberId">
+        select id, member_id,education_id,job_categoryC_id,resume_status, resume_title, created_date, updated_date
+        from tbl_resume
+        where id = #{memberId}
         and resume_status = '대표'
+    </select>
+
+    <select id="selectAllByMemberId" resultType="resumeDTO">
+        select id, member_id,education_id,job_categoryC_id,resume_status, resume_title, created_date, updated_date
+        from tbl_resume
+        where id = #{memberId}
     </select>
 </mapper>
 

@@ -1,4 +1,4 @@
-# 이력서 테이블
+ # 이력서 테이블
 create table tbl_resume(
     id bigint unsigned auto_increment primary key ,
     member_id bigint unsigned not null,
@@ -27,5 +27,7 @@ INSERT INTO tbl_resume (
              1,    -- education_id (tbl_education 테이블의 교육 ID)
              1     -- job_categoryC_id (tbl_job_categoryC 테이블의 직업 분류 ID)
          );
-alter table tbl_resume
-    add column updated_date datetime default current_timestamp;
+alter table tbl_resume add column created_date datetime default current_timestamp;
+alter table tbl_resume add column updated_date datetime default current_timestamp;
+alter table tbl_resume add column resume_status varchar(255) default '일반';
+alter table tbl_resume add column resume_title varchar(255);

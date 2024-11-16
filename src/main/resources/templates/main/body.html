@@ -11,7 +11,7 @@
     </head>
     <body>
     <header th:replace="~{/main/other-login-header :: header-login}"></header>
-        <section
+    <section
             role="region"
             aria-label="추천공고"
             id="section-contents"
@@ -3053,7 +3053,7 @@
     <script src="/js/main/body.js"></script>
     <script src="/js/main/other-login-header.js"></script>
     <script th:inline="javascript">
-        [[${session.member}]];
+        member = [[${session.member}]];
     </script>
     <script>
         const logoutButton = document.querySelector(".logout")
