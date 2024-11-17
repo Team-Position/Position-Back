@@ -71,14 +71,14 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String sendMessage(String memberPhone) {
         String certificationNumber = createCertificationNumber();
-        String api_key = "NCSBNK6DHAHDJS9X";
-        String api_secret = "Y8S1KYO9F1P8VNHK30RIGO0Z4HBFE3PE";
+        String api_key = "NCS4ARZOWWFV02UP";
+        String api_secret = "P4DFKCYBMZCISWFIUC2VZJ6D0SWSURHO";
         Message coolsms = new Message(api_key, api_secret);
         log.info(certificationNumber);
 
 //        HashMap<String, String> params = new HashMap<String, String>();
 //        params.put("to", memberPhone);
-//        params.put("from", "01066178331");
+//        params.put("from", "01093386535");
 //        params.put("type", "SMS");
 //        params.put("text", "[Postion]\n아래의 인증번호를 정확히 입력해주세요.\n" + certificationNumber);
 //        params.put("app_version", "test app 1.2"); // application name and version
@@ -194,5 +194,10 @@ public class MemberServiceImpl implements MemberService {
 
     private String getPath(){
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    }
+
+    @Override
+    public void changeName(MemberVO memberVO) {
+        memberDAO.updateName(memberVO);
     }
 }

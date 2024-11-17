@@ -128,12 +128,12 @@ header, footer, section, nav, article {
     overflow: hidden;
     width: 134px;
     height: 34px;
-    background: url('/static/images/my-page/position-logo-small.svg') no-repeat;
+    background: url('/images/my-page/position-logo-small.svg') no-repeat;
 }
 #header.fixed .bi .frame, #header.simple.bubble .bi .frame {
     width: 36px;
     height: 20px;
-    background-image: url('/static/images/main/home.png');
+    background-image: url('/images/main/home.png');
     background-repeat: no-repeat;
 }
 /* 네비게이션 */
@@ -142,7 +142,6 @@ header, footer, section, nav, article {
     position: relative;
     z-index: 2;
     width: 100%;
-    margin-left: -130px;
     grid-template-rows: 64px;
     gap: 15px;
     align-items: center;
@@ -245,7 +244,6 @@ header, footer, section, nav, article {
     display: none;
     position: absolute;
     top: 63px;
-    left: 50%; /* 왼쪽 기준으로 화면 중앙으로 위치 */
     transform: translateX(-50%); /* 50%만큼 왼쪽으로 이동하여 정확히 중앙 정렬 */
     padding-left: 0px;
     width: 400px;

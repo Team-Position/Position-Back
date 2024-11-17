@@ -2,11 +2,15 @@ package com.app.positionback.controller.notice;
 
 import com.app.positionback.domain.corporation.CorporationVO;
 import com.app.positionback.domain.file.FileDTO;
+import com.app.positionback.domain.member.MemberVO;
 import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.notice.NoticeListDTO;
+import com.app.positionback.domain.resume.ResumeDTO;
 import com.app.positionback.service.corporation.CorporationService;
 import com.app.positionback.service.notice.NoticeService;
+import com.app.positionback.service.resume.ResumeService;
 import com.app.positionback.utill.Pagination;
+import com.app.positionback.utill.Search;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +30,7 @@ import java.io.IOException;
 public class NoticeController {
     private final NoticeService noticeService;
     private final CorporationService corporationService;
+    private final ResumeService resumeService;
     private final HttpSession session;
 
 //    공고 작성 페이지 이동
@@ -91,11 +97,25 @@ public class NoticeController {
         return noticeService.getNoticesByCorporationId(page,pagination,corporationVO.getId()); // corporationId에 맞게 조정
     }
     // 공고 전체 목록
-    @GetMapping("notices/all-list/{page}")
+    @PostMapping("notices/all-list/{page}")
     @ResponseBody
-    public NoticeListDTO getNoticeAllList(@PathVariable("page") Integer page, Pagination pagination) {
+    public NoticeListDTO getNoticeAllList(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        log.info("검색어: " + search.getKeyword());
 
-        return noticeService.getAll(page,pagination); // corporationId에 맞게 조정
+        // getJobs()가 null이 아닌지 확인하고 로그 출력
+        if (search.getJobs() != null) {
+            log.info("직업 목록: " + Arrays.toString(search.getJobs())); // 배열 내용을 출력
+        } else {
+            log.warn("직업 목록이 null입니다.");
+        }
+
+        // getLocations()가 null이 아닌지 확인하고 로그 출력
+        if (search.getLocations() != null) {
+            log.info("위치 목록: " + Arrays.toString(search.getLocations())); // 배열 내용을 출력
+        } else {
+            log.warn("위치 목록이 null입니다.");
+        }
+        return noticeService.getAll(page, pagination, search); // corporationId에 맞게 조정
     }
 
     @GetMapping("notices/total")
@@ -110,7 +130,32 @@ public class NoticeController {
 
     // 공고 상세 조회
     @GetMapping("notice-detail")
-    public String getNoticeDetail(@RequestParam("id")Long id, Model model) {
+    public Object  getNoticeDetail(@RequestParam("id")Long id, Model model) {
+        MemberVO memberVO = (MemberVO) session.getAttribute("member");
+
+        // 로그인 여부 확인
+        if (memberVO == null) {
+            return new RedirectView("/login");  // 로그인 페이지로 리다이렉트
+        }
+
+        ResumeDTO resumeDTO = resumeService.getRepresentativeByMemberId(memberVO.getId());
+        NoticeDTO noticeDTO = noticeService.getNoticeById(id);
+        FileDTO fileDTO = noticeService.getNoticeFileById(id);
+        FileDTO fileLogo = corporationService.getCorporationFileById(noticeDTO.getCorporationId());
+
+        model.addAttribute("resume", resumeDTO);
+        model.addAttribute("notice", noticeDTO);
+        model.addAttribute("file", fileDTO);
+        model.addAttribute("logoFile", fileLogo);
+        model.addAttribute("member", memberVO);
+        return "matching/matching-detail";
+    }
+
+    // 공고 상세 조회(기업 미리보기)
+    @GetMapping("notice-preview")
+    public String getNoticeCorporationPreview(@RequestParam("id")Long id, Model model) {
+        CorporationVO corporationVO = (CorporationVO) session.getAttribute("member");
+
         NoticeDTO noticeDTO = noticeService.getNoticeById(id);
         FileDTO fileDTO = noticeService.getNoticeFileById(id);
         FileDTO fileLogo = corporationService.getCorporationFileById(noticeDTO.getCorporationId());
@@ -118,9 +163,10 @@ public class NoticeController {
         model.addAttribute("notice", noticeDTO);
         model.addAttribute("file", fileDTO);
         model.addAttribute("logoFile", fileLogo);
-        return "matching/matching-detail";
+        model.addAttribute("corporation", corporationVO);
+        return "matching/matching-detail-corporation";
     }
-//
+
 //    // 공고 수정 페이지 이동
 //    @GetMapping("corporation-login-main-update-posting/{id}")
 //    public String goToUpdateNotice(Long id, Model model) {

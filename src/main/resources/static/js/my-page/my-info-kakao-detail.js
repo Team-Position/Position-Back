@@ -1,6 +1,24 @@
+const viewName = document.querySelector("#view-name");
+const viewBirthDay = document.querySelector("#view-birthDay");
+const viewAddress = document.querySelector("#view-address");
+const viewCell = document.querySelector("#view-cell");
+const viewMail = document.querySelector("#view-mail");
+const changedYear = document.querySelector("#select-year");
+const changedMonth = document.querySelector("#select-month");
+const changedDay = document.querySelector("#select-day");
+const changedAddress1 = document.querySelector("#select-address1");
+const changedAddress2 = document.querySelector("#select-address2");
+const nameChangeButton = document.querySelector("#btnName");
+const birthDayChangeButton = document.querySelector("#btnBirthDay");
+const addressChangeButton = document.querySelector("#btnAddress");
+
 const editButton = document.querySelector(".photo-edit-btn");
 const photoButton = document.querySelector(".btn-photo");
 const txtPhotoOriginal = document.querySelector(".txt-photo-original");
+
+nameChangeButton.addEventListener("click", (e) => {
+    fetchChangeName(member.memberId);
+})
 
 photoButton.addEventListener("click", () => {
     txtPhotoOriginal.style.display = "block";
@@ -259,3 +277,19 @@ const myPhotoModal = document.querySelector(
 btnSave.addEventListener("click", () => {
     myPhotoModal.style.display = "none";
 });
+
+if(member.memberName != null) {
+    viewName.innerHTML = member.memberName;
+}
+if(member.memberBirthDay != null) {
+    viewBirthDay.innerHTML = member.memberBirthDay;
+}
+if(member.memberAddress != null && member.memberAddressDetail != null) {
+    viewAddress.innerHTML = member.memberAddress + member.memberAddressDetail;
+}
+if(member.memberPhone != null) {
+    viewCell.innerHTML = member.memberPhone;
+}
+if(member.memberEmail != null) {
+    viewMail.innerHTML = member.memberEmail;
+}

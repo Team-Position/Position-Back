@@ -162,7 +162,34 @@
         order by n.created_date desc
             limit 3
     </select>
-    
+
+    <sql id="search">
+        <if test="search.jobs != null or search.locations != null or search.keyword != null">
+            <where>
+                <if test="search.jobs != null">
+                    notice_job_category_name in (
+                    <trim suffixOverrides=",">
+                        <foreach item="job" collection="search.jobs">
+                            #{job},
+                        </foreach>
+                    </trim>
+                    )
+                </if>
+                <if test="search.locations != null">
+                    and (
+                    <trim suffixOverrides="or">
+                        <foreach item="location" collection="search.locations">
+                            corporation_address like concat('%', #{location}, '%') or
+                        </foreach>
+                    </trim>
+                    )
+                </if>
+                <if test="search.keyword != null">
+                    and corporation_name like concat('%', #{search.keyword}, '%')
+                </if>
+            </where>
+        </if>
+    </sql>
 
     <select id="selectAll" resultType="com.app.positionback.domain.notice.NoticeDTO">
         select n.id, corporation_id, notice_title, notice_career, notice_education,
@@ -172,6 +199,8 @@
                notice_job_category_name, c.corporation_name, c.corporation_address
         from tbl_notice n
         join tbl_corporation c on n.corporation_id = c.id
+        <include refid="search"/>
+        and n.notice_end_date > current_date
         order by
             n.created_date
         desc
@@ -180,6 +209,14 @@
 
     <select id="selectAllCount">
         select count(*) from tbl_notice
+        where notice_end_date > current_date
+    </select>
+
+    <select id="selectSearchAllCount">
+        select count(*) from tbl_notice n
+        join tbl_corporation c on n.corporation_id = c.id
+        <include refid="search"/>
+        and n.notice_end_date > current_date
     </select>
 
     <select id="selectTop3" resultType="com.app.positionback.domain.notice.NoticeDTO">
@@ -200,6 +237,7 @@
                c.corporation_address
         from tbl_notice n
                  join tbl_corporation c on n.corporation_id = c.id
+        where n.notice_end_date > current_date
         order by n.notice_read_count desc
             limit 3
     </select>

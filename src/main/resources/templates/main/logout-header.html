@@ -4,15 +4,15 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>logout header</title>
-        <link rel="stylesheet" href="/static/css/main.css" />
-        <link rel="stylesheet" href="/static/css/main/logout-header.css" />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/main/logout-header.css" />
     </head>
     <body id="main" class="vsc-initialized">
         <header id="header" class="main bubble">
             <div class="wrap_header">
                 <h1>
                     <a
-                        href="/"
+                        th:href="@{/main}"
                         class="bi"
                         aria-label="사람인"
                         data-nav-track="ga_lead|main-gnb|global_menu|ci"
@@ -1410,5 +1410,5 @@
             </svg>
         </div>
     </body>
-    <script src="/static/js/main/logout-header.js"></script>
+    <script src="/js/main/logout-header.js"></script>
 </html>

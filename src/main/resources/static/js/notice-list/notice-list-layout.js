@@ -23,7 +23,7 @@ const showNoticeList = ({notices, pagination}, status) => {
                     <div class="col notification-info">
                         <div class="job-tit">
                             <a class="str-tit" id="rec-link-${notice.id}" 
-                               href="/corporation/notice-detail?id=${notice.id}" 
+                               href="/corporation/notice-preview?id=${notice.id}" 
                                target="_blank" title="${notice.noticeTitle}">
                                 <span>${notice.noticeTitle}</span>
                             </a>

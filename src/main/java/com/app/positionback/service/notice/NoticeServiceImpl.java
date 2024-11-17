@@ -10,6 +10,7 @@ import com.app.positionback.repository.notice.NoticeDAO;
 import com.app.positionback.repository.notice.NoticeFileDAO;
 import com.app.positionback.service.corporation.CorporationService;
 import com.app.positionback.utill.Pagination;
+import com.app.positionback.utill.Search;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -161,16 +162,30 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeDAO.findRecentNotices(corporationId);
     }
 
+
     // 공고 전체 목록
     @Override
-    public NoticeListDTO getAll(int page, Pagination pagination) {
+    public NoticeListDTO getAll(int page, Pagination pagination,Search search) {
         NoticeListDTO noticeListDTO = new NoticeListDTO();
         pagination.setPage(page);
-        pagination.setTotal(noticeDAO.getAllTotal());
-        pagination.progress(12);
+        // search 객체가 null이 아닌지 확인
+        if (search != null) {
+            // 검색 조건에 맞는 총 개수를 설정
+            if (search.getKeyword() != null || search.getTypes() != null) {
+                pagination.setTotal(noticeDAO.getSearchAllTotal(search));
+            } else {
+                pagination.setTotal(noticeDAO.getAllTotal());
+            }
+        } else {
+            // search가 null일 경우 전체 공고 개수로 설정
+            pagination.setTotal(noticeDAO.getAllTotal());
+        }
+
+//        pagination.setTotal(noticeDAO.getAllTotal());
+        pagination.progress();
         noticeListDTO.setPagination(pagination);
 
-        List<NoticeDTO> notices = noticeDAO.findAll(pagination);
+        List<NoticeDTO> notices = noticeDAO.findAll(pagination, search);
 
         for(NoticeDTO notice : notices) {
             Long corporationId = notice.getCorporationId();
@@ -198,6 +213,16 @@ public class NoticeServiceImpl implements NoticeService {
 
         noticeListDTO.setNotices(notices); // 공고 목록을 NoticeListDTO에 설정
         return noticeListDTO;
+    }
+
+    @Override
+    public int getAllTotal() {
+        return noticeDAO.getAllTotal();
+    }
+
+    @Override
+    public int getSearchAllTotal(Search search) {
+        return noticeDAO.getSearchAllTotal(search);
     }
 
     private FileDTO saveAndLinkFile(MultipartFile file) throws IOException {

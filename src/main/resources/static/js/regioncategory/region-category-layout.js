@@ -51,7 +51,6 @@ let selectedCategoryAName = "";
 // 소카 리스트를 렌더링하는 함수
 const renderCategoryBList = (categoriesB) => {
     listCheck.innerHTML = ''; // 기존 소카 리스트 초기화
-    let content = '';
 
     // 객체의 각 키를 순회합니다.
     Object.keys(categoriesB).forEach((region) => {
@@ -60,31 +59,52 @@ const renderCategoryBList = (categoriesB) => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
                 <div class="inpChk">
-                    <input type="checkbox" id="categoryB-${subRegion}">
+                    <input type="checkbox" name="locations" value="${subRegion}" id="categoryB-${subRegion}">
                     <label class="lbl" for="categoryB-${subRegion}">
                         <span class="txt">${subRegion}</span>
                     </label>
                 </div>
             `;
 
+            // 체크박스의 체크 상태를 선택된 항목에 따라 설정
+            const checkbox = listItem.querySelector('input');
+            if (selectedCategories[subRegion]) {
+                checkbox.checked = true;
+            }
+
             // 체크박스 변경 시 이벤트 추가
-            listItem.querySelector('input').addEventListener('change', (event) => {
+            checkbox.addEventListener('change', (event) => {
                 if (event.target.checked) {
-                    // 체크된 경우 선택 항목 추가
                     addSelectedCategory(selectedCategoryAName, subRegion);
                 } else {
-                    // 체크 해제된 경우 선택 항목 제거
                     removeSelectedCategory(subRegion);
                 }
             });
+
+            // // 체크박스 변경 시 이벤트 추가
+            // listItem.querySelector('input').addEventListener('change', (event) => {
+            //     if (event.target.checked) {
+            //         // 체크된 경우 선택 항목 추가
+            //         addSelectedCategory(selectedCategoryAName, subRegion);
+            //     } else {
+            //         // 체크 해제된 경우 선택 항목 제거
+            //         removeSelectedCategory(subRegion);
+            //     }
+            // });
 
             listCheck.appendChild(listItem);
         });
     });
 };
 
+// 선택된 소카 항목을 저장할 전역 객체
+let selectedCategories = {};
+
 // 선택된 대카 및 소카 정보를 sp-preview-selected에 추가하는 함수
 const addSelectedCategory = (categoryAName, categoryBName) => {
+    // 선택된 소카 항목을 전역 객체에 추가
+    selectedCategories[categoryBName] = categoryAName;
+
     const selectedSpan = document.createElement('span');
     selectedSpan.classList.add('selected-keyword');
     selectedSpan.id = `selected-${categoryBName}`; // 고유 ID 추가
@@ -99,8 +119,9 @@ const addSelectedCategory = (categoryAName, categoryBName) => {
     // 삭제 버튼에 클릭 이벤트 추가하여 선택 항목을 제거
     selectedSpan.querySelector('.remove-btn').addEventListener('click', () => {
         previewSelected.removeChild(selectedSpan);
-        // 해당 소카 항목의 체크박스도 해제
         document.querySelector(`#categoryB-${categoryBName}`).checked = false;
+        delete selectedCategories[categoryBName]; // 전역 객체에서 항목 제거
+        updateResetTextVisibility();
     });
 
     previewSelected.appendChild(selectedSpan);
@@ -108,11 +129,37 @@ const addSelectedCategory = (categoryAName, categoryBName) => {
     updateResetTextVisibility();
 };
 
+// // 선택된 대카 및 소카 정보를 sp-preview-selected에 추가하는 함수
+// const addSelectedCategory = (categoryAName, categoryBName) => {
+//     const selectedSpan = document.createElement('span');
+//     selectedSpan.classList.add('selected-keyword');
+//     selectedSpan.id = `selected-${categoryBName}`; // 고유 ID 추가
+//
+//     selectedSpan.innerHTML = `
+//         ${categoryAName} &gt; ${categoryBName}
+//         <button type="button" id="sp-preview-job-category" class="btn-del remove-btn">
+//             삭제
+//         </button>
+//     `;
+//
+//     // 삭제 버튼에 클릭 이벤트 추가하여 선택 항목을 제거
+//     selectedSpan.querySelector('.remove-btn').addEventListener('click', () => {
+//         previewSelected.removeChild(selectedSpan);
+//         // 해당 소카 항목의 체크박스도 해제
+//         document.querySelector(`#categoryB-${categoryBName}`).checked = false;
+//     });
+//
+//     previewSelected.appendChild(selectedSpan);
+//
+//     updateResetTextVisibility();
+// };
+
 // 선택된 항목을 제거하는 함수
 const removeSelectedCategory = (categoryBName) => {
     const selectedSpan = document.querySelector(`#selected-${categoryBName}`);
     if (selectedSpan) {
         previewSelected.removeChild(selectedSpan);
+        delete selectedCategories[categoryBName]; // 전역 객체에서 항목 제거
         // 선택 항목 확인 후 .reset-txt 표시 상태 업데이트
         updateResetTextVisibility();
     }
@@ -131,3 +178,4 @@ const updateResetTextVisibility = () => {
 btnArea.addEventListener('click', () => {
     regionCategoryService.getCategoryA(renderCategoryAList);
 });
+

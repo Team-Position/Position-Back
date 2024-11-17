@@ -29,4 +29,8 @@ public class ApplyDAO {
     public ApplyDTO findApplyById(Long applyId){
         return applyMapper.selectApplyById(applyId);
     }
+
+    public void saveApply(ApplyVO applyVO){
+        applyMapper.insertApply(applyVO);
+    }
 }

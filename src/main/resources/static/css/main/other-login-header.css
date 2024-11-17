@@ -142,7 +142,6 @@ header, footer, section, nav, article {
     position: relative;
     z-index: 2;
     width: 100%;
-    margin-left: -130px;
     grid-template-rows: 64px;
     gap: 15px;
     align-items: center;
@@ -247,7 +246,6 @@ header, footer, section, nav, article {
     display: none;
     position: absolute;
     top: 63px;
-    left: 50%; /* 왼쪽 기준으로 화면 중앙으로 위치 */
     transform: translateX(-50%); /* 50%만큼 왼쪽으로 이동하여 정확히 중앙 정렬 */
     padding-left: 0px;
     width: 860px;

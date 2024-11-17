@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="/css/matching/matching-detail.css"
+        />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link
+                rel="stylesheet"
+                href="/css/corporation/corporation-login-header.css"
+        />
+        <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a1e0bdeafd8a8a27e472648b06cdfefc&libraries=services"></script>
+        <title>매칭 상세보기(기업)</title>
+    </head>
+    <body>
+    <header th:replace="~{/corporation/corporation-login-header :: #header}"></header>
+            <div id="position-section">
+                <div id="position-wrap">
+                    <div id="content">
+                        <div class="wrap-jview">
+                            <!-- 이게 한 공고 -->
+                            <section class="jview">
+                                <a class="placeholder" tabindex="-1"></a>
+                                <div class="wrap-jv-cont">
+                                    <!-- 헤더 -->
+                                    <div class="wrap-jv-header">
+                                        <a
+                                            class="placeholder"
+                                            tabindex="-1"
+                                        ></a>
+                                        <div class="jv-header">
+                                            <div class="title-inner">
+                                                <a
+                                                    href="/corporation"
+                                                    title="(주)호호당"
+                                                    class="company"
+                                                    th:text="${notice.corporationName}"
+                                                    ></a
+                                                >
+                                                <button
+                                                    type="button"
+                                                    title="관심기업 등록"
+                                                    class="btn-jview spr-jview btn-interest"
+                                                >
+                                                    <svg
+                                                        width="16"
+                                                        height="16"
+                                                        fill="none"
+                                                        class="icon-interested"
+                                                    >
+                                                        <path
+                                                            d="M6.02498 12.7861L5.64593 12.4305L5.26661 12.0676L4.9045 11.7145L4.57727 11.3886L4.30315 11.1078L4.09798 10.8878L3.60986 10.3434L3.3016 9.99345L3.02797 9.67542L2.79004 9.38984L2.58897 9.13749L2.42437 8.91736L2.35722 8.8214C2.09522 8.43618 1.89245 8.04622 1.73708 7.6185C1.41094 6.38491 1.4304 5.39882 1.73942 4.62739C2.06107 3.82442 2.56896 3.24401 3.25465 2.87112C3.97841 2.47923 4.74412 2.39639 5.56989 2.63105C6.18765 2.82443 6.71818 3.1964 7.16412 3.7682L7.29598 3.94787L7.58589 4.37863L8.00062 4.99485L8.41545 4.3787L8.71259 3.93737C9.13803 3.32866 9.65597 2.91815 10.2666 2.68825L10.4462 2.62682C11.2606 2.39707 12.0242 2.47999 12.7465 2.87106C13.4323 3.24395 13.9403 3.82439 14.262 4.62745C14.5705 5.39767 14.5909 6.3831 14.2537 7.6522C14.1088 8.04661 13.9058 8.43727 13.6424 8.82404C13.6227 8.85295 13.6015 8.88333 13.5787 8.9152L13.4124 9.13756L13.2113 9.38998L12.9737 9.67507L12.549 10.1656L12.1189 10.6483L12.1177 10.6497L11.8097 10.99L11.569 11.2414L11.2664 11.5467L10.7343 12.0681L10.3555 12.4306L9.97658 12.786L9.61564 13.1169L9.28863 13.4077C9.1893 13.4942 9.09986 13.57 9.0226 13.6331C9.02237 13.6333 9.02214 13.6335 9.02192 13.6336L8.00223 14.461L7.999 14.4634L6.85007 13.5257C6.76132 13.4504 6.66238 13.3642 6.55569 13.2693L6.20886 12.9558C6.20844 12.9554 6.20801 12.955 6.20759 12.9546C6.148 12.9 6.08733 12.844 6.02592 12.787C6.02561 12.7867 6.0253 12.7864 6.02498 12.7861Z"
+                                                            fill="white"
+                                                            stroke="#8491A7"
+                                                        ></path>
+                                                    </svg>
+                                                    <span>관심기업</span>
+                                                </button>
+
+                                                <h1 class="tit-job" th:text="${notice.noticeTitle}">제목을 여기에 넣습니다.</h1>
+
+                                                <button
+                                                    type="button"
+                                                    class="btn-scrap"
+                                                >
+                                                    <span class="txt-scrap"
+                                                        >8</span
+                                                    >
+                                                </button>
+                                                <div class="btn-apply">
+                                                    <span class="dday" id="dday-display"></span>
+                                                    <button
+                                                        class="position-btn-lg for-btn-event"
+                                                        title="미리보기는 지원을 할 수 없습니다."
+                                                    >
+                                                        <span
+                                                            class="position-btn-immediately"
+                                                            >미리보기
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 요약 -->
+                                        <div class="jv-cont jv-summary">
+                                            <h2 class="jv-title blind">
+                                                핵심 정보
+                                            </h2>
+                                            <div class="cont">
+                                                <div class="col">
+                                                    <dl>
+                                                        <dt>경력</dt>
+                                                        <dd>
+                                                            <strong th:text="'경력' + ${notice.noticeCareer}"
+                                                                ></strong
+                                                            >
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>학력</dt>
+                                                        <dd>
+                                                            <strong th:text="${notice.noticeEducation == '무관' ? '무관' : notice.noticeEducation + ' 이상'}"></strong>
+
+
+                                                            <!--                                                            <span class="etc">-->
+<!--                                                                각 모집 부문에-->
+<!--                                                                따라-->
+<!--                                                                상이함</span-->
+<!--                                                            >-->
+                                                        </dd>
+                                                    </dl>
+
+<!--                                                    <dl>-->
+<!--                                                        <dt>우대사항</dt>-->
+<!--                                                        <dd class="preferred">-->
+<!--                                                            <div-->
+<!--                                                                class="toolTipWrap"-->
+<!--                                                            >-->
+<!--                                                                <button-->
+<!--                                                                    type="button"-->
+<!--                                                                    class="spr-jview btn-jview btn-tooltip"-->
+<!--                                                                    aria-haspopup="dialog"-->
+<!--                                                                    aria-expanded="false"-->
+<!--                                                                >-->
+<!--                                                                    <span-->
+<!--                                                                        class="blind"-->
+<!--                                                                        >우대사항</span-->
+<!--                                                                    ><span-->
+<!--                                                                        >상세보기</span-->
+<!--                                                                    ><svg-->
+<!--                                                                        aria-hidden="true"-->
+<!--                                                                        focusable="false"-->
+<!--                                                                        class="ic"-->
+<!--                                                                    >-->
+<!--                                                                        <use-->
+<!--                                                                            xlink:href="#icon_i"-->
+<!--                                                                        ></use>-->
+<!--                                                                    </svg>-->
+<!--                                                                </button>-->
+<!--                                                                <div-->
+<!--                                                                    class="toolTip"-->
+<!--                                                                    role="dialog"-->
+<!--                                                                    aria-label="필수사항 상세"-->
+<!--                                                                >-->
+<!--                                                                    <span-->
+<!--                                                                        class="tail tail-top-left"-->
+<!--                                                                    ></span>-->
+<!--                                                                    <div-->
+<!--                                                                        id="details-preferred-49199391"-->
+<!--                                                                        class="toolTipCont txtLeft"-->
+<!--                                                                    >-->
+<!--                                                                        <ul-->
+<!--                                                                            class="toolTipTxt"-->
+<!--                                                                        >-->
+<!--                                                                            <li>-->
+<!--                                                                                <span-->
+<!--                                                                                    >활동/경험</span-->
+<!--                                                                                >해당직무-->
+<!--                                                                                근무경험-->
+<!--                                                                            </li>-->
+<!--                                                                        </ul>-->
+<!--                                                                        <p-->
+<!--                                                                            class="txt-noti"-->
+<!--                                                                        >-->
+<!--                                                                            ※-->
+<!--                                                                            지원부문별-->
+<!--                                                                            상이할-->
+<!--                                                                            수-->
+<!--                                                                            있으니,-->
+<!--                                                                            상세요강에서-->
+<!--                                                                            확인해주세요.-->
+<!--                                                                        </p>-->
+<!--                                                                    </div>-->
+<!--                                                                    <button-->
+<!--                                                                        type="button"-->
+<!--                                                                        class="btnClose"-->
+<!--                                                                    >-->
+<!--                                                                        <span-->
+<!--                                                                            class="blind"-->
+<!--                                                                            >닫기-->
+<!--                                                                            - -->
+<!--                                                                            우대사항-->
+<!--                                                                            상세</span-->
+<!--                                                                        >-->
+<!--                                                                    </button>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </dd>-->
+<!--                                                    </dl>-->
+                                                </div>
+                                                <div class="col">
+                                                    <dl>
+                                                        <dt>근무일시</dt>
+                                                        <dd th:if="${notice.noticeWorkStartDate.substring(0, 10) == notice.noticeWorkEndDate.substring(0, 10)}"
+                                                            th:text="${notice.noticeWorkStartDate.substring(0, 10)}"></dd>
+
+                                                        <dd th:if="${notice.noticeWorkStartDate.substring(0, 10) != notice.noticeWorkEndDate.substring(0, 10)}"
+                                                            th:text="${notice.noticeWorkStartDate.substring(0, 10)} + '~' + ${notice.noticeWorkEndDate.substring(0, 10)}"></dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>근무지역</dt>
+                                                        <dd th:text="${notice.corporationAddress} + ' ' + ${notice.corporationAddressDetail}">
+
+                                                            <button
+                                                                type="button"
+                                                                class="spr-jview btn-jview btn-move-map"
+                                                            >
+                                                                <span
+                                                                    >지도</span
+                                                                >
+                                                            </button>
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="meta">
+                                                    <span class="salary-desc"
+                                                        ><strong
+                                                            >최저임금계산에 대한
+                                                            알림</strong
+                                                        >
+                                                        하단에 명시된 급여, 근무
+                                                        내용 등이 최저임금에
+                                                        미달하는 경우 위 내용이
+                                                        우선합니다.</span
+                                                    >
+                                                    <ul class="list-meta">
+                                                        <li>
+                                                            조회수
+                                                            <strong th:text="${notice.noticeReadCount}"></strong>
+                                                        </li>
+                                                        <li class="wrap-share">
+                                                            <div class="share">
+                                                                <button
+                                                                    type="button"
+                                                                    class="spr-jview btn-jview btn-share"
+                                                                >
+                                                                    <svg
+                                                                        aria-hidden="true"
+                                                                        focusable="false"
+                                                                        class="ic"
+                                                                    >
+                                                                        <use
+                                                                            xlink:href="#icon_sns_share"
+                                                                        ></use>
+                                                                    </svg>
+                                                                    <span
+                                                                        >공유하기</span
+                                                                    >
+                                                                </button>
+<!--                                                                <ul-->
+<!--                                                                    class="spr-jview list-share"-->
+<!--                                                                >-->
+<!--                                                                    <li>-->
+<!--                                                                        <a-->
+<!--                                                                            href=""-->
+<!--                                                                            class="spr-jview facebook"-->
+<!--                                                                            title="페이스북 공유하기"-->
+<!--                                                                            ><span-->
+<!--                                                                                class="blind"-->
+<!--                                                                                >페이스북</span-->
+<!--                                                                            ></a-->
+<!--                                                                        >-->
+<!--                                                                    </li>-->
+<!--                                                                    <li>-->
+<!--                                                                        <a-->
+<!--                                                                            href=""-->
+<!--                                                                            class="spr-jview twitter"-->
+<!--                                                                            title="트위터 공유하기"-->
+<!--                                                                            ><span-->
+<!--                                                                                class="blind"-->
+<!--                                                                                >트위터</span-->
+<!--                                                                            ></a-->
+<!--                                                                        >-->
+<!--                                                                    </li>-->
+<!--                                                                    <li>-->
+<!--                                                                        <button-->
+<!--                                                                            type="button"-->
+<!--                                                                            class="spr-jview copy-url"-->
+<!--                                                                            title="공고 주소 복사하기"-->
+<!--                                                                        >-->
+<!--                                                                            <span-->
+<!--                                                                                class="blind"-->
+<!--                                                                                >URL복사</span-->
+<!--                                                                            >-->
+<!--                                                                        </button>-->
+<!--                                                                    </li>-->
+<!--                                                                    <li>-->
+<!--                                                                        <button-->
+<!--                                                                            type="button"-->
+<!--                                                                            class="spr-jview send-sms"-->
+<!--                                                                            title="이 공고 내 폰으로 전송하기"-->
+<!--                                                                        >-->
+<!--                                                                            <span-->
+<!--                                                                                class="blind"-->
+<!--                                                                                >SMS발송</span-->
+<!--                                                                            >-->
+<!--                                                                        </button>-->
+<!--                                                                    </li>-->
+<!--                                                                </ul>-->
+                                                            </div>
+                                                        </li>
+                                                        <!--wmg-31267-->
+<!--                                                        <li>-->
+<!--                                                            <a-->
+<!--                                                                href=""-->
+<!--                                                                class="spr-jview btn-report"-->
+<!--                                                                ><svg-->
+<!--                                                                    aria-hidden="true"-->
+<!--                                                                    focusable="false"-->
+<!--                                                                    class="ic"-->
+<!--                                                                >-->
+<!--                                                                    <use-->
+<!--                                                                        xlink:href="#icon_report"-->
+<!--                                                                    ></use>-->
+<!--                                                                </svg>-->
+<!--                                                                신고하기-->
+<!--                                                            </a>-->
+<!--                                                        </li>-->
+                                                        <!-- //wmg-31267-->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 내용 -->
+                                        <div class="jv-cont jv-detail">
+                                            <h2 class="jv-title blind">
+                                                상세요강
+                                            </h2>
+                                            <div class="cont">
+                                                <img id="notice-image" src="" alt="notice-img" width="860px" height="1400px">
+
+                                            </div>
+                                        </div>
+                                        <!-- 근무지 위치 -->
+                                        <div
+                                            class="jv-cont jv-location"
+                                        >
+                                            <a
+                                                class="placeholder"
+                                                tabindex="-1"
+                                            ></a>
+                                            <h2 class="jv-title">근무지위치</h2>
+                                            <div class="cont box">
+                                                <address class="address" >
+                                                    <span
+                                                        class="spr-jview txt-adr"
+                                                        ><span class="wrap-ic"
+
+                                                            ><svg
+                                                                class="ic"
+                                                                width="20"
+                                                                height="20"
+                                                                viewBox="0 0 20 20"
+                                                                fill="none"
+                                                            >
+                                                                <path
+                                                                    d="M14.305 10.9376L10.5998 16.6302C10.1775 17.2789 9.21948 17.2542 8.83119 16.5846L5.52495 10.883C4.85419 9.72631 4.5 8.39263 4.5 7.05307C4.5 4.01462 7.00816 1.5 10.0448 1.5C13.0381 1.5 15.5 3.92741 15.5 6.91099C15.5 8.34059 15.0849 9.73943 14.305 10.9376Z"
+                                                                    stroke="#8491A7"
+                                                                ></path>
+                                                                <circle
+                                                                    cx="10"
+                                                                    cy="7"
+                                                                    r="2.5"
+                                                                    stroke="#8491A7"
+                                                                ></circle>
+                                                            </svg>
+                                                        </span>
+                                                        <span th:text="${notice.corporationAddress} + ' ' + ${notice.corporationAddressDetail}"></span>
+                                                    </span>
+                                                </address>
+                                                <button
+                                                    type="button"
+                                                    class="btn-mapview relay-map"
+                                                >
+                                                    <svg
+                                                        class="ic"
+                                                        width="24"
+                                                        height="24"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                    >
+                                                        <path
+                                                            d="M8.80769 9.58013L3.30769 11.8718C3.12137 11.9494 3 12.1315 3 12.3333V20.25C3 20.6068 3.36296 20.8488 3.69231 20.7115L8.80769 18.5801C8.93077 18.5288 9.06923 18.5288 9.19231 18.5801L14.7888 20.912C14.9229 20.9679 15.0747 20.9626 15.2047 20.8977L20.7236 18.1382C20.893 18.0535 21 17.8804 21 17.691V9.80902C21 9.43733 20.6088 9.19558 20.2764 9.3618L15.2047 11.8977C15.0747 11.9626 14.9229 11.9679 14.7888 11.912L9.19231 9.58013C9.06923 9.52885 8.93077 9.52885 8.80769 9.58013Z"
+                                                            stroke="#8491A7"
+                                                        ></path>
+                                                        <mask
+                                                            id="path-2-inside-1_371_33951"
+                                                            fill="white"
+                                                        >
+                                                            <path
+                                                                fill-rule="evenodd"
+                                                                clip-rule="evenodd"
+                                                                d="M12.9998 14.4995C12.9998 14.7757 12.776 14.9995 12.4999 14.9995C12.2237 14.9995 11.9999 14.7757 11.9999 14.4995V7.49932C11.9999 7.22319 12.2237 6.99934 12.4999 6.99934C12.776 6.99934 12.9998 7.22319 12.9998 7.49932V14.4995Z"
+                                                            ></path>
+                                                        </mask>
+                                                        <path
+                                                            fill-rule="evenodd"
+                                                            clip-rule="evenodd"
+                                                            d="M12.9998 14.4995C12.9998 14.7757 12.776 14.9995 12.4999 14.9995C12.2237 14.9995 11.9999 14.7757 11.9999 14.4995V7.49932C11.9999 7.22319 12.2237 6.99934 12.4999 6.99934C12.776 6.99934 12.9998 7.22319 12.9998 7.49932V14.4995Z"
+                                                            fill="black"
+                                                            fill-opacity="0.01"
+                                                        ></path>
+                                                        <path
+                                                            d="M12.9999 14.4995V7.49932H10.9999V14.4995H12.9999ZM11.9998 7.49932V14.4995H13.9998V7.49932H11.9998ZM12.4999 7.99934C12.2237 7.99934 11.9998 7.77547 11.9998 7.49932H13.9998C13.9998 6.6709 13.3283 5.99934 12.4999 5.99934V7.99934ZM12.9999 7.49932C12.9999 7.77547 12.776 7.99934 12.4999 7.99934V5.99934C11.6714 5.99934 10.9999 6.6709 10.9999 7.49932H12.9999ZM12.4999 13.9995C12.776 13.9995 12.9999 14.2234 12.9999 14.4995H10.9999C10.9999 15.328 11.6714 15.9995 12.4999 15.9995V13.9995ZM12.4999 15.9995C13.3283 15.9995 13.9998 15.328 13.9998 14.4995H11.9998C11.9998 14.2234 12.2237 13.9995 12.4999 13.9995V15.9995Z"
+                                                            fill="#8491A7"
+                                                            mask="url(#path-2-inside-1_371_33951)"
+                                                        ></path>
+                                                        <path
+                                                            d="M12.4999 3.49924C13.6044 3.49924 14.4998 4.39459 14.4998 5.49929C14.4998 6.60401 13.6044 7.49935 12.4999 7.49935C11.3953 7.49935 10.4999 6.60401 10.4999 5.49929C10.4999 4.39459 11.3953 3.49924 12.4999 3.49924Z"
+                                                            fill="black"
+                                                            fill-opacity="0.01"
+                                                            stroke="#8491A7"
+                                                        ></path>
+                                                        <path
+                                                            d="M9 9.5V18.5M15 12V20.5"
+                                                            stroke="#8491A7"
+                                                        ></path>
+                                                    </svg>
+                                                    <span class="spr-jview"
+                                                        >지도 보기
+                                                    </span>
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 접수방법 -->
+                                    <div class="jv-cont jv-howto">
+                                        <a
+                                            class="placeholder"
+                                            tabindex="-1"
+                                        ></a>
+                                        <h2 class="jv-title">
+                                            접수기간 및 방법
+                                        </h2>
+                                        <div class="cont box">
+                                            <div class="status">
+                                                <div
+                                                    class="info-timer"
+                                                    data-remain-time="184017"
+                                                >
+                                                    <span class="txt"
+                                                        >남은 기간</span
+                                                    ><span class="day" id="remaining-days">0</span
+                                                    ><span class="txt-day"
+                                                        >일</span
+                                                    ><span class="time" id="remaining-time"
+                                                        >02:48:34</span
+                                                    >
+                                                </div>
+                                                <dl class="info-period">
+                                                    <dt>시작일</dt>
+                                                    <dd id="start-date" th:text="${notice.createdDate}"></dd>
+                                                    <dt class="end">마감일</dt>
+                                                    <dd id="end-date" th:text="${notice.noticeEndDate}"></dd>
+                                                </dl>
+                                            </div>
+                                            <dl class="guide">
+                                                <dt>지원방법</dt>
+                                                <dd class="method">
+                                                    <p>포지셔너 지원</p>
+                                                </dd>
+                                                <dt>접수양식</dt>
+                                                <dd class="template">
+                                                    <div class="toolTipWrap">
+                                                        <button
+                                                            type="button"
+                                                            class="spr-jview btn-jview btn-tooltip"
+                                                        >
+                                                            <span
+                                                                >포지션 이력서</span
+                                                            >
+<!--                                                            <svg-->
+<!--                                                                aria-hidden="true"-->
+<!--                                                                class="ic"-->
+<!--                                                            >-->
+<!--                                                                <use-->
+<!--                                                                    xlink:href="#icon_i"-->
+<!--                                                                ></use>-->
+<!--                                                            </svg>-->
+                                                        </button>
+                                                        <div class="toolTip">
+                                                            <span
+                                                                class="tail tail-top-center"
+                                                            ></span>
+                                                            <div
+                                                                class="toolTipCont txtLeft"
+                                                            >
+                                                                <strong
+                                                                    class="toolTipTit"
+                                                                    >제출서류</strong
+                                                                >
+                                                                <p>
+                                                                    이력서,
+                                                                    자기소개서
+                                                                </p>
+                                                            </div>
+                                                            <button
+                                                                type="button"
+                                                                class="btnClose"
+                                                            >
+                                                                <span
+                                                                    class="blind"
+                                                                    >닫기</span
+                                                                >
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                            </dl>
+                                            <p class="noti">
+                                                <svg
+                                                    aria-hidden="true"
+                                                    focusable="false"
+                                                    class="ic"
+                                                >
+                                                    <use
+                                                        xlink:href="#icon_i"
+                                                    ></use>
+                                                </svg>
+                                                마감일은 기업의 사정, 조기마감
+                                                등으로 변경될 수 있습니다.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- 기업정보 -->
+                                    <div class="jv-cont jv-company">
+                                        <a
+                                            class="placeholder"
+                                            tabindex="-1"
+                                        ></a>
+                                        <div class="jv-title">
+                                            <h2 class="jv-title-heading">
+                                                기업정보
+                                            </h2>
+                                            <a
+                                                href=""
+                                                class="link-txt spr-jview ga-data-layer"
+                                            >
+                                                이 기업의 다른 공고 (2건)
+                                            </a>
+                                        </div>
+                                        <div class="cont box">
+                                            <div class="wrap-info">
+                                                <div class="tit-area">
+                                                    <div class="basic-info">
+                                                        <h3>
+                                                            <a
+                                                                href=""
+                                                                class="company-name ga-data-layer"
+                                                                th:text="${notice.corporationName}"
+                                                            >
+                                                                (주)넥슨코리아 </a
+                                                            ><button
+                                                                type="button"
+                                                                title="관심기업 등록"
+                                                                aria-pressed="true"
+                                                                id="company-like-button"
+                                                                class="btn-jview btn-jview-round btn-interest on"
+                                                            >
+                                                                <svg
+                                                                    width="16"
+                                                                    height="16"
+                                                                    viewBox="0 0 16 16"
+                                                                    fill="none"
+                                                                    class="icon-interested"
+                                                                >
+                                                                    <path
+                                                                        d="M6.02498 12.7861L5.64593 12.4305L5.26661 12.0676L4.9045 11.7145L4.57727 11.3886L4.30315 11.1078L4.09798 10.8878L3.60986 10.3434L3.3016 9.99345L3.02797 9.67542L2.79004 9.38984L2.58897 9.13749L2.42437 8.91736L2.35722 8.8214C2.09522 8.43618 1.89245 8.04622 1.73708 7.6185C1.41094 6.38491 1.4304 5.39882 1.73942 4.62739C2.06107 3.82442 2.56896 3.24401 3.25465 2.87112C3.97841 2.47923 4.74412 2.39639 5.56989 2.63105C6.18765 2.82443 6.71818 3.1964 7.16412 3.7682L7.29598 3.94787L7.58589 4.37863L8.00062 4.99485L8.41545 4.3787L8.71259 3.93737C9.13803 3.32866 9.65597 2.91815 10.2666 2.68825L10.4462 2.62682C11.2606 2.39707 12.0242 2.47999 12.7465 2.87106C13.4323 3.24395 13.9403 3.82439 14.262 4.62745C14.5705 5.39767 14.5909 6.3831 14.2537 7.6522C14.1088 8.04661 13.9058 8.43727 13.6424 8.82404C13.6227 8.85295 13.6015 8.88333 13.5787 8.9152L13.4124 9.13756L13.2113 9.38998L12.9737 9.67507L12.549 10.1656L12.1189 10.6483L12.1177 10.6497L11.8097 10.99L11.569 11.2414L11.2664 11.5467L10.7343 12.0681L10.3555 12.4306L9.97658 12.786L9.61564 13.1169L9.28863 13.4077C9.1893 13.4942 9.09986 13.57 9.0226 13.6331C9.02237 13.6333 9.02214 13.6335 9.02192 13.6336L8.00223 14.461L7.999 14.4634L6.85007 13.5257C6.76132 13.4504 6.66238 13.3642 6.55569 13.2693L6.20886 12.9558C6.20844 12.9554 6.20801 12.955 6.20759 12.9546C6.148 12.9 6.08733 12.844 6.02592 12.787C6.02561 12.7867 6.0253 12.7864 6.02498 12.7861Z"
+                                                                        fill="white"
+                                                                        stroke="#8491A7"
+                                                                    ></path>
+                                                                </svg>
+                                                                <span
+                                                                    >관심기업</span
+                                                                >
+                                                            </button>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="logo">
+                                                        <div
+                                                            class="img ga-data-layer"
+                                                            ><img
+                                                                id="logo-img"
+
+                                                        /></div>
+                                                    </div>
+                                                </div>
+                                                <div class="info-area">
+                                                    <dl>
+                                                        <dt>대표자명</dt>
+                                                        <dd th:text="${notice.corporationOwner}"
+                                                        >
+                                                        </dd>
+                                                    </dl>
+<!--                                                    <dl>-->
+<!--                                                        <dt>기업형태</dt>-->
+<!--                                                        <dd-->
+<!--                                                            title="대기업, 1000대기업, 수출입 기업"-->
+<!--                                                        >-->
+<!--                                                            대기업-->
+<!--                                                        </dd>-->
+<!--                                                    </dl>-->
+                                                    <dl>
+                                                        <dt>업종</dt>
+                                                        <dd th:text="${notice.corporationBusiness}"
+                                                        >
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>사원수</dt>
+                                                        <dd th:text="${notice.corporationEmployeesNumber + '명'}"
+                                                        >
+<!--                                                            <span>-->
+<!--                                                                (2024년-->
+<!--                                                                기준)</span-->
+<!--                                                            >-->
+                                                        </dd>
+                                                    </dl>
+<!--                                                    <dl>-->
+<!--                                                        <dt>설립일</dt>-->
+<!--                                                        <dd-->
+<!--                                                            title="2005년 10월 11일 (업력 20년차) "-->
+<!--                                                        >-->
+<!--                                                            2005년 10월 11일-->
+<!--                                                            <span-->
+<!--                                                                >(업력 20년차)-->
+<!--                                                            </span>-->
+<!--                                                        </dd>-->
+<!--                                                    </dl>-->
+                                                    <dl>
+                                                        <dt>매출액</dt>
+                                                        <dd th:text="${
+                                                                   notice.corporationSales >= 100000000 ?
+                                                                       (notice.corporationSales / 100000000) + '조 ' +
+                                                                       (notice.corporationSales / 10000 % 10000) + '억 ' +
+                                                                       (notice.corporationSales % 10000) + '만원' :
+                                                                   notice.corporationSales >= 10000 ?
+                                                                       (notice.corporationSales / 10000) + '억 ' +
+                                                                       (notice.corporationSales % 10000) + '만원' :
+                                                                   notice.corporationSales + '만원'
+                                                               }">
+
+
+<!--                                                            <span-->
+<!--                                                                >(2023년-->
+<!--                                                                기준)</span-->
+<!--                                                            >-->
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>홈페이지</dt>
+                                                        <dd>
+                                                            <a th:href="${notice.corporationHomepage}" th:text="${notice.corporationHomepage}">
+
+                                                            </a>
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>기업주소</dt>
+                                                        <dd th:text="${notice.corporationAddress} + ' ' + ${notice.corporationAddressDetail}"
+                                                        >
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="link-area">
+                                                    <div class="btn-area">
+                                                        <a
+                                                            href=""
+                                                            class="spr-jview btn-jview-new btn-link ga-data-layer"
+                                                            ><span
+                                                                >채용정보
+                                                                <strong
+                                                                    >2</strong
+                                                                >건</span
+                                                            ></a
+                                                        ><a
+                                                            href=""
+                                                            class="spr-jview btn-jview-new btn-link ga-data-layer"
+                                                            ><span
+                                                                >면접후기
+                                                                <strong
+                                                                    >1</strong
+                                                                >건</span
+                                                            ></a
+                                                        ><a
+                                                            href=""
+                                                            class="spr-jview btn-jview-new btn-link ga-data-layer"
+                                                            ><span
+                                                                >기업리뷰</span
+                                                            ></a
+                                                        >
+<!--                                                        <a-->
+<!--                                                            href=""-->
+<!--                                                            class="spr-jview btn-jview-new btn-link ga-data-layer"-->
+<!--                                                            ><span-->
+<!--                                                                >연봉정보</span-->
+<!--                                                            ></a-->
+<!--                                                        >-->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="jv-ads bottom-nest"></div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        <!-- 아이콘들 -->
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <symbol id="jv_detail" fill="none">
+                <rect
+                    x="4.5"
+                    y="6.5"
+                    width="22"
+                    height="16"
+                    rx="1.5"
+                    stroke="currentColor"
+                ></rect>
+                <rect
+                    x="13.5"
+                    y="22.5"
+                    width="4"
+                    height="4"
+                    stroke="currentColor"
+                ></rect>
+                <rect
+                    x="10.25"
+                    y="26.25"
+                    width="10.5"
+                    height="0.5"
+                    fill="#5C667B"
+                    stroke="currentColor"
+                    stroke-width="0.5"
+                ></rect>
+                <rect
+                    x="4.25"
+                    y="19.25"
+                    width="21.5"
+                    height="0.5"
+                    fill="#5C667B"
+                    stroke="currentColor"
+                    stroke-width="0.5"
+                ></rect>
+                <rect
+                    x="8.25"
+                    y="11.25"
+                    width="6.5"
+                    height="0.5"
+                    fill="#5C667B"
+                    stroke="currentColor"
+                    stroke-width="0.5"
+                ></rect>
+                <rect
+                    x="0.25"
+                    y="-0.25"
+                    width="13.5"
+                    height="0.5"
+                    transform="matrix(1 0 0 -1 8 13.5)"
+                    fill="#5C667B"
+                    stroke="currentColor"
+                    stroke-width="0.5"
+                ></rect>
+                <rect
+                    x="0.25"
+                    y="-0.25"
+                    width="5.5"
+                    height="0.5"
+                    transform="matrix(1 0 0 -1 8 15.5)"
+                    fill="#5C667B"
+                    stroke="currentColor"
+                    stroke-width="0.5"
+                ></rect>
+            </symbol>
+            <symbol id="jv_howto" fill="none">
+                <path
+                    d="M7.5 10C7.5 6.96243 9.96243 4.5 13 4.5H19C22.0376 4.5 24.5 6.96243 24.5 10V20C24.5 24.6944 20.6944 28.5 16 28.5C11.3056 28.5 7.5 24.6944 7.5 20V10Z"
+                    stroke="currentColor"
+                ></path>
+                <rect
+                    x="8.25"
+                    y="13.25"
+                    width="15.5"
+                    height="0.5"
+                    fill="#8491A7"
+                    stroke="currentColor"
+                    stroke-width="0.5"
+                ></rect>
+                <rect
+                    x="15.5"
+                    y="8.5"
+                    width="1"
+                    height="2"
+                    fill="#8491A7"
+                    stroke="currentColor"
+                ></rect>
+            </symbol>
+            <symbol id="jv_statics" fill="none">
+                <path
+                    d="M10 19C10 18.6 13.6667 12.8333 15.5 10L19.5 15.5L23.5 11.5"
+                    stroke="currentColor"
+                ></path>
+                <path d="M6.5 7V23.5H26.5" stroke="currentColor"></path>
+            </symbol>
+            <symbol id="jv_company" fill="none">
+                <rect
+                    x="6.5"
+                    y="4.5"
+                    width="19"
+                    height="23"
+                    stroke="currentColor"
+                ></rect>
+                <rect
+                    x="11.5"
+                    y="9.5"
+                    width="2"
+                    height="2"
+                    stroke="currentColor"
+                ></rect>
+                <rect
+                    x="11.5"
+                    y="16.5"
+                    width="2"
+                    height="2"
+                    stroke="currentColor"
+                ></rect>
+                <rect
+                    x="18.5"
+                    y="9.5"
+                    width="2"
+                    height="2"
+                    stroke="currentColor"
+                ></rect>
+                <rect
+                    x="18.5"
+                    y="16.5"
+                    width="2"
+                    height="2"
+                    stroke="currentColor"
+                ></rect>
+            </symbol>
+            <symbol id="icon_i" fill="none">
+                <circle
+                    cx="8"
+                    cy="8"
+                    r="7.5"
+                    fill="white"
+                    stroke="#8491A7"
+                ></circle>
+                <path
+                    d="M8 6C8.552 6 9 5.552 9 5C9 4.4475 8.552 4 8 4C7.448 4 7 4.4475 7 5C7 5.552 7.448 6 8 6Z"
+                    fill="#8491A7"
+                ></path>
+                <path
+                    d="M8.79462 7.9067C8.74841 7.50883 8.41027 7.2 8 7.2C7.55817 7.2 7.2 7.55817 7.2 8V11.6L7.20538 11.6933C7.25159 12.0912 7.58973 12.4 8 12.4C8.44183 12.4 8.8 12.0418 8.8 11.6V8L8.79462 7.9067Z"
+                    fill="#8491A7"
+                ></path>
+            </symbol>
+            <symbol id="icon_fav" fill="none">
+                <path
+                    d="M8.03687 4.03588L8.49755 5.10541L8.95575 4.03482C9.80012 2.06194 11.4507 1.34018 12.8329 1.61125C14.1997 1.87929 15.4834 3.1585 15.5004 5.58636C15.5045 6.17834 15.2791 6.80662 14.8952 7.4389C14.5132 8.06822 13.9941 8.66869 13.4609 9.19483C12.9295 9.7193 12.3954 10.1589 11.9933 10.4677C11.7927 10.6218 11.6259 10.7426 11.5101 10.8243C11.4522 10.8652 11.4072 10.8962 11.3771 10.9167L11.3434 10.9395L11.3355 10.9447L11.3338 10.9458L11.3338 10.9459L11.3337 10.9458L11.3277 10.9499L11.6089 11.3634C11.3277 10.9499 11.3277 10.95 11.3276 10.95L11.3275 10.9501L11.327 10.9504L11.3252 10.9517L11.3185 10.9562L11.293 10.9737C11.2709 10.9889 11.2386 11.0111 11.1976 11.0395C11.1156 11.0963 10.9987 11.1779 10.8579 11.2777C10.5768 11.4772 10.1991 11.7507 9.81514 12.0451C9.43302 12.3382 9.03625 12.6585 8.72103 12.9507C8.64481 13.0214 8.57133 13.0923 8.50269 13.1624C8.43171 13.091 8.35563 13.0189 8.27669 12.947C7.95868 12.6572 7.56079 12.3414 7.17827 12.053C6.79396 11.7633 6.41677 11.495 6.13628 11.2995C5.99584 11.2016 5.8792 11.1216 5.79747 11.066C5.75659 11.0382 5.72442 11.0165 5.70234 11.0016L5.67695 10.9845L5.67025 10.9801L5.66846 10.9789L5.66796 10.9785L5.66781 10.9784C5.66776 10.9784 5.66773 10.9784 5.39247 11.3906L5.66773 10.9784L5.66534 10.9768L5.6653 10.9768L5.66517 10.9767L5.66511 10.9766L5.66348 10.9755L5.65556 10.9703L5.62188 10.9475C5.59176 10.927 5.5467 10.896 5.48883 10.8552C5.37304 10.7735 5.20628 10.6527 5.00564 10.4986C4.60352 10.1898 4.06947 9.75033 3.53803 9.22592C3.0049 8.69985 2.48578 8.09943 2.10374 7.47013C1.71991 6.83788 1.49449 6.20957 1.49862 5.61752L1.49862 5.6175C1.51554 3.18658 2.78513 1.85635 4.13901 1.5622C5.49499 1.26759 7.14464 1.96445 8.03687 4.03588Z"
+                    fill="white"
+                    stroke="#949494"
+                ></path>
+                <!--<path d="M8.03687 4.03654L8.49755 5.10608L8.95576 4.03548C9.80012 2.0626 11.4507 1.34084 12.8329 1.61191C14.1997 1.87994 15.4834 3.15916 15.5004 5.58702C15.5045 6.179 15.2791 6.80728 14.8952 7.43956C14.5132 8.06888 13.9941 8.66935 13.4609 9.19549C12.9295 9.71996 12.3954 10.1595 11.9933 10.4684C11.7927 10.6225 11.6259 10.7433 11.5101 10.825C11.4522 10.8658 11.4072 10.8969 11.3771 10.9174L11.3434 10.9401L11.3355 10.9454L11.3338 10.9465L11.3338 10.9465L11.3337 10.9465L11.3277 10.9506L11.6089 11.364C11.3277 10.9506 11.3277 10.9506 11.3276 10.9506L11.3275 10.9507L11.327 10.9511L11.3252 10.9523L11.3185 10.9569L11.293 10.9743C11.2709 10.9895 11.2386 11.0117 11.1976 11.0401C11.1156 11.0969 10.9987 11.1785 10.8579 11.2784C10.5768 11.4778 10.1991 11.7513 9.81514 12.0458C9.43302 12.3388 9.03625 12.6591 8.72103 12.9514C8.64481 13.0221 8.57133 13.093 8.50269 13.1631C8.43171 13.0917 8.35563 13.0195 8.27669 12.9476C7.95868 12.6579 7.56079 12.3421 7.17827 12.0537C6.79396 11.7639 6.41677 11.4956 6.13628 11.3001C5.99584 11.2022 5.8792 11.1223 5.79746 11.0667C5.75659 11.0389 5.72442 11.0171 5.70234 11.0023L5.67695 10.9852L5.67025 10.9807L5.66846 10.9795L5.66796 10.9792L5.66781 10.9791C5.66776 10.9791 5.66772 10.979 5.3901 11.3949L5.66773 10.979L5.66534 10.9774L5.6653 10.9774L5.66517 10.9773L5.66511 10.9773L5.66348 10.9762L5.65556 10.9709L5.62188 10.9482C5.59176 10.9277 5.5467 10.8967 5.48883 10.8558C5.37304 10.7741 5.20628 10.6534 5.00564 10.4993C4.60352 10.1905 4.06947 9.75099 3.53802 9.22658C3.00489 8.7005 2.48578 8.10009 2.10373 7.47078C1.7199 6.83854 1.49449 6.21024 1.49862 5.61818L1.49862 5.61817C1.51554 3.18723 2.78513 1.857 4.13901 1.56285C5.49499 1.26824 7.14464 1.96511 8.03687 4.03654Z" fill="#FF5656" stroke="#FF5656"/>-->
+            </symbol>
+            <symbol id="icon_sns_share" fill="none">
+                <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M9.5 4C10.3284 4 11 3.32843 11 2.5C11 1.67157 10.3284 1 9.5 1C8.67157 1 8 1.67157 8 2.5C8 3.32843 8.67157 4 9.5 4ZM9.5 5C10.8807 5 12 3.88071 12 2.5C12 1.11929 10.8807 0 9.5 0C8.11929 0 7 1.11929 7 2.5C7 2.58612 7.00435 2.67122 7.01286 2.7551L4.42836 4.90885C3.96982 4.35376 3.27622 4 2.5 4C1.11929 4 0 5.11929 0 6.5C0 7.88071 1.11929 9 2.5 9C3.28763 9 3.99019 8.63577 4.44843 8.06654L7.09124 9.82842C7.03178 10.0421 7 10.2673 7 10.5C7 11.8807 8.11929 13 9.5 13C10.8807 13 12 11.8807 12 10.5C12 9.11929 10.8807 8 9.5 8C8.71237 8 8.00981 8.36423 7.55157 8.93346L4.90876 7.17159C4.96822 6.95788 5 6.73265 5 6.5C5 6.26199 4.96674 6.03175 4.90461 5.81367L7.34975 3.77607C7.78559 4.50892 8.58545 5 9.5 5ZM9.5 12C10.3284 12 11 11.3284 11 10.5C11 9.67157 10.3284 9 9.5 9C8.67157 9 8 9.67157 8 10.5C8 11.3284 8.67157 12 9.5 12ZM4 6.5C4 7.32843 3.32843 8 2.5 8C1.67157 8 1 7.32843 1 6.5C1 5.67157 1.67157 5 2.5 5C3.32843 5 4 5.67157 4 6.5Z"
+                    fill="#8491A7"
+                ></path>
+            </symbol>
+            <symbol id="icon_report" fill="none">
+                <path
+                    d="M0.5 11C0.5 10.7239 0.723858 10.5 1 10.5H11C11.2761 10.5 11.5 10.7239 11.5 11V12C11.5 12.2761 11.2761 12.5 11 12.5H1C0.723858 12.5 0.5 12.2761 0.5 12V11Z"
+                    stroke="#8491A7"
+                ></path>
+                <path
+                    d="M10.5 10V5C10.5 2.51472 8.48528 0.5 6 0.5V0.5C3.51472 0.5 1.5 2.51472 1.5 5V10"
+                    stroke="#8491A7"
+                ></path>
+                <path
+                    d="M3.5 5.49999C3.5 4.5 4 3 5.5 3"
+                    stroke="#949494"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                ></path>
+            </symbol>
+            <symbol id="icon_prt" fill="none">
+                <rect
+                    x="3.5"
+                    y="0.5"
+                    width="8"
+                    height="6"
+                    fill="white"
+                    stroke="#8491A7"
+                ></rect>
+                <rect
+                    x="0.5"
+                    y="4.5"
+                    width="14"
+                    height="7"
+                    fill="white"
+                    stroke="#8491A7"
+                ></rect>
+                <rect
+                    x="3.5"
+                    y="8.5"
+                    width="8"
+                    height="6"
+                    fill="white"
+                    stroke="#8491A7"
+                ></rect>
+            </symbol>
+        </svg>
+
+    </body>
+    <script th:inline="javascript">
+        // Thymeleaf를 사용하여 noticeEndDate 값을 JavaScript 변수에 할당
+        const noticeEndDate = [[${notice.noticeEndDate}]];
+        const fileDTO = [[${file}]];
+        const logoFile = [[${logoFile}]];
+
+        const img = document.getElementById("notice-image");
+        const logoImg = document.getElementById("logo-img");
+        img.src=`/file/display?fileName=${fileDTO.filePath}/${fileDTO.fileName}`;
+        logoImg.src =`/file/display?fileName=${logoFile.filePath}/${logoFile.fileName}`;
+    </script>
+    <script src="/js/matching/matching-detail-corporation.js"></script>
+    <script src="/js/matching/detail/detail-layout.js"></script>
+    <script src="/js/matching/detail/detail-corporation-event.js"></script>
+    <script src="/js/corporation/corporation-login-header.js"></script>
+</html>

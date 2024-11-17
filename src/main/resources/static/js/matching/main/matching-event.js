@@ -1,5 +1,3 @@
-globalThis.page = 1;
-matchingService.getList(globalThis.page, showListScroll);
 
 globalThis.loadingFlag = false;
 window.addEventListener("scroll", (e) => {
@@ -11,11 +9,13 @@ window.addEventListener("scroll", (e) => {
         return;
     }
 
-    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    if((window.innerHeight + window.scrollY+ 10) >= document.body.offsetHeight) {
         globalThis.loadingFlag = true;
-        matchingService.getList(++globalThis.page, showListScroll);
+        matchingService.getList(++globalThis.page,formData, showListScroll);
     }
-})
+});
+
+
 
 
 // 창 높이 조절

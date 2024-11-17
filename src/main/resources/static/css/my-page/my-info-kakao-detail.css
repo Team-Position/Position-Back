@@ -207,7 +207,7 @@ body {
     height: 100%;
     border-radius: 100%;
     box-sizing: border-box;
-    background: var(--gray40) url('/static/images/my-page/profile-noimg.png') no-repeat center center;
+    background: var(--gray40) url('/images/my-page/profile-noimg.png') no-repeat center center;
 }
 .photo-wrap .photo-border {
     position: absolute;
@@ -230,7 +230,7 @@ body {
     height: 32px;
     border: 1px solid var(--gray40);
     border-radius: 100%;
-    background: var(--white) url('/static/images/my-page/ico-camera.png') no-repeat center center;
+    background: var(--white) url('/images/my-page/ico-camera.png') no-repeat center center;
 }
 .photo-wrap:hover .btn-photo {
     background-color: var(--gray20);
@@ -665,7 +665,7 @@ field-btn button {
     width: 17px;
     height: 17px;
     border: 0 none;
-    background: url('/static/images/my-page/btn-layer-close.png') no-repeat 50% 50%;
+    background: url('/images/my-page/btn-layer-close.png') no-repeat 50% 50%;
 }
 
 
@@ -731,7 +731,7 @@ field-btn button {
     margin: 100px 30px 0;
     width: 24px;
     height: 42px;
-    background: url('/static/images/my-page/ico-photo-arrow.png') no-repeat 0 0;
+    background: url('/images/my-page/ico-photo-arrow.png') no-repeat 0 0;
 }
 
 .layer-photo .area-photo .photo-preview {

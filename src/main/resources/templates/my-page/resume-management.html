@@ -4,16 +4,16 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Resume</title>
-        <link rel="stylesheet" href="/static/css/main.css" />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/my-page/my-page-header.css" />
         <link
             rel="stylesheet"
-            href="/static/css/my-page/resume-management.css"
+            href="/css/my-page/resume-management.css"
         />
     </head>
-
     <body>
         <!-- 헤더 추가 해야 함-->
-        <header></header>
+        <header th:replace="~{/my-page/my-page-header :: my-page-header}"></header>
         <!-- 전체 body -->
         <div id="position-section">
             <!-- 사이드 바 추가 해야 함-->
@@ -54,39 +54,6 @@
                                         </li>
                                     </ul>
                                     <ul class="control-group">
-                                        <li>
-                                            <a
-                                                href="/zf-user/member/suggest/status-list"
-                                                class="BtnType SizeM resume-btn common ga-event"
-                                                >스크랩한 공고</a
-                                            >
-                                            <span class="badge-count">0</span>
-                                        </li>
-                                        <!-- <li>
-                                            <a
-                                                href="/zf-user/member/resume-manage/lookup-status"
-                                                class="BtnType SizeM resume-btn common ga-event"
-                                                data-layer="lookup-history"
-                                                >이력서 열람 현황</a
-                                            >
-                                            <span class="badge-count">0</span>
-                                        </li> -->
-                                        <li>
-                                            <button
-                                                type="button"
-                                                class="BtnType SizeM resume-btn common btn-layer-open ga-event"
-                                            >
-                                                입사 지원 내역
-                                            </button>
-                                            <span class="badge-count">0</span>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="/zf-user/persons/scrap-recruit"
-                                                class="BtnType SizeM resume-btn my-link ga-event"
-                                                >내 공고활동 보러가기</a
-                                            >
-                                        </li>
                                         <li class="control">
                                             <button
                                                 type="button"
@@ -198,7 +165,7 @@
                                         </div>
                                     </div> -->
                                     <a
-                                        href="javascript:;"
+                                        href="/resume/write"
                                         class="BtnType SizeM btn-action"
                                         >이력서 작성</a
                                     >
@@ -602,5 +569,12 @@
             </symbol>
         </svg>
     </body>
-    <script src="/static/js/my-page/resume-management.js"></script>
+    <script th:inline="javascript">
+        const resumes = [[${resumes}]];
+        const btnToggleGnb = document.querySelector(".btn-toggle-gnb");
+        const btnExpands = document.querySelectorAll(".btn-expand");
+        const gnbLists = document.querySelectorAll(".gnb li");
+    </script>
+    <script src="/js/my-page/my-page-header.js"></script>
+    <script src="/js/my-page/resume-management.js"></script>
 </html>
