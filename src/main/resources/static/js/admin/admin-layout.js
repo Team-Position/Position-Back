@@ -41,6 +41,10 @@ function goToPage(page) {
     fetchAndShowMembers(page);
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    goToPage(1);
+});
+
 // 일반 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowMembers = async (page) => {
     const keyword = memberKeywordInput.value;
@@ -84,14 +88,18 @@ const showMemberList = ( { members, pagination } ) => {
                 <div class="UserTable_cell">${member.memberAddress || ''}</div>
                 <div class="UserTable_cell">${member.memberPhone || ''}</div>
                 <div class="UserTable_cell">${member.memberStatus || ''}</div>
-                <div class="UserTable_cell"><button class="editBtn">수정</button></div>
+                <div class="UserTable_cell">
+                    <button class="editBtn">수정</button>
+                </div>
             </div>    
         `;
     });
 
     MemberListLayout.innerHTML = text;
 
-    console.log("Total pages:", pagination.totalPages);
+    // 동적으로 totalPages 계산
+    const memberTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = memberTotalPages;
 
     // 페이지 버튼 생성
     let pagingText = '';
@@ -158,7 +166,11 @@ function goToCorPage(page) {
     fetchAndShowCorporations(page);
 }
 
-// 일반 회원 목록을 서버에서 가져오고 화면에 표시
+document.addEventListener('DOMContentLoaded', () => {
+    goToCorPage(1);
+});
+
+// 기업 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowCorporations = async (page) => {
     const keyword = corporationKeywordInput.value;
     try {
@@ -205,8 +217,6 @@ const showCorporationList = ( { corporations, pagination } ) => {
     });
 
     CorporationListLayout.innerHTML = text;
-
-    console.log("Total pages:", pagination.totalPages);
 
     // 페이지 버튼 생성
     let pagingText = '';
@@ -276,7 +286,7 @@ const PositionKeywordInput = document.getElementById("positionSearchInput");
 const ApplyStatusSortOptions = document.querySelectorAll(".sort-filter-option.applySort");
 const InterviewSortOptions = document.querySelectorAll(".sort-filter-option.interviewSort");
 const PositionStatusSortOptions = document.querySelectorAll(".sort-filter-option.positionSort");
-let applySelectedSort = "최신순" // 기본 정렬 설정
+let applySelectedSort = "신청일순" // 기본 정렬 설정
 
 // 검색어 초기화
 ApplyKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
@@ -306,6 +316,10 @@ function goToApplyPage(page) {
     fetchAndShowApply(page);
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    goToApplyPage(1);
+});
+
 // 지원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowApply = async (page) => {
     const keyword = ApplyKeywordInput.value;
@@ -313,7 +327,7 @@ const fetchAndShowApply = async (page) => {
 
     try {
         // 데이터를 서버에서 가져오는 요청
-        const response = await fetch(`/admin/position/position/apply/${page}?keyword=${keyword}&types=${sortType}`);
+        const response = await fetch(`/admin/position/apply/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
         // 페이지 데이터와 지원 목록 데이터를 표시하는 함수 호출
@@ -324,8 +338,8 @@ const fetchAndShowApply = async (page) => {
     }
 };
 
-// 일반 회원 목록과 페이지네이션을 표시하는 함수
-const showApplyList = ({applys, pagination}) => {
+// 지원 목록과 페이지네이션을 표시하는 함수
+const showApplyList = ({ applies, pagination }) => {
     let text = `
         <div class="ApplyTable_row ApplyTable_header">
             <div class="ApplyTable_cell"><input type="checkbox" id="selectAll"></div>
@@ -340,9 +354,9 @@ const showApplyList = ({applys, pagination}) => {
         </div>
     `;
 
-    applys.forEach((apply) => {
+    applies.forEach((apply) => {
         text += `
-        <div class="ApplyTable_row"
+        <div class="ApplyTable_row">
             <div class="ApplyTable_cell"><input type="checkbox" id="selectAll"></div>
             <div class="ApplyTable_cell">${apply.corporationName}</div>
             <div class="ApplyTable_cell">${apply.createdDate}</div>
@@ -410,7 +424,7 @@ const showApplyList = ({applys, pagination}) => {
 };
 
 // 면접 현황 기본 정렬 설정
-let interviewSelectedSort = "최신순";
+let interviewSelectedSort = "지원 합격일 순";
 
 // 정렬 옵션 이벤트 설정
 InterviewSortOptions.forEach((option) => {
@@ -443,9 +457,11 @@ function goToInterviewPage(page) {
 // 면접 현황 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowInterview = async (page) => {
     const keyword = InterviewKeywordInput.value;
+    const sortType = interviewSelectedSort;
+
     try {
         // 데이터를 서버에서 가져오는 요청
-        const response = await fetch(`/admin/position/apply/${page}?keyword=${keyword}`);
+        const response = await fetch(`/admin/position/interview/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
         // 페이지 데이터와 면접 현황 목록 데이터를 표시하는 함수 호출
@@ -457,12 +473,12 @@ const fetchAndShowInterview = async (page) => {
 };
 
 // 면접 현황 목록과 페이지 처리를 표시
-const showInterviewList = ({Interviews, pagination}) => {
+const showInterviewList = ({interviews, pagination}) => {
     let text = `
         <div class="InterviewTable_row InterviewTable_header">
             <div class="InterviewTable_cell"><input type="checkbox" id="selectAll"></div>
             <div class="InterviewTable_cell">기업명</div>
-            <div class="InterviewTable_cell">면접 날짜</div>
+            <div class="InterviewTable_cell">지원 합격일</div>
             <div class="InterviewTable_cell">공고 제목</div>
             <div class="InterviewTable_cell">면접자</div>
             <div class="InterviewTable_cell">전화번호</div>
@@ -481,9 +497,10 @@ const showInterviewList = ({Interviews, pagination}) => {
                 <div class="InterviewTable_cell">${interview.noticeTitle}</div>
                 <div class="InterviewTable_cell">${interview.memberName}</div>
                 <div class="InterviewTable_cell">${interview.memberPhone}</div>
-                <div class="InterviewTable_cell">${interview.applyType}</div>
+                <div class="InterviewTable_cell">${interview.noticeJobCategoryName}</div>
                 <div class="InterviewTable_cell">${interview.interviewStatus}</div>
                 <div class="InterviewTable_cell">수정</div>
+            </div>
         `;
     });
 
@@ -572,6 +589,10 @@ function goToPositionPage(Page) {
     fetchAndShowPosition(page);
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    goToPositionPage(1);
+});
+
 // 포지션 현황 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowPosition = async (page) => {
     const keyword = PositionKeywordInput.value;
@@ -615,7 +636,7 @@ const showPositionList = ({positions, pagination}) => {
                 <div class="PositionTable_cell">${position.noticeTitle}</div>
                 <div class="PositionTable_cell">${position.memberName}</div>
                 <div class="PositionTable_cell">${position.memberPhone}</div>
-                <div class="PositionTable_cell">${position.applyType}</div>
+                <div class="PositionTable_cell">${position.noticeJobCategoryName}</div>
                 <div class="PositionTable_cell">${position.positionStatus}</div>
                 <div class="PositionTable_cell">수정</div>
             </div>

@@ -16,6 +16,14 @@ public class InterviewDTO {
     private String interviewDate;
     private String interviewStatus = "면접 예정";
 
+    // 관리자 페이지 - 면접 현황 관리
+    private String corporationName;
+    private String noticeTitle;
+    private String memberName;
+    private String memberPhone;
+    private String applyType;
+    private String noticeJobCategoryName;
+
     public InterviewVO toVO() {
         return new InterviewVO(id, corporationId, resumeId, interviewDate, interviewStatus);
     }

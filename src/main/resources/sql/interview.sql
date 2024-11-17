@@ -12,3 +12,35 @@ create table tbl_interview(
 
 select * from tbl_interview;
 
+
+
+
+SELECT
+    n.notice_title,
+    c.corporation_name,
+    i.interview_date,
+    m.member_name,
+    m.member_phone,
+    n.notice_job_category_name,
+    i.interview_status
+FROM
+    tbl_interview i
+        JOIN
+    tbl_corporation c ON i.corporation_id = c.id
+        JOIN
+    tbl_notice n ON n.corporation_id = c.id
+        JOIN
+    tbl_resume r ON i.resume_id = r.id
+        JOIN
+    tbl_member m ON r.member_id = m.id;
+
+# join tbl_notice n on n.corporation_id = c.id
+
+
+
+
+
+
+
+
+

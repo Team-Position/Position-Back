@@ -1061,7 +1061,7 @@ video {
 /* 두번째 열 */
 .Apply-headerCell:nth-child(3),
 .ApplyTable_cell:nth-child(3) {
-    width: 10%;
+    width: 11%;
 }
 
 /* 세번째 열 */
@@ -1248,7 +1248,7 @@ video {
 /* 두번째 열 */
 .Position-headerCell:nth-child(3),
 .PositionTable_cell:nth-child(3) {
-    width: 10%;
+    width: 12%;
 }
 
 /* 세번째 열 */

@@ -20,18 +20,18 @@ create table tbl_corporation(
 
 
 alter table tbl_corporation add(corporation_sales varchar(255) default '0');
-alter table tbl_corporation alter column corporation_sales set default 0;
+alter table tbl_corporation add column corporation_interested_count int default 0;
 alter table tbl_corporation add column corporation_opening_date date;
 alter table tbl_corporation alter column corporation_type set default '-';
-alter table tbl_corporation alter column corporation_business set default '-';
+alter table tbl_corporation add column corporation_business varchar(255) default '-';
 alter table tbl_corporation drop column corporation_business;
-alter table tbl_corporation drop column corporation_type;
+alter table tbl_corporation drop column corporation_interested_count;
 
 alter table tbl_corporation drop column corporation_sales;
 alter table tbl_corporation add(corporation_sales int);
 
 alter table  tbl_corporation drop column corporation_gen;
-alter  table  tbl_corporation add (corporation_gen varchar(255));
+alter  table  tbl_corporation add (corporation_type varchar(255) default '대기업');
 
 alter table  tbl_corporation add(created_date datetime default current_timestamp);
 alter table  tbl_corporation add(updated_date datetime default current_timestamp);
