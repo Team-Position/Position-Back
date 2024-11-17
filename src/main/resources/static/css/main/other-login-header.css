@@ -247,7 +247,7 @@ header, footer, section, nav, article {
     position: absolute;
     top: 63px;
     transform: translateX(-50%); /* 50%만큼 왼쪽으로 이동하여 정확히 중앙 정렬 */
-    padding-left: 0px;
+    padding-left: 190px;
     width: 860px;
     height: 58px;
     border-bottom: 1px solid #eaedf4;

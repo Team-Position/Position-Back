@@ -159,6 +159,7 @@
         from tbl_notice n
                  join tbl_corporation c on n.corporation_id = c.id
         where n.corporation_id = #{corporationId}
+          and n.notice_end_date > current_date
         order by n.created_date desc
             limit 3
     </select>

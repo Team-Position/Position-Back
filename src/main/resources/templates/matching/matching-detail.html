@@ -200,7 +200,7 @@
                                                             th:text="${notice.noticeWorkStartDate.substring(0, 10)}"></dd>
 
                                                         <dd th:if="${notice.noticeWorkStartDate.substring(0, 10) != notice.noticeWorkEndDate.substring(0, 10)}"
-                                                            th:text="${notice.noticeWorkStartDate.substring(0, 10)} + '~' + ${notice.noticeWorkEndDate.substring(0, 10)}"></dd>
+                                                            th:text="${notice.noticeWorkStartDate.substring(0, 10)} + ' ~ '  + ${notice.noticeWorkEndDate.substring(0, 10)}"></dd>
                                                     </dl>
                                                     <dl>
                                                         <dt>근무지역</dt>
@@ -218,7 +218,7 @@
                                                     </dl>
                                                 </div>
                                                 <div class="meta">
-                                                    <span class="salary-desc"
+                                                    <!--<span class="salary-desc"
                                                         ><strong
                                                             >최저임금계산에 대한
                                                             알림</strong
@@ -227,7 +227,7 @@
                                                         내용 등이 최저임금에
                                                         미달하는 경우 위 내용이
                                                         우선합니다.</span
-                                                    >
+                                                    >-->
                                                     <ul class="list-meta">
                                                         <li>
                                                             조회수
@@ -539,10 +539,10 @@
                                                 기업정보
                                             </h2>
                                             <a
-                                                href=""
+                                                href="/matching"
                                                 class="link-txt spr-jview ga-data-layer"
                                             >
-                                                이 기업의 다른 공고 (2건)
+                                                공고 목록
                                             </a>
                                         </div>
                                         <div class="cont box">

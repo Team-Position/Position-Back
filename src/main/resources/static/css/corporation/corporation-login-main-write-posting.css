@@ -1566,7 +1566,7 @@ li {
 
 .review-write .btn-confirm {
     display: block;
-    margin: 0 auto;
+    margin: 10px auto 0 auto;
     width: 200px;
     height: 40px;
     color: var(--white);

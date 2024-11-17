@@ -41,7 +41,7 @@ notices.forEach((notice) => {
     const formattedEndDate = `${year}년 ${month}월 ${day}일`;
     text += `
             <li>
-                <a href="/corporation/notice-detail?id=${notice.id}"  class="newcomer-link-view" target="_blank">
+                <a href="/corporation/notice-preview?id=${notice.id}"  class="newcomer-link-view" target="_blank">
                     <div class="list-curation-slide">
                         <span class="announcement">
                             ${notice.noticeTitle}
