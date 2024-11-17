@@ -313,23 +313,29 @@
         limit #{pagination.startRow}, #{pagination.rowCount}
     </select>
 
+    <select id="selectMemberInquiryTotal">
+        select count(*) tbl_inquiry
+    </select>
+
     <!-- 기업 문의 목록 페이징 -->
     <select id="selectAllCorporationInquiry" resultType="inquiryDTO">
-        SELECT id,
+        select id,
                inquiry_type,
                inquiry_category,
                inquiry_title,
                inquiry_content,
                created_date AS createdDate,
                updated_date AS updatedDate,
-               CASE
-                   WHEN member_email IS NOT NULL THEN member_email
-                   ELSE member_kakao_email
-                   END AS memberEmail
+               coalesce(member_email, member_kakao_email) as memberEmail,
+               inquiry_status
         FROM tbl_inquiry
         WHERE inquiry_type = '기업'
         ORDER BY createdDate DESC
             LIMIT #{pagination.startRow}, #{pagination.rowCount}
+    </select>
+
+    <select id="selectCorporationInquiryTotal">
+        select count(*) tbl_inquiry
     </select>
 
 </mapper>

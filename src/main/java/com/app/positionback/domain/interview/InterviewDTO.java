@@ -22,6 +22,7 @@ public class InterviewDTO {
     private String memberName;
     private String memberPhone;
     private String applyType;
+    private String noticeJobCategoryName;
 
     public InterviewVO toVO() {
         return new InterviewVO(id, corporationId, resumeId, interviewDate, interviewStatus);
