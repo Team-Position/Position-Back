@@ -173,10 +173,11 @@
                                     "
                                 >
                                     <li
+                                        th:each="notice : ${notices}"
                                         class="item item-recruit swiper-slide swiper-slide-active"
                                     >
                                         <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49109253&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
+                                            th:href="@{/notice-detail(id=${notice.id})}"
                                             class="inner"
                                             data-ga="major-recruit"
                                             data-click-url=""
@@ -184,7 +185,7 @@
                                             <div class="item-header">
                                                 <div class="logo">
                                                     <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/3641_logo.png"
+                                                            th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
                                                         class="img"
                                                         alt=""
                                                         loading="lazy"
@@ -193,556 +194,561 @@
                                             </div>
                                             <div class="item-body">
                                                 <strong
+                                                        th:text="${notice.noticeTitle}"
                                                     >다우기술 경력•신입 대규모
                                                     인재영입</strong
                                                 >
-                                                <span>(주)다우기술</span>
-                                            </div>
-                                            <div class="item-footer">D-3</div>
-                                        </a>
-                                    </li>
-                                    <li
-                                        class="item item-recruit swiper-slide swiper-slide-next"
-                                    >
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49108696&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://pds.saramin.co.kr/company/logo/202111/09/r2aefd_aj07-1mldvrb_logo.png"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >원격관제 신입/경력직
-                                                    채용</strong
-                                                >
-                                                <span>에스케이쉴더스(주)</span>
-                                            </div>
-                                            <div class="item-footer">D-2</div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49115634&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/12587_logo_1.jpg"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >어플라이드 머티어리얼즈
-                                                    코리아 신입/경력 엔지니어
-                                                    채용(학사, 전문학사)</strong
-                                                >
                                                 <span
-                                                    >어플라이드머티어리얼즈코리아(주)</span
-                                                >
+                                                        th:text="${notice.corporationName}"
+                                                >(주)다우기술</span>
                                             </div>
-                                            <div class="item-footer">D-3</div>
+                                            <div
+                                                    th:text="'D-' + ${T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).now(), T(java.time.LocalDate).parse(notice.noticeEndDate))}"
+                                                    class="item-footer">D-3</div>
                                         </a>
                                     </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49141440&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/74306_logo.png"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >[네이버] SNOW 품질보증 지원
-                                                    담당자 모집 (계약직)</strong
-                                                >
-                                                <span>스노우(주)</span>
-                                            </div>
-                                            <div class="item-footer">D-5</div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49155756&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/2178_logo.gif"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >안성공장 2024년 하반기
-                                                    채용(기숙사 있음)</strong
-                                                >
-                                                <span>(주)디에이피</span>
-                                            </div>
-                                            <div class="item-footer">D-6</div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49105385&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/32471_logo_2.gif"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >2024년 9차 kt telecop
-                                                    SG사원 상시채용</strong
-                                                >
-                                                <span>케이티텔레캅(주)</span>
-                                            </div>
-                                            <div class="item-footer">D-2</div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49141209&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/6933_logo.jpg"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >2024 넥슨컴퍼니 채용형
-                                                    인턴십, 넥토리얼</strong
-                                                >
-                                                <span>(주)넥슨코리아</span>
-                                            </div>
-                                            <div class="item-footer">
-                                                ~10.21(월)
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49077090&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://pds.saramin.co.kr/company/logo/oldfile_v1/neople.jpg"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >[홈페이지지원][서울지사][인프라기술실]
-                                                    웹프로그래머 모집</strong
-                                                >
-                                                <span>(주)네오플</span>
-                                            </div>
-                                            <div class="item-footer">
-                                                ~10.25(금)
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49133668&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/477_logo.jpg"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >2024년 3분기 분야별
-                                                    공개채용</strong
-                                                >
-                                                <span>극동건설(주)</span>
-                                            </div>
-                                            <div class="item-footer">
-                                                ~10.31(목)
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49155472&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/980_logo.jpg"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >(주)도화엔지니어링 2025년도
-                                                    대졸 신입사원
-                                                    공개채용</strong
-                                                >
-                                                <span>(주)도화엔지니어링</span>
-                                            </div>
-                                            <div class="item-footer">D-6</div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49105172&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/72911_logo.png"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >Generative Model-based
-                                                    Simulation Research
-                                                    Intern</strong
-                                                >
-                                                <span>네이버랩스(주)</span>
-                                            </div>
-                                            <div class="item-footer">D-6</div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49120499&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://pds.saramin.co.kr/company/logo/202307/31/ryng6f_3krp-1klc26s_logo.png"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >[IDC] 카카오 뱅크
-                                                    데이터센터 엔지니어
-                                                    채용</strong
-                                                >
-                                                <span>(주)디케이테크인</span>
-                                            </div>
-                                            <div class="item-footer">
-                                                ~11.01(금)
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49132039&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/38184_logo_1.jpg"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >채용 전환형 인턴
-                                                    채용</strong
-                                                >
-                                                <span>(주)이노션</span>
-                                            </div>
-                                            <div class="item-footer">D-7</div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49145209&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/15639_logo_1.gif"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >[천재교육그룹 공개채용]
-                                                    부문별 인재 모집</strong
-                                                >
-                                                <span>(주)천재교육</span>
-                                            </div>
-                                            <div class="item-footer">
-                                                ~10.21(월)
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49109343&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/877_logo_1.gif"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >각 부문별
-                                                    채용(전산팀/사류영업/니트원단
-                                                    영업,생산/니트의류
-                                                    영업/IR)</strong
-                                                >
-                                                <span>디아이동일(주)</span>
-                                            </div>
-                                            <div class="item-footer">
-                                                오늘마감
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=48909091&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://pds.saramin.co.kr/company/logo/202409/09/sjj546_ecdb-suclxr_logo.png"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >[NHN Enterprise] IDC 운영자
-                                                    (판교)</strong
-                                                >
-                                                <span>엔에이치엔(주)</span>
-                                            </div>
-                                            <div class="item-footer">
-                                                채용시
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49083753&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/16_.gif"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >에이닷 앱 서비스 운영 지원
-                                                    담당자</strong
-                                                >
-                                                <span>SK텔레콤(주)</span>
-                                            </div>
-                                            <div class="item-footer">D-2</div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49084032&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/219_.gif"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >[동서] 2024년 동서식품 대졸
-                                                    신입사원 채용</strong
-                                                >
-                                                <span>동서식품(주)</span>
-                                            </div>
-                                            <div class="item-footer">
-                                                15시마감
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=49089575&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/955_logo_1.gif"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >2024 명화공업 및 관계사
-                                                    수시 채용 (신입 및
-                                                    경력)</strong
-                                                >
-                                                <span>명화공업(주)</span>
-                                            </div>
-                                            <div class="item-footer">D-3</div>
-                                        </a>
-                                    </li>
-                                    <li class="item item-recruit swiper-slide">
-                                        <a
-                                            href="/zf-user/jobs/relay/view?rec-idx=48805171&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
-                                            <div class="item-header">
-                                                <div class="logo">
-                                                    <img
-                                                        src="https://pds.saramin.co.kr/company/logo/201707/27/otqn5e_o0m3-gyv0pu_logo.jpg"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="item-body">
-                                                <strong
-                                                    >(주)유니크 SW설계 연구직
-                                                    채용(판교)</strong
-                                                >
-                                                <span>(주)유니크</span>
-                                            </div>
-                                            <div class="item-footer">
-                                                채용시
-                                            </div>
-                                        </a>
-                                    </li>
+<!--                                    <li-->
+<!--                                        class="item item-recruit swiper-slide swiper-slide-next"-->
+<!--                                    >-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49108696&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://pds.saramin.co.kr/company/logo/202111/09/r2aefd_aj07-1mldvrb_logo.png"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >원격관제 신입/경력직-->
+<!--                                                    채용</strong-->
+<!--                                                >-->
+<!--                                                <span>에스케이쉴더스(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-2</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49115634&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/12587_logo_1.jpg"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >어플라이드 머티어리얼즈-->
+<!--                                                    코리아 신입/경력 엔지니어-->
+<!--                                                    채용(학사, 전문학사)</strong-->
+<!--                                                >-->
+<!--                                                <span-->
+<!--                                                    >어플라이드머티어리얼즈코리아(주)</span-->
+<!--                                                >-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-3</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49141440&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/74306_logo.png"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >[네이버] SNOW 품질보증 지원-->
+<!--                                                    담당자 모집 (계약직)</strong-->
+<!--                                                >-->
+<!--                                                <span>스노우(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-5</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49155756&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/2178_logo.gif"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >안성공장 2024년 하반기-->
+<!--                                                    채용(기숙사 있음)</strong-->
+<!--                                                >-->
+<!--                                                <span>(주)디에이피</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-6</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49105385&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/32471_logo_2.gif"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >2024년 9차 kt telecop-->
+<!--                                                    SG사원 상시채용</strong-->
+<!--                                                >-->
+<!--                                                <span>케이티텔레캅(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-2</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49141209&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/6933_logo.jpg"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >2024 넥슨컴퍼니 채용형-->
+<!--                                                    인턴십, 넥토리얼</strong-->
+<!--                                                >-->
+<!--                                                <span>(주)넥슨코리아</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">-->
+<!--                                                ~10.21(월)-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49077090&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://pds.saramin.co.kr/company/logo/oldfile_v1/neople.jpg"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >[홈페이지지원][서울지사][인프라기술실]-->
+<!--                                                    웹프로그래머 모집</strong-->
+<!--                                                >-->
+<!--                                                <span>(주)네오플</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">-->
+<!--                                                ~10.25(금)-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49133668&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/477_logo.jpg"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >2024년 3분기 분야별-->
+<!--                                                    공개채용</strong-->
+<!--                                                >-->
+<!--                                                <span>극동건설(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">-->
+<!--                                                ~10.31(목)-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49155472&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/980_logo.jpg"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >(주)도화엔지니어링 2025년도-->
+<!--                                                    대졸 신입사원-->
+<!--                                                    공개채용</strong-->
+<!--                                                >-->
+<!--                                                <span>(주)도화엔지니어링</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-6</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49105172&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/72911_logo.png"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >Generative Model-based-->
+<!--                                                    Simulation Research-->
+<!--                                                    Intern</strong-->
+<!--                                                >-->
+<!--                                                <span>네이버랩스(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-6</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49120499&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://pds.saramin.co.kr/company/logo/202307/31/ryng6f_3krp-1klc26s_logo.png"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >[IDC] 카카오 뱅크-->
+<!--                                                    데이터센터 엔지니어-->
+<!--                                                    채용</strong-->
+<!--                                                >-->
+<!--                                                <span>(주)디케이테크인</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">-->
+<!--                                                ~11.01(금)-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49132039&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/38184_logo_1.jpg"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >채용 전환형 인턴-->
+<!--                                                    채용</strong-->
+<!--                                                >-->
+<!--                                                <span>(주)이노션</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-7</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49145209&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/15639_logo_1.gif"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >[천재교육그룹 공개채용]-->
+<!--                                                    부문별 인재 모집</strong-->
+<!--                                                >-->
+<!--                                                <span>(주)천재교육</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">-->
+<!--                                                ~10.21(월)-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49109343&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/877_logo_1.gif"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >각 부문별-->
+<!--                                                    채용(전산팀/사류영업/니트원단-->
+<!--                                                    영업,생산/니트의류-->
+<!--                                                    영업/IR)</strong-->
+<!--                                                >-->
+<!--                                                <span>디아이동일(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">-->
+<!--                                                오늘마감-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=48909091&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://pds.saramin.co.kr/company/logo/202409/09/sjj546_ecdb-suclxr_logo.png"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >[NHN Enterprise] IDC 운영자-->
+<!--                                                    (판교)</strong-->
+<!--                                                >-->
+<!--                                                <span>엔에이치엔(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">-->
+<!--                                                채용시-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49083753&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/16_.gif"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >에이닷 앱 서비스 운영 지원-->
+<!--                                                    담당자</strong-->
+<!--                                                >-->
+<!--                                                <span>SK텔레콤(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-2</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49084032&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/219_.gif"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >[동서] 2024년 동서식품 대졸-->
+<!--                                                    신입사원 채용</strong-->
+<!--                                                >-->
+<!--                                                <span>동서식품(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">-->
+<!--                                                15시마감-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49089575&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/955_logo_1.gif"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >2024 명화공업 및 관계사-->
+<!--                                                    수시 채용 (신입 및-->
+<!--                                                    경력)</strong-->
+<!--                                                >-->
+<!--                                                <span>명화공업(주)</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">D-3</div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="item item-recruit swiper-slide">-->
+<!--                                        <a-->
+<!--                                            href="/zf-user/jobs/relay/view?rec-idx=48805171&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
+<!--                                            class="inner"-->
+<!--                                            data-ga="major-recruit"-->
+<!--                                            data-click-url=""-->
+<!--                                        >-->
+<!--                                            <div class="item-header">-->
+<!--                                                <div class="logo">-->
+<!--                                                    <img-->
+<!--                                                        src="https://pds.saramin.co.kr/company/logo/201707/27/otqn5e_o0m3-gyv0pu_logo.jpg"-->
+<!--                                                        class="img"-->
+<!--                                                        alt=""-->
+<!--                                                        loading="lazy"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-body">-->
+<!--                                                <strong-->
+<!--                                                    >(주)유니크 SW설계 연구직-->
+<!--                                                    채용(판교)</strong-->
+<!--                                                >-->
+<!--                                                <span>(주)유니크</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="item-footer">-->
+<!--                                                채용시-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
                                 </ul>
                                 <span
                                     class="swiper-notification"
@@ -783,47 +789,12 @@
                                 rel="nofollow"
                                 style="display: block"
                                 ><img
-                                    src="/static/images/main/promotion-image2.png"
+                                    src="/images/main/promotion-image2.png"
                                     alt="홍보 이미지"
                             /></a>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="main-links">
-                    <a
-                        href="/zf-user/tools/personal-statement-coaching-service"
-                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut-right', 'personal-statement-coaching')"
-                    >
-                        <svg aria-hidden="true" focusable="false">
-                            <use
-                                xlink:href="#main-link-personal-statement-coaching"
-                            ></use>
-                        </svg>
-                        <span>Ai 자소서 코칭</span>
-                    </a>
-                    <a
-                        href="/zf-user/tools/character-counter"
-                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut-right', 'character-counter')"
-                    >
-                        <svg aria-hidden="true" focusable="false">
-                            <use
-                                xlink:href="#main-link-character-counter"
-                            ></use>
-                        </svg>
-                        <span>맞춤법 검사</span>
-                    </a>
-                    <a
-                        href="/zf-user/tools/salary-calculator"
-                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut-right', 'salary-calculator')"
-                    >
-                        <svg aria-hidden="true" focusable="false">
-                            <use
-                                xlink:href="#main-link-salary-calculator"
-                            ></use>
-                        </svg>
-                        <span>연봉계산기</span>
-                    </a>
-                </div> -->
             </div>
         </section>
         <!-- 배너 밑 목록 -->
@@ -871,26 +842,33 @@
                     </div>
                     <!-- 공고 목록 -->
                     <ul class="prd-list plus" id="-platinumPlus">
-                        <li class="expanded" data-rec-idx="49126264">
+                        <li th:each="notice, iterStat : ${notices}"
+                            th:class="${iterStat.index == 0} ? 'expanded' : 'option'"
+                            th:data-rec-idx="${notice.id}">
                             <a
-                                href="/zf-user/jobs/relay/pop-view?rec-idx=49126264"
+                                th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
                                 class="link-box track-event"
                                 data-track-event="main|Ads-click|platinum-plus-onlyexpandoption|1"
                                 rel="sponsored, nofollow"
                             >
                                 <span class="logo"
                                     ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/skt1nt_8xul-2so27i_platinum7403469Guide150120.png"
+                                        th:if="${notice.fileDTO != null}"
+                                        th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
                                         class="img"
-                                        alt="차병원·바이오그룹 "
+                                        th:alt="${notice.corporationName}"
                                         loading="lazy"
-                                /></span>
-                                <span class="c-name">차병원·바이오그룹 </span>
-                                <span class="title"
+                                /> <img th:if="${notice.fileDTO == null}"
+                                        src="/images/default-logo.png" class="img" alt="기본 로고" loading="lazy" />
+                                </span>
+                                <span th:text="${notice.corporationName}" class="c-name">차병원·바이오그룹 </span>
+                                <span th:text="${notice.noticeTitle}" class="title"
                                     >2024년 신입/Junior <br />대규모
                                     공개채용</span
                                 >
-                                <span class="title-ex"
+                                <span
+                                        th:text="${notice.noticeTitle}"
+                                        class="title-ex"
                                     >2024년 신입/Junior <br />대규모
                                     공개채용</span
                                 >
@@ -898,29 +876,30 @@
                                     <svg>
                                         <use xlink:href="#job-tag-subway"></use>
                                     </svg>
-                                    <span>경강선 역세권 기업</span>
+                                    <span th:text="${notice.badgeText}">경강선 역세권 기업</span>
                                 </span>
-                                <span class="date">D-6</span>
+                                <span th:text="'D-' + ${T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).now(), T(java.time.LocalDate).parse(notice.noticeEndDate))}" class="date">D-6</span>
                                 <span class="bg"
                                     ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/skt1wj_6n30-2so27i_07.jpg"
-                                        alt="2024년 신입/Junior 대규모 공개채용"
+                                        th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
+                                        th:alt="${notice.noticeTitle}"
                                         loading="lazy"
                                 /></span>
                                 <span class="bg-ex"
                                     ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/skt1wj_6n30-2so27i_07.jpg"
-                                        alt="2024년 신입/Junior 대규모 공개채용"
+                                        th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
+                                        th:alt="${notice.noticeTitle}"
                                         loading="lazy"
                                 /></span>
-                                <span class="cont"
-                                    >1960년 설립 (65년차)<br />
-                                    사원수 2,426명 (2024년)</span
-                                >
+                                <span class="cont">
+                                    <span th:text="${notice.corporationBusiness}"></span><br />
+                                    <span th:text="${notice.corporationEmployeesNumber} + '명'"></span><br />
+                                    <span th:text="${notice.corporationAddress}"></span>
+                                </span>
                             </a>
                             <button
                                 class="btn-scrap track-event"
-                                data-track-event="main|Ads-scrap|platinum-plus-onlyexpandoption"
+                                th:data-track-event="'main|Ads-scrap|platinum-plus-option'"
                                 aria-pressed="false"
                             >
                                 <svg
@@ -937,10 +916,7 @@
                                         stroke="#8491A7"
                                     ></path>
                                 </svg>
-                                <span class="blind"
-                                    >차병원·바이오그룹 2024년 신입/Junior
-                                    <br />대규모 공개채용공고 스크랩 버튼</span
-                                >
+                                <span th:text="${notice.corporationName} + ' ' + ${notice.noticeTitle} + ' 공고 스크랩 버튼'"></span>
                             </button>
                         </li>
                         <li class="option" data-rec-idx="49173937">
