@@ -8,9 +8,26 @@
         <link rel="stylesheet" href="/css/main/body.css" />
         <link rel="stylesheet" href="/css/main/footer.css" />
         <link rel="stylesheet" href="/css/main/other-login-header.css" />
+        <link rel="stylesheet" th:href="@{/css/main/other-logout-header.css}"/>
+        <link rel="stylesheet" th:href="@{/css/main/other-login-header.css}" />
     </head>
     <body id="main">
-    <header th:replace="~{/main/other-login-header :: header-login}"></header>
+    <!-- 일반 회원일 때 -->
+    <!-- 일반 회원일 때 -->
+    <th:block th:if="${session.member != null and session.member.memberType == 'Personal'}">
+        <header th:replace="~{/main/other-login-header :: header-login}"></header>
+    </th:block>
+
+    <!-- 기업 회원일 때 -->
+    <th:block th:if="${session.member != null and session.member.memberType == 'Corporation'}">
+        <header th:replace="~{/main/other-login-header :: header-login}"></header>
+    </th:block>
+
+    <!-- 로그아웃 상태일 때 -->
+    <th:block th:if="${session.member == null}">
+        <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    </th:block>
+
     <section
             role="region"
             aria-label="추천공고"
@@ -57,6 +74,7 @@
                         href="https://www.saramingig.co.kr/exhibition/EX00000034?utm-source=saramin&amp;utm-medium=menu&amp;utm-campaign=gnb-sub"
                         target="-blank"
                         class="btn-greeting-link"
+                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut', 'sri-market')"
                     >
                         <span class="icon">
                             <svg
@@ -76,6 +94,7 @@
                     <a
                         href="https://mentor-match.saramin.co.kr"
                         class="btn-greeting-link"
+                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut', 'mentor-match')"
                         target="-blank"
                     >
                         <span class="icon">
@@ -2789,7 +2808,8 @@
 <!--    <footer th:replace="~{/main/footer :: footer}"></footer>-->
     </body>
     <script src="/js/main/body.js"></script>
-    <script src="/js/main/other-login-header.js"></script>
+    <script th:src="@{/js/main/other-logout-header.js}"></script>
+    <script th:src="@{/js/main/other-login-header.js}"></script>
     <script th:inline="javascript">
         member = [[${session.member}]];
     </script>

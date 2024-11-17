@@ -12,6 +12,7 @@ create table tbl_apply(
             references tbl_resume(id)
 );
 
+
 select *
 from tbl_apply;
 
