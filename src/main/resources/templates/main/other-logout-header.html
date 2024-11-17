@@ -4,18 +4,15 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>other logout header</title>
-        <link rel="stylesheet" href="/static/css/main.css" />
-        <link
-            rel="stylesheet"
-            href="/static/css/main/other-logout-header.css"
-        />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/main/other-logout-header.css"/>
     </head>
     <body id="main" class="vsc-initialized">
         <header id="header" class="main bubble" th:fragment="header-logout">
             <div class="wrap_header">
                 <h1>
                     <a
-                        href="/"
+                        th:href="@{/main}"
                         class="bi"
                         aria-label="사람인"
                         data-nav-track="ga_lead|main-gnb|global_menu|ci"
@@ -49,72 +46,6 @@
                             >
                                 <span class="txt">포지션 매칭</span>
                             </a>
-                            <!-- <ul class="depth2">
-                                <li class="selected">
-                                    <a
-                                        href="/zf_user/jobs/list/domestic"
-                                        data-nav-track="ga_lead|section-gnb|recruit|area"
-                                    >
-                                        <span class="txt">지역별</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/jobs/list/job-category"
-                                        data-nav-track="ga_lead|section-gnb|recruit|job"
-                                    >
-                                        <span class="txt">직업별</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/jobs/list/subway"
-                                        data-nav-track="ga_lead|section-gnb|recruit|area_subway"
-                                    >
-                                        <span class="txt">역세권별</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/jobs/hot100"
-                                        data-nav-track="ga_lead|section-gnb|recruit|hot100"
-                                    >
-                                        <span class="txt">HOT100</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/jobs/list/headhunting"
-                                        data-nav-track="ga_lead|section-gnb|recruit|headhunting"
-                                    >
-                                        <span class="txt">헤드헌팅</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/jobs/theme/main"
-                                        data-nav-track="ga_lead|section-gnb|recruit|theme"
-                                    >
-                                        <span class="txt">채용관</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/curation"
-                                        data-nav-track="ga_lead|section-gnb|recruit|curation"
-                                    >
-                                        <span class="txt">큐레이션</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/jobs/list/dispatch"
-                                        data-nav-track="ga_lead|section-gnb|recruit|dispatch"
-                                    >
-                                        <span class="txt">파견대행</span>
-                                    </a>
-                                </li>
-                            </ul> -->
                         </div>
                         <div class="major">
                             <a
@@ -215,145 +146,6 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- <div class="major">
-                            <a
-                                class="depth1"
-                                href="/zf_user/company-review"
-                                data-nav-track="ga_lead|section-gnb|company_info|company_info"
-                            >
-                                <span class="txt">기업·연봉</span>
-                            </a>
-                            <ul class="depth2">
-                                <li class="">
-                                    <a
-                                        href="/zf_user/company-review"
-                                        data-nav-track="ga_lead|section-gnb|company_info|review"
-                                    >
-                                        <span class="txt">기업리뷰</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/salaries/total-salary/list"
-                                        data-nav-track="ga_lead|section-gnb|company_info|salary"
-                                    >
-                                        <span class="txt">연봉정보</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/interview-review"
-                                        data-nav-track="ga_lead|section-gnb|company_info|interview"
-                                    >
-                                        <span class="txt">면접후기</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/company-info/sri-certification?seq=1227"
-                                        data-nav-track="ga_lead|section-gnb|company_info|certification"
-                                    >
-                                        <span class="txt">기업큐레이션</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="major">
-                            <a
-                                class="depth1"
-                                href="/zf_user/careerplus"
-                                data-nav-track="ga_lead|section-gnb|contents|contents"
-                            >
-                                <span class="txt">커리어성장</span>
-                            </a>
-                            <ul class="depth2">
-                                <li class="">
-                                    <a
-                                        href="/zf_user/careerplus"
-                                        data-nav-track="ga_lead|section-gnb|contents|home"
-                                    >
-                                        <span class="txt">클래스</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="https://mentor-match.saramin.co.kr"
-                                        target="_blank"
-                                        data-nav-track="ga_lead|section-gnb|contents|mentoring"
-                                    >
-                                        <span class="txt">멘토링매치</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/tools/personal-statement-coaching-service"
-                                        data-nav-track="ga_lead|section-gnb|contents|tool_personal-statement-coaching-service"
-                                    >
-                                        <span class="txt">Ai자소서 코칭</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/tools/character-counter"
-                                        data-nav-track="ga_lead|section-gnb|contents|tool"
-                                    >
-                                        <span class="txt">취업TOOL</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/pds-resume/resume-download"
-                                        data-nav-track="ga_lead|section-gnb|contents|jobdata_resume-download"
-                                    >
-                                        <span class="txt">이력서 양식</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/hr-magazine/list"
-                                        target="_blank"
-                                        data-nav-track="ga_lead|section-gnb|contents|hr-magazine"
-                                    >
-                                        <span class="txt">HR매거진</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="major">
-                            <a
-                                class="depth1"
-                                href="/zf_user/company-review-qst-and-ans"
-                                data-nav-track="ga_lead|section-gnb|qst-and-ans|qst-and-ans"
-                            >
-                                <span class="txt">커뮤니티</span>
-                            </a>
-                            <ul class="depth2">
-                                <li class="">
-                                    <a
-                                        href="/zf_user/company-review-qst-and-ans"
-                                        data-nav-track="ga_lead|section-gnb|qst-and-ans|qst_home"
-                                    >
-                                        <span class="txt">커뮤니티 홈</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/career-information/senior-list"
-                                        data-nav-track="ga_lead|section-gnb|qst-and-ans|qst_careerinfo"
-                                    >
-                                        <span class="txt">현직자 인터뷰</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a
-                                        href="/zf_user/company-review-qst-and-ans/influencer-intro"
-                                        data-nav-track="ga_lead|section-gnb|qst-and-ans|qst_expert"
-                                    >
-                                        <span class="txt">프로 전문가</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div> -->
                     </div>
                 </div>
                 <!-- header 로그인 -->
@@ -390,12 +182,12 @@
                             <ul class="services">
                                 <li class="half_col">
                                     <a
-                                        href="/zf_user/auth?ut=c"
+                                        th:href="@{/login/login-combine}"
                                         data-nav-track="ga_lead|main-gnb|layer_comp_service|signin_comp"
                                         >로그인</a
                                     >
                                     <a
-                                        href="/zf_user/member/registration/join?ut=c"
+                                        th:href="@{/join/member-select}"
                                         data-nav-track="ga_lead|main-gnb|layer_comp_service|company_join"
                                         >회원가입</a
                                     >
@@ -1435,5 +1227,5 @@
         </div>
         </header>
     </body>
-    <script src="/static/js/main/other-logout-header.js"></script>
+    <script src="/js/main/other-logout-header.js"></script>
 </html>
