@@ -7,9 +7,9 @@ create table tbl_apply(
         created_date datetime default current_timestamp,
         updated_date datetime default  current_timestamp,
         constraint fk_apply_notice foreign key (notice_id)
-            references tbl_notice(id),
+            references tbl_notice(id) on delete cascade ,
         constraint fk_apply_resume foreign key (resume_id)
-            references tbl_resume(id)
+            references tbl_resume(id) on delete cascade
 );
 
 select *
