@@ -85,7 +85,7 @@ public class NoticeDAO {
         return noticeMapper.selectSearchAllCount(search);
     }
 
-    // 공고 인기순 4개
+    // 공고 인기순 3개
     public List<NoticeDTO> findTop3(){
         return noticeMapper.selectTop3();
     }

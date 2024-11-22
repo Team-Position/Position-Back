@@ -201,7 +201,7 @@ public class NoticeServiceImpl implements NoticeService {
     public NoticeListDTO getTop3() {
         NoticeListDTO noticeListDTO = new NoticeListDTO();
 
-        // 상위 4개의 공고를 가져옴
+        // 상위 3개의 공고를 가져옴
         List<NoticeDTO> notices = noticeDAO.findTop3();
 
         // 각 공고에 파일 정보 추가

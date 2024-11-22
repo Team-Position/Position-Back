@@ -1425,3 +1425,68 @@ option {
     line-height: 47px;
     background: #fff;
 }
+
+.list-body .info-empty {
+    padding: 60px 0;
+    border-top: 1px solid var(--gray70);
+    border-bottom: 1px solid var(--gray40);
+    text-align: center;
+}
+
+.list-body .info-empty .info-title {
+    padding-bottom: 24px;
+}
+
+.list-body .info-empty .info-title .title {
+    color: var(--gray100);
+    font-size: 18px;
+}
+
+.list-body .info-empty .info-title .text {
+    margin-top: 10px;
+    color: var(--gray100);
+    font-size: 16px;
+}
+
+.list-body .info-detail {
+    margin: 0 auto;
+    padding: 20px 24px;
+    width: 425px;
+    border-radius: 16px;
+    background-color: var(--blue10);
+}
+
+.list-body .info-detail .detail-tit {
+    color: var(--gray80);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.list-body .info-detail>ul {
+    margin-top: 10px;
+}
+
+.list-body .info-detail>ul>li {
+    position: relative;
+    padding-left: 10px;
+    color: var(--gray80);
+    font-size: 13px;
+    line-height: 20px;
+    text-align: left;
+}
+
+.list-body .info-detail>ul>li:before {
+    display: block;
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background-color: var(--gray100);
+    content: "";
+}
+
+.info-empty {
+    display: none;
+}

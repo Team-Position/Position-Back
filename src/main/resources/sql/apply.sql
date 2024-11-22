@@ -15,6 +15,22 @@ create table tbl_apply(
 select *
 from tbl_apply;
 
+ALTER TABLE tbl_apply DROP FOREIGN KEY fk_apply_notice;
+ALTER TABLE tbl_apply DROP FOREIGN KEY fk_apply_resume;
+
+ALTER TABLE tbl_apply
+    ADD CONSTRAINT fk_apply_notice
+        FOREIGN KEY (notice_id)
+            REFERENCES tbl_notice(id)
+            ON DELETE CASCADE;
+
+ALTER TABLE tbl_apply
+    ADD CONSTRAINT fk_apply_resume
+        FOREIGN KEY (resume_id)
+            REFERENCES tbl_resume(id)
+            ON DELETE CASCADE;
+
+
 alter table tbl_apply drop column apply_type;
 
 ALTER TABLE tbl_apply
