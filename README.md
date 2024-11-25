@@ -67,8 +67,8 @@
 
 <br>
 5-2 백엔드<br>
-<img src="https://github.com/dev-sein/dev-sein/assets/122762143/fe6adb96-e884-49a1-a8e8-a1baec2352fa">
-<img src="https://github.com/dev-sein/dev-sein/assets/122762143/b61f98f8-b23a-46c3-bf3d-0b0983e4213b">
+<img src="https://github.com/user-attachments/assets/ccd24e16-762f-4e4a-9dca-634c095d0421">
+<img src="https://github.com/user-attachments/assets/5dfe716d-34b0-4f76-9f6a-05c5f127543c">
 
 
 ▶ 메인
