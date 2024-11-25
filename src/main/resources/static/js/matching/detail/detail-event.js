@@ -78,7 +78,7 @@ document.querySelector(".meta-pixel-event").addEventListener("click", () => {
                 id: workId,
                 name: workTitle,
                 qty: 1,
-                price: 100
+                price: 10000
             }
         ],
         extra: {
