@@ -1,6 +1,6 @@
 # sanghun-position
 
-<h1>사회 초년생을 위한 기업 실무 체험 프로젝트 - 'POSITION'</h1>
+<h1>사회 초년생을 위한 기업 실무 체험 솔류션 - 'POSITION'</h1>
 
 
 <h2>1. 기획 의도</h2>
