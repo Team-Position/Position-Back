@@ -36,7 +36,7 @@
 - Java Script<br>
 - tomcat<br>
 - jQuery<br>
-- ORACLE<br>
+- MySQL<br>
 - Spring Boot<br>
 - Visual Studio Code<br>
 - DBeaver<br>
@@ -44,10 +44,10 @@
 - git, github<br>
 - JSON<br>
 - Ajax<br>
-- JDK 11.0.15<br>
-- Naver DEVELOPER API<br>
+- JDK 17.0.10<br>
 - Kakao DEVELOPER API<br>
-- SMTP Gmail API<br>
+- Kakao Map API<br>
+- Boot Pay<br>
 - Slack<br>
 
 <h2>4. ERD</h2>
