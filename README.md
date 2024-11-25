@@ -11,7 +11,7 @@
 </div>
 
 <h2>2. 기대 효과</h2>
-<img src="https://github.com/dev-sein/study-jpa/assets/122762143/213261a1-31e2-4e81-9330-a3449b83a311">
+<img src="https://github.com/user-attachments/assets/956971ae-cef2-48c1-b7dc-074f021d8332">
 
 청년층 문화생활 독려를 통하여 청년들의 삶의 질, 자존감 향상들을 이끌어낸다.<br><Br>
 
