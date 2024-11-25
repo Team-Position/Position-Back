@@ -30,6 +30,29 @@
 
 
 <h2>3. 프로젝트 사용 툴</h2>
+- java
+- jQuery
+- Thymeleaf
+- QueryDSL
+- JPA
+- Spring Boot
+- HTML, CSS, JS
+- Oracle
+- JDK 11.0.15
+- YAML
+- JSON
+- REST:API
+- Sourcetree
+- DBeaver
+- IntelliJ IDEA
+- git, gitHub
+- JUnit5
+- POSTMAN
+- Lombok
+- Boot pay
+- Naver OAuth
+- Kakao OAuth
+- Cool SMS api 
 - Java<br>
 - Java Spring Data<br>
 -  QueryDSL<br>
