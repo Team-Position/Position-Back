@@ -31,27 +31,9 @@
 
 <h2>3. 프로젝트 사용 툴</h2>
 ▶ 문화공간 정보
-- 문화공간 정보 출력
-- 카카오맵 API 활용 지도 출력
-- Java
-- Java Spring Data
--  QueryDSL
-- Java Script
-- tomcat
-- jQuery
-- MySQL<br>
-- Spring Boot<br>
-- Visual Studio Code<br>
-- DBeaver<br>
-- Sourcetree<br>
-- git, github<br>
-- JSON<br>
-- Ajax<br>
-- JDK 17.0.10<br>
-- Kakao DEVELOPER API<br>
-- Kakao Map API<br>
-- Boot Pay<br>
-- Slack<br>
+- 123
+- 1241
+- 124ㄴ
 
 <h2>4. ERD</h2>
 <img src="https://github.com/user-attachments/assets/e2c4a86e-b6cc-4078-95f2-97785c66b6ae">
