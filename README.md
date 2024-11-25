@@ -31,12 +31,27 @@
 
 <h2>3. 프로젝트 사용 툴</h2>
 
-- 내용 
-- 내용2
-- 내용 3
-- ㅇㅇ
-- ㅇㅇ
-- ㅇㅇ
+<h2>3. 프로젝트 사용 툴</h2>
+
+- Java
+- Java Spring Data
+- QueryDSL
+- Java Script
+- tomcat
+- jQuery
+- MySQL<br>
+- Spring Boot
+- Visual Studio Code
+- DBeaver
+- Sourcetree
+- git, github
+- JSON
+- Ajax
+- JDK 17.0.10
+- Kakao DEVELOPER API
+- Kakao Map API
+- Boot Pay
+- Slack
 
 <h2>4. ERD</h2>
 <img src="https://github.com/user-attachments/assets/e2c4a86e-b6cc-4078-95f2-97785c66b6ae">
