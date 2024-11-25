@@ -32,7 +32,7 @@
 <h2>3. 프로젝트 사용 툴</h2>
 - Java<br>
 - Java Spring Data<br>
-- QueryDSL<br>
+-  QueryDSL<br>
 - Java Script<br>
 - tomcat<br>
 - jQuery<br>
