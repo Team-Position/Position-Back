@@ -33,8 +33,6 @@ alter table tbl_inquiry add column inquiry_attachment varchar(255);
 alter table tbl_inquiry drop column inquiry_attachment;
 
 alter table tbl_inquiry add column member_email varchar(255);
-alter table tbl_inquiry add column memebr_kakao_email varchar(255);
-alter table tbl_inquiry drop column memebr_kakao_email;
 alter table tbl_inquiry add column member_kakao_email varchar(255);
 alter table tbl_inquiry add column inquiry_status varchar(255) default '답변 예정';
 

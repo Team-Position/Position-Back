@@ -19,7 +19,7 @@
             </div>
             <div class="help-find help-lost wrap-help">
                 <div class="cont-find">
-                    <form th:action="@{/customer-service-center/inquiry}" method="post" th:object="${inquiryDTO}"id="write-form">
+                    <form th:action="@{/customer-service-center/inquiry}" method="post" th:object="${inquiryDTO}"id="write-form" enctype="multipart/form-data">
 
                         <fieldset>
                             <p class="desc-find-type2">
@@ -50,7 +50,7 @@
                                                             id="help-email"
                                                             class="inp-find"
                                                             name="memberEmail"
-                                                            th:value="${member != null ? member.memberEmail : corporation.corporationEmail}"
+                                                            th:value="${member != null ? member.memberEmail : (corporation != null ? corporation.corporationEmail : '')}"
                                                             autocomplete="off"
                                                             readonly="readonly"
 
