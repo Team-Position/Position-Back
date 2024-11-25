@@ -47,7 +47,7 @@
  
 <h2>5. 담당 업무</h2>
 5-1 프론트엔드<br>
-<img src="https://github.com/dev-sein/dev-sein/assets/122762143/248e4def-c7fb-4f6f-a391-d38e4fcfb608">
+<img src="https://github.com/user-attachments/assets/a20ec0fe-de2e-4c8b-ae87-a151143110bc">
 
 ▶ 문화공간 정보
 - 문화공간 정보 출력
