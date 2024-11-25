@@ -1,6 +1,6 @@
-# sein-dodamdodam
+# sanghun-position
 
-<h1>청년문화 통합 플랫폼 프로젝트 - '도담도담'</h1>
+<h1>사회 초년생을 위한 기업 실무 체험 프로젝트 - 'POSITION'</h1>
 
 
 <h2>1. 기획 의도</h2>
