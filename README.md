@@ -42,7 +42,7 @@
 - Slack<br>
 
 <h2>4. ERD</h2>
-<img src="https://github.com/dev-mwYoon/dodamdodam/assets/122762471/35c5c3c8-afc6-453e-9516-248be04971f1">
+<img src="https://github.com/user-attachments/assets/e2c4a86e-b6cc-4078-95f2-97785c66b6ae">
 
  
 <h2>5. 담당 업무</h2>
