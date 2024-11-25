@@ -3,8 +3,9 @@
 <h1>사회 초년생을 위한 기업 실무 체험 솔류션 - 'POSITION'</h1>
 <img src="https://github.com/user-attachments/assets/08156fec-26a6-48c9-8095-a94e642a69ca">
 
-<h2>1. 기획 의도</h2>
+<h2>1. 기획 배경</h2>
 <img src="https://github.com/user-attachments/assets/7c44941b-7d36-4ce1-9193-a0ed65620396">
+
 
 현재 우리나라는 1인가구가 늘어나고 있으며, 1인가구의 핵심세대인 2030 청년들로 하여금 <strong>청년문제가 발생</strong>하고 있다는 사실에 주목하였다. 코로나나 비혼 등의 이유로 현재 청년들은 '혼자' 생활을 하는 경우가 많으며, 문화생활 역시 혼자 즐기는 경우가 많다. <strong>청년 우울감 해소와 함께 사회적 커뮤니티 형성</strong>을 위하여 도담도담에서는 <strong>청년 문화 생활 통합 플랫폼</strong>을 기획하여 청년들이 보다 더 <strong>문화공간에 쉽게 접근하고 함께하는 공동체적 가치</strong>를 만들 수 있도록 하였다.
 
