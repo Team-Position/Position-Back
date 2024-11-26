@@ -23,7 +23,7 @@ delete from tbl_member;
 
 alter table  tbl_member add(created_date datetime default current_timestamp);
 alter table  tbl_member add(updated_date datetime default current_timestamp);
-alter table  tbl_member add(member_complain_count int default 0);
+alter table  tbl_member add(member_complain_count int default 0);   
 alter table tbl_member add(member_kakao_email varchar(255));
 alter table tbl_member add(member_kakao_profile_url varchar(255));
 alter table tbl_member add(member_phone varchar(255));
