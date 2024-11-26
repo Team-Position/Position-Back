@@ -10,7 +10,15 @@
         <link rel="stylesheet" href="/css/main/other-login-header.css" />
     </head>
     <body id="main">
-    <header th:replace="~{/main/other-login-header :: header-login}"></header>
+    <!-- 일반 회원일 때 -->
+    <th:block th:if="${session.member != null}">
+        <header th:replace="~{/main/other-login-header :: header-login}"></header>
+    </th:block>
+
+    <!-- 로그아웃 상태일 때 -->
+    <th:block th:if="${session.member == null}">
+        <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    </th:block>
     <section
             role="region"
             aria-label="추천공고"

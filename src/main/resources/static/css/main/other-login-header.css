@@ -578,16 +578,17 @@ svg:not(:root) {
 }
 
 #index .menu {
-    display: grid;
+    display: grid
+;
     padding-right: 10px;
     width: 1001px;
     background: #fff;
     gap: 36px 0;
     grid-template-areas:
-        "major major major major major major major"
-        "minor personalize personalize blank extra1 extra2 extra3";
-    grid-template-rows: auto auto;
-    grid-template-columns: 143px 143px 143px 143px 143px 143px 143px;
+        "major major major major"
+        "minor personalize blank extra1";
+    grid-template-rows: 200px 50px;
+    grid-template-columns: repeat(4, 1fr);
     align-items: end;
 }
 
@@ -600,7 +601,6 @@ svg:not(:root) {
 #index .menu .major {
     position: relative;
     padding: 0 17px;
-    min-height: 326px;
     align-self: stretch;
 }
 
