@@ -9,14 +9,20 @@
         />
         <link rel="stylesheet" href="/css/matching/matching-main.css" />
         <link rel="stylesheet" href="/css/main.css" />
-        <link
-                rel="stylesheet"
-                href="/css/main/other-logout-header.css"
-        />
+        <link rel="stylesheet" href="/css/main/other-login-header.css" />
+        <link rel="stylesheet" th:href="@{/css/main/other-logout-header.css}"/>
         <title>매칭 페이지</title>
     </head>
     <body id="main">
-    <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    <!-- 일반 회원일 때 -->
+    <th:block th:if="${session.member != null}">
+        <header th:replace="~{/main/other-login-header :: header-login}"></header>
+    </th:block>
+
+    <!-- 로그아웃 상태일 때 -->
+    <th:block th:if="${session.member == null}">
+        <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    </th:block>
     <div id="position-section" class="layout-wide has-banner">
             <div id="position-wrap">
                 <div id="content">
@@ -1347,5 +1353,4 @@
     <script src="/js/matching/main/matching-service.js"></script>
     <script src="/js/matching/main/matching-layout.js"></script>
     <script src="/js/matching/main/matching-event.js"></script>
-    <script src="/js/main/other-logout-header.js"></script>
 </html>

@@ -8,17 +8,23 @@
             href="/css/matching/matching-detail.css"
         />
         <link rel="stylesheet" href="/css/main.css" />
-        <link
-                rel="stylesheet"
-                href="/css/main/other-logout-header.css"
-        />
+        <link rel="stylesheet" href="/css/main/other-login-header.css" />
+        <link rel="stylesheet" th:href="@{/css/main/other-logout-header.css}"/>
         <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a1e0bdeafd8a8a27e472648b06cdfefc&libraries=services"></script>
         <script src="https://js.bootpay.co.kr/bootpay-5.0.1.min.js" type="application/javascript"></script>
 
         <title>매칭 상세보기</title>
     </head>
     <body id="main">
-    <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    <!-- 일반 회원일 때 -->
+    <th:block th:if="${session.member != null}">
+        <header th:replace="~{/main/other-login-header :: header-login}"></header>
+    </th:block>
+
+    <!-- 로그아웃 상태일 때 -->
+    <th:block th:if="${session.member == null}">
+        <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    </th:block>
             <div id="position-section">
                 <div id="position-wrap">
                     <div id="content">
@@ -1174,5 +1180,4 @@
     <script src="/js/matching/matching-detail.js"></script>
     <script src="/js/matching/detail/detail-layout.js"></script>
     <script src="/js/matching/detail/detail-event.js"></script>
-    <script src="/js/main/other-logout-header.js"></script>
 </html>
