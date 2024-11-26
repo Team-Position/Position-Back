@@ -72,10 +72,10 @@
         from tbl_notice
         where corporation_id = #{corporationId}
         <if test="pagination.status == 'closed'">
-            <![CDATA[ and notice_end_date <= current_date ]]>
+            <![CDATA[ and notice_end_date <= current_timestamp ]]>
         </if>
         <if test="pagination.status == 'ongoing'">
-            <![CDATA[ and notice_end_date > current_date ]]>
+            <![CDATA[ and notice_end_date > current_timestamp ]]>
         </if>
         order by
         <choose>
@@ -90,10 +90,10 @@
         select count(*) from tbl_notice
         where corporation_id = #{corporationId}
         <if test="pagination.status == 'closed'">
-            <![CDATA[ and notice_end_date <= current_date
+            <![CDATA[ and notice_end_date <= current_timestamp
         ]]></if>
         <if test="pagination.status == 'ongoing'">
-            <![CDATA[ and notice_end_date > current_date
+            <![CDATA[ and notice_end_date > current_timestamp
         ]]></if>
     </select>
 
@@ -103,7 +103,7 @@
         from tbl_notice
         where notice_job_category_name is not null
         <![CDATA[
-          and notice_end_date <= current_date
+          and notice_end_date <= current_timestamp
         ]]>
         group by notice_job_category_name
         order by count desc
@@ -159,7 +159,7 @@
         from tbl_notice n
                  join tbl_corporation c on n.corporation_id = c.id
         where n.corporation_id = #{corporationId}
-          and n.notice_end_date > current_date
+          and n.notice_end_date > current_timestamp
         order by n.created_date desc
             limit 3
     </select>
@@ -201,7 +201,7 @@
         from tbl_notice n
         join tbl_corporation c on n.corporation_id = c.id
         <include refid="search"/>
-        and n.notice_end_date > current_date
+        and n.notice_end_date > current_timestamp
         order by
             n.created_date
         desc
@@ -210,14 +210,14 @@
 
     <select id="selectAllCount">
         select count(*) from tbl_notice
-        where notice_end_date > current_date
+        where notice_end_date > current_timestamp
     </select>
 
     <select id="selectSearchAllCount">
         select count(*) from tbl_notice n
         join tbl_corporation c on n.corporation_id = c.id
         <include refid="search"/>
-        and n.notice_end_date > current_date
+        and n.notice_end_date > current_timestamp
     </select>
 
     <select id="selectTop3" resultType="com.app.positionback.domain.notice.NoticeDTO">
@@ -238,7 +238,7 @@
                c.corporation_address
         from tbl_notice n
                  join tbl_corporation c on n.corporation_id = c.id
-        where n.notice_end_date > current_date
+        where n.notice_end_date > current_timestamp
         order by n.notice_read_count desc
             limit 3
     </select>

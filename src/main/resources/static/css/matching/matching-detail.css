@@ -1421,7 +1421,7 @@ body {
     bottom: 0px;
     z-index: 150;
     width: 448px;
-    height: 670px;
+    height: 578px;
     border: 0px;
     border-radius: 20px 20px 0px 0px;
     box-sizing: border-box;
@@ -1442,7 +1442,7 @@ body {
 .wrap-global-apply {
     position: relative;
     width: 448px;
-    height: 670px;
+    height: 578px;
     overflow: hidden;
     border-radius: 20px;
     border-bottom-left-radius: 0;
