@@ -5,4 +5,8 @@
         INSERT INTO tbl_inquiry(inquiry_type, inquiry_category, inquiry_title, inquiry_content, member_id)
         VALUES (#{inquiryType}, #{inquiryCategory}, #{inquiryTitle}, #{inquiryContent}, #{memberId})
     </insert>
+
+    <select id="getLastInsertId" resultType="long">
+        select last_insert_id()
+    </select>
 </mapper>

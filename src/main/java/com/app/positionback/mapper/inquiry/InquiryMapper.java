@@ -7,5 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface InquiryMapper {
 
     // 1:1 문의 작성
-    public void insert(InquiryVO inquiryVO);
+    public void insertInquiry(InquiryVO inquiryVO);
+
+    // 가장 최근 작성된 문의 ID 가져오기
+    public Long getLastInsertId();
 }

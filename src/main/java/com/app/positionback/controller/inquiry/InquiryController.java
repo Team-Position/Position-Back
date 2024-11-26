@@ -12,7 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/customer-service-center")
@@ -37,14 +40,14 @@ public class InquiryController {
     }
 
     @PostMapping("/inquiry")
-    public RedirectView write(InquiryDTO inquiryDTO, HttpSession session) {
+    public RedirectView write(InquiryDTO inquiryDTO, String uuid, String path, MultipartFile file, HttpSession session) throws IOException {
         Long memberId = (Long) session.getAttribute("memberId");
         if (memberId == null) {
             memberId = 1L;
         }
         inquiryDTO.setMemberId(memberId);
         log.info(inquiryDTO.toString());
-        inquiryService.write(inquiryDTO.toVO());
+        inquiryService.writeInquiry(inquiryDTO.toVO(), uuid, path, file);
         return new RedirectView("/customer-service-center/faq");
     }
 
