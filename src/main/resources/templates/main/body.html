@@ -13,13 +13,7 @@
     </head>
     <body id="main">
     <!-- 일반 회원일 때 -->
-    <!-- 일반 회원일 때 -->
-    <th:block th:if="${session.member != null and session.member.memberType == 'Personal'}">
-        <header th:replace="~{/main/other-login-header :: header-login}"></header>
-    </th:block>
-
-    <!-- 기업 회원일 때 -->
-    <th:block th:if="${session.member != null and session.member.memberType == 'Corporation'}">
+    <th:block th:if="${session.member != null}">
         <header th:replace="~{/main/other-login-header :: header-login}"></header>
     </th:block>
 
