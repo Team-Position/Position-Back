@@ -97,12 +97,12 @@
     <!-- 지원 현황 -->
     <sql id="ApplySearch">
         <where>
-            <if test="search.keyword != null and search.keyworkd != ''">
+            <if test="search.keyword != null and search.keyword != ''">
                 and (
                 c.corporation_name like concat('%', #{search.keyword}, '%')
                 or m.member_name like concat('%', #{search.keyword}, '%')
                 or m.member_phone like concat('%', #{search.keyword}, '%')
-                or a.apply_type like cconcat('%', ##{search.keyword}, '%')
+                or a.apply_type like concat('%', #{search.keyword}, '%')
                 )
             </if>
         </where>
@@ -158,7 +158,7 @@
         <include refid="ApplySearch"/>
     </select>
 
-    <!-- 면접 현황 기업명, 공고제목, 면접자, 전화번호, 지원 분야-->
+    <!-- 면접 현황 -->
     <sql id="InterviewSearch">
         <where>
             <if test="search.keyword != null and search.keyword != ''">
@@ -166,8 +166,8 @@
                 c.corporation_name like concat('%', #{search.keyword}, '%')
                 or n.notice_title like concat('%', #{search.keyword}, '%')
                 or m.member_name like concat('%', #{search.keyword}, '%')
-                or m.member_phone concat('%', #{search.keyword}, '%')
-                or n.notice_job_category_nameconcat('%', #{search.keyword}, '%')
+                or m.member_phone like concat('%', #{search.keyword}, '%')
+                or n.notice_job_category_name like concat('%', #{search.keyword}, '%')
                 )
             </if>
         </where>
@@ -175,27 +175,27 @@
 
     <select id="selectAllInterview">
         select c.corporation_name, i.interview_date, n.notice_title, m.member_name, m.member_phone, n.notice_job_category_name, i.interview_status
-        from interview i
-        join corporation c on i.corporation_id = c.id
-        join notice n on i.notice_id = n.id
-        join resume r on i.resume_id = r.id
-        join member m on r.member_id = m.id
+        from tbl_interview i
+        join tbl_corporation c on i.corporation_id = c.id
+        join tbl_notice n on n.corporation_id = c.id
+        join tbl_resume r on i.resume_id = r.id
+        join tbl_member m on r.member_id = m.id
         <include refid="InterviewSearch"/>
         <choose>
             <when test="search.types[0] == 'recent'">
                 order by i.interview_date desc
             </when>
             <when test="search.types[0] == 'interviewexpected'">
-                order by (interview_status = '면접 예정') desc, created_date desc
+                order by (interview_status = '면접 예정') desc, i.interview_date desc
             </when>
             <when test="search.types[0] == 'interviewcancel'">
-                order by (interview_status = '면접 취소') desc, created_date desc
+                order by (interview_status = '면접 취소') desc, i.interview_date desc
             </when>
             <when test="search.types[0] == 'interviewpass'">
-                order by (interview_status = '면접 합격') desc, created_date desc
+                order by (interview_status = '면접 합격') desc, i.interview_date desc
             </when>
             <when test="search.types[0] == 'interviewfail'">
-                order by (interview_status = '면접 불합격') desc, created_date desc
+                order by (interview_status = '면접 불합격') desc, i.interview_date desc
             </when>
             <otherwise>
                 order by i.interview_date desc
@@ -207,19 +207,19 @@
     <select id="selectInterviewTotal">
         select count(*)
         from tbl_interview i
-        join corporation c on i.corporation_id = c.id
-        join notice n on i.notice_id = n.id
-        join resume r on i.resume_id = r.id
-        join member m on r.member_id = m.id
+        join tbl_corporation c on i.corporation_id = c.id
+        join tbl_notice n on n.corporation_id = c.id
+        join tbl_resume r on i.resume_id = r.id
+        join tbl_member m on r.member_id = m.id
     </select>
 
     <select id="selectTotalWithInterviewSearch">
         select count(*)
         from tbl_interview i
-        join corporation c on i.corporation_id = c.id
-        join notice n on i.notice_id = n.id
-        join resume r on i.resume_id = r.id
-        join member m on r.member_id = m.id
+        join tbl_corporation c on i.corporation_id = c.id
+        join tbl_notice n on n.corporation_id = c.id
+        join tbl_resume r on i.resume_id = r.id
+        join tbl_member m on r.member_id = m.id
         <include refid="InterviewSearch"/>
     </select>
 
@@ -240,23 +240,23 @@
 
     <select id="selectAllPosition">
         select c.corporation_name, n.notice_work_start_date, n.notice_title, m.member_name, m.member_phone, n.notice_job_category_name, p.position_status
-        from position p
-        join notice n on p.notice_id = n.id
-        join corporation c on n.corporation_id = c.id
-        join member m on p.member_id = m.id
+        from tbl_position p
+        join tbl_notice n on p.notice_id = n.id
+        join tbl_corporation c on n.corporation_id = c.id
+        join tbl_member m on p.member_id = m.id
         <include refid="PositionSearch"/>
         <choose>
             <when test="search.types[0] == 'recent'">
                 order by n.notice_work_start_date desc
             </when>
             <when test="search.types[0] == 'positionschedule'">
-                order by (position_status = '포지션 예정') desc, created_date desc
+                order by (position_status = '포지션 예정') desc, n.notice_work_start_date desc
             </when>
             <when test="search.types[0] == 'positioncompletion'">
-                order by (position_status = '포지션 수료') desc, created_date desc
+                order by (position_status = '포지션 수료') desc, n.notice_work_start_date desc
             </when>
             <when test="search.types[0] == 'positionnotcompleted'">
-                order by (position_status = '포지션 미수료') desc, created_date desc
+                order by (position_status = '포지션 미수료') desc, n.notice_work_start_date desc
             </when>
             <otherwise>
                 order by n.notice_work_start_date desc
@@ -268,17 +268,17 @@
     <select id="selectPositionTotal">
         select count(*)
         from tbl_position p
-        join notice n on p.notice_id = n.id
-        join corporation c on n.corporation_id = c.id
-        join member m on p.member_id = m.id
+        join tbl_notice n on p.notice_id = n.id
+        join tbl_corporation c on n.corporation_id = c.id
+        join tbl_member m on p.member_id = m.id
     </select>
 
     <select id="selectTotalWithPositionSearch">
         select count(*)
         from tbl_position p
-        join notice n on p.notice_id = n.id
-        join corporation c on n.corporation_id = c.id
-        join member m on p.member_id = m.id
+        join tbl_notice n on p.notice_id = n.id
+        join tbl_corporation c on n.corporation_id = c.id
+        join tbl_member m on p.member_id = m.id
         <include refid="PositionSearch"/>
     </select>
 
@@ -313,23 +313,29 @@
         limit #{pagination.startRow}, #{pagination.rowCount}
     </select>
 
+    <select id="selectMemberInquiryTotal">
+        select count(*) tbl_inquiry
+    </select>
+
     <!-- 기업 문의 목록 페이징 -->
     <select id="selectAllCorporationInquiry" resultType="inquiryDTO">
-        SELECT id,
+        select id,
                inquiry_type,
                inquiry_category,
                inquiry_title,
                inquiry_content,
                created_date AS createdDate,
                updated_date AS updatedDate,
-               CASE
-                   WHEN member_email IS NOT NULL THEN member_email
-                   ELSE member_kakao_email
-                   END AS memberEmail
+               coalesce(member_email, member_kakao_email) as memberEmail,
+               inquiry_status
         FROM tbl_inquiry
         WHERE inquiry_type = '기업'
         ORDER BY createdDate DESC
             LIMIT #{pagination.startRow}, #{pagination.rowCount}
+    </select>
+
+    <select id="selectCorporationInquiryTotal">
+        select count(*) tbl_inquiry
     </select>
 
 </mapper>
