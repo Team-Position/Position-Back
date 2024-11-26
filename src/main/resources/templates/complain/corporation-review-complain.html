@@ -8,9 +8,14 @@
             rel="stylesheet"
             href="/css/customer-service-center/inquiry.css"
         />
+        <link
+                rel="stylesheet"
+                href="/css/corporation/corporation-login-header.css"
+        />
         <title>기업 후기 신고 페이지</title>
     </head>
     <body>
+    <header th:replace="~{/corporation/corporation-login-header :: #header}"></header>
         <div id="position-section" class="has-banner">
             <div id="position-wrap">
 
@@ -213,9 +218,6 @@
                                             위 동의를 거부 할 권리가 있으며 동의
                                             거부 시 신고 이용이 제한됩니다.
                                             <br />
-                                            이외의 방법으로 문의하시려면
-                                            이메일(help@saramin.co.kr)을 통하여
-                                            문의하시기 바랍니다.
                                         </p>
                                         <div class="check-agree">
                                             <div class="position-input3">
@@ -259,4 +261,5 @@
     </body>
     <script src="/js/customer-service-center/inquiry.js"></script>
     <script src="/js/complain/complain-event.js"></script>
+    <script src="/js/corporation/corporation-login-header.js"></script>
 </html>

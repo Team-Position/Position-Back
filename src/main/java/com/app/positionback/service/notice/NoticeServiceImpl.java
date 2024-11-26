@@ -182,7 +182,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
 //        pagination.setTotal(noticeDAO.getAllTotal());
-        pagination.progress();
+        pagination.progress(12);
         noticeListDTO.setPagination(pagination);
 
         List<NoticeDTO> notices = noticeDAO.findAll(pagination, search);

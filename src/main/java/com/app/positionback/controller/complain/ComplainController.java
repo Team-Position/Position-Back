@@ -3,6 +3,7 @@ package com.app.positionback.controller.complain;
 import com.app.positionback.domain.apply.ApplyDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
 import com.app.positionback.domain.complain.ComplainVO;
+import com.app.positionback.domain.corporation.CorporationVO;
 import com.app.positionback.service.apply.ApplyService;
 import com.app.positionback.service.complain.ComplainService;
 import jakarta.servlet.http.HttpSession;
@@ -24,8 +25,10 @@ public class ComplainController {
 
     @GetMapping("/corporation/complain")
     public String insertComplain(ComplainDTO complainDTO, Long id, Model model) {
+        CorporationVO corporationVO = (CorporationVO) session.getAttribute("member");
         ApplyDTO applyDTO = applyService.getApplyById(id);
         model.addAttribute("apply", applyDTO);
+        model.addAttribute("corporation", corporationVO);
         return "/complain/corporation-review-complain";
     }
 
