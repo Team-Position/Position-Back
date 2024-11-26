@@ -20,6 +20,7 @@
             <div class="help-find help-lost wrap-help">
                 <div class="cont-find">
                     <form th:action="@{/customer-service-center/inquiry}" method="post" th:object="${inquiryDTO}"id="write-form">
+                        <input type="hidden" name="memberId" th:value="${member.id}">
                         <fieldset>
                             <p class="desc-find-type2">
                                 평일 09시 에서 17시까지 문의하신 내용은
@@ -49,9 +50,10 @@
                                                             id="help-email"
                                                             class="inp-find"
                                                             name="memberEmail"
-                                                            th:value="${inquiryDTO.memberEmail}"
+                                                            th:value="${member != null ? member.memberEmail : corporation.corporationEmail}"
                                                             autocomplete="off"
                                                             readonly="readonly"
+
                                                     />
                                                 </span>
                                     </div>
@@ -72,9 +74,10 @@
                                                                 name="inquiryType"
                                                                 id="help-member-type-person"
                                                                 class="help-member-type"
-                                                                th:field="*{inquiryType}"
+
                                                                 value="개인"
-                                                                checked
+                                                                th:checked="${member != null}"
+                                                                th:disabled="${corporation != null}"
                                                         />
                                                         <label
                                                                 for="help-member-type-person"
@@ -88,8 +91,10 @@
                                                                 name="inquiryType"
                                                                 id="help-member-type-company"
                                                                 class="help-member-type"
-                                                                th:field="*{inquiryType}"
+                                                                th:checked="${corporation != null}"
+                                                                th:disabled="${member != null}"
                                                                 value="기업"
+
                                                         />
                                                         <label
                                                                 for="help-member-type-company"

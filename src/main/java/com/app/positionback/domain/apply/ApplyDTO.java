@@ -44,6 +44,7 @@ public class ApplyDTO {
     private String memberName;
     private String memberEmail;
     private String memberNickname;
+    private String memberPhone;
 
     private String positionerReviewTips;
     private String evaluationOverall;

@@ -13,4 +13,12 @@ public class PositionDTO {
     private Long memberId;
     private Long noticeId;
     private String positionStatus;
+
+    // 관리자 페이지 - 면접 현황 관리
+    private String corporationName;
+    private String noticeWorkStartDate;
+    private String noticeTitle;
+    private String memberName;
+    private String memberPhone;
+    private String noticeJobCategoryName;
 }
