@@ -111,6 +111,7 @@ public class CorporationController {
         return reviewService.getPositionReviewList(positionerReviewId);
     }
 
+//    지원자들 명수
     @GetMapping("/apply/total")
     @ResponseBody
     public int getTotalCount(@RequestParam String status) {

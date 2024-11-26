@@ -8,17 +8,23 @@
             href="/css/matching/matching-detail.css"
         />
         <link rel="stylesheet" href="/css/main.css" />
-        <link
-                rel="stylesheet"
-                href="/css/main/other-logout-header.css"
-        />
+        <link rel="stylesheet" href="/css/main/other-login-header.css" />
+        <link rel="stylesheet" th:href="@{/css/main/other-logout-header.css}"/>
         <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a1e0bdeafd8a8a27e472648b06cdfefc&libraries=services"></script>
         <script src="https://js.bootpay.co.kr/bootpay-5.0.1.min.js" type="application/javascript"></script>
 
         <title>매칭 상세보기</title>
     </head>
     <body id="main">
-    <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    <!-- 일반 회원일 때 -->
+    <th:block th:if="${session.member != null}">
+        <header th:replace="~{/main/other-login-header :: header-login}"></header>
+    </th:block>
+
+    <!-- 로그아웃 상태일 때 -->
+    <th:block th:if="${session.member == null}">
+        <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    </th:block>
             <div id="position-section">
                 <div id="position-wrap">
                     <div id="content">
@@ -882,14 +888,14 @@
                                             제출서류는 90일까지 지원기업에게
                                             제공됩니다.
                                         </p>
-                                        <p class="desc">
+                                        <!--<p class="desc">
                                             채용절차법상, 사람인 홈페이지로
                                             제출한 경우이므로 채용 서류는 별도로
                                             반환하지 않으며, 구인사는 채용이
                                             종료되는 경우 개인정보보호법을
                                             준수하여 채용 서류를 즉시
                                             파기합니다.
-                                        </p>
+                                        </p>-->
                                         <!---->
                                     </div>
 
@@ -1174,5 +1180,4 @@
     <script src="/js/matching/matching-detail.js"></script>
     <script src="/js/matching/detail/detail-layout.js"></script>
     <script src="/js/matching/detail/detail-event.js"></script>
-    <script src="/js/main/other-logout-header.js"></script>
 </html>

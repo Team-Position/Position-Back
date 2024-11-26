@@ -106,7 +106,7 @@ public class MemberController {
             });
             session.setAttribute("member", memberVO);
             log.info("멤버 들어옴 : {} ", session.getAttribute("member"));
-            return new RedirectView("/main");
+            return new RedirectView("/");
         }
         Optional<CorporationVO> foundCorporation = corporationService.login(memberDTO);
         CorporationVO corporationVO = foundCorporation.orElseThrow(() -> {
@@ -123,10 +123,6 @@ public class MemberController {
         return new RedirectView("/login");
     }
 
-    @GetMapping("/main")
-    public String goToMain(){
-        return "main/body";
-    }
 
     @GetMapping("/mypage")
     public String goToMypage(HttpSession session){

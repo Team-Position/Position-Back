@@ -7,14 +7,30 @@ create table tbl_apply(
         created_date datetime default current_timestamp,
         updated_date datetime default  current_timestamp,
         constraint fk_apply_notice foreign key (notice_id)
-            references tbl_notice(id),
+            references tbl_notice(id) on delete cascade ,
         constraint fk_apply_resume foreign key (resume_id)
-            references tbl_resume(id)
+            references tbl_resume(id) on delete cascade
 );
 
 
 select *
 from tbl_apply;
+
+ALTER TABLE tbl_apply DROP FOREIGN KEY fk_apply_notice;
+ALTER TABLE tbl_apply DROP FOREIGN KEY fk_apply_resume;
+
+ALTER TABLE tbl_apply
+    ADD CONSTRAINT fk_apply_notice
+        FOREIGN KEY (notice_id)
+            REFERENCES tbl_notice(id)
+            ON DELETE CASCADE;
+
+ALTER TABLE tbl_apply
+    ADD CONSTRAINT fk_apply_resume
+        FOREIGN KEY (resume_id)
+            REFERENCES tbl_resume(id)
+            ON DELETE CASCADE;
+
 
 alter table tbl_apply drop column apply_type;
 

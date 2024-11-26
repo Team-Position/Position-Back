@@ -55,6 +55,6 @@ public interface NoticeMapper {
     // 공고 검색 개수
     public int selectSearchAllCount(@Param("search") Search search);
 
-    // 공고 목록 인기 4개
+    // 공고 목록 인기 3개
     public List<NoticeDTO> selectTop3();
 }
