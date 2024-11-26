@@ -35,6 +35,16 @@ keywordInput.addEventListener("blur", () => {
     updateTotalAndFetchData(); // 직업 선택 시 total과 데이터를 업데이트
 });
 
+// 입력 필드에 keydown 이벤트 리스너 추가
+keywordInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") { // Enter 키가 눌렸을 때
+        // 필요 시 스타일 복구
+        keywordSection.classList.remove("on");
+        layerSearchKeyword.classList.add("no-suggest");
+        updateTotalAndFetchData(); // 직업 선택 시 total과 데이터를 업데이트
+    }
+});
+
 btnReset.addEventListener("click", () => {
     previewSelected.innerHTML = ``;
     resetText.style.display = "block";

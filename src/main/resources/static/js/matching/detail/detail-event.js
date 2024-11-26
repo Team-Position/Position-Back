@@ -116,7 +116,7 @@ document.querySelector(".meta-pixel-event").addEventListener("click", () => {
             });
 
             alert("결제가 성공적으로 완료되었습니다.");
-            window.location.href = `/my-page`;
+            window.location.href = `/`;
         })
         .catch((error) => {
             console.error("결제 요청 중 오류 발생:", error.message);
