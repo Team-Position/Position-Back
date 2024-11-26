@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="/css/main/body.css" />
         <link rel="stylesheet" href="/css/main/footer.css" />
         <link rel="stylesheet" href="/css/main/other-login-header.css" />
+        <link rel="stylesheet" th:href="@{/css/main/other-logout-header.css}"/>
     </head>
     <body id="main">
     <!-- 일반 회원일 때 -->
@@ -2798,6 +2799,7 @@
     </body>
     <script src="/js/main/body.js"></script>
     <script src="/js/main/other-login-header.js"></script>
+    <script src="/js/main/other-logout-header.js"></script>
     <script th:inline="javascript">
         member = [[${session.member}]];
     </script>

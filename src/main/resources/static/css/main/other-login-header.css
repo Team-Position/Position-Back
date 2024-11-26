@@ -578,8 +578,7 @@ svg:not(:root) {
 }
 
 #index .menu {
-    display: grid
-;
+    display: grid;
     padding-right: 10px;
     width: 1001px;
     background: #fff;
