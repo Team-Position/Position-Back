@@ -46,4 +46,10 @@ public class FileController {
         memberService.logo(uuid, path, file, corporationId);
         return  new RedirectView("/corporation");
     }
+
+    @PostMapping("inquiry/upload")
+    @ResponseBody
+    public FileDTO uploadInquiryFile(MultipartFile file) throws IOException {
+        return memberService.uploadFile(file);
+    }
 }
