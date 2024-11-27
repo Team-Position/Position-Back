@@ -24,8 +24,6 @@ import java.io.IOException;
 public class InquiryController {
     private final InquiryService inquiryService;
     private final HttpSession session;
-//    @GetMapping("inquiry")
-//    public void goToInquiryForm(InquiryDTO inquiryDTO) {;}
 
     // 테스트 이메일 값을 넣은 1:1 문의 작성
     @GetMapping("/inquiry")
