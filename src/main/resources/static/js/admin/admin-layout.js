@@ -9,13 +9,6 @@ const corporationKeywordInput = document.getElementById("corporationSearchInput"
 const sortOptions = document.querySelectorAll(".sort-filter-option"); // 정렬 옵션
 let selectedSort = "가입일 순"; // 기본 정렬 설정
 
-// 검색어 초기화
-// URL 쿼리 문자열에서 "keyword"라는 이름의 매개변수 값을 가져옴
-// 만약 URL에 "keyword" 매개변수가 없다면 기본값으로 빈 문자열("")을 할당함
-// URLSearchParams() : 객체 인스턴스를 반환
-// window.location.search : 현재 페이지의 쿼리 스트링에 접근하여 현재 페이지 URL의 쿼리 스트링 부분을 가져온다.
-memberKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
-
 // 정렬 옵션 이벤트 설정
 sortOptions.forEach((option) => {
     option.addEventListener("click", () => {
@@ -30,6 +23,13 @@ sortOptions.forEach((option) => {
         fetchAndShowMembers(1);
     });
 });
+
+// 검색어 초기화
+// URL 쿼리 문자열에서 "keyword"라는 이름의 매개변수 값을 가져옴
+// 만약 URL에 "keyword" 매개변수가 없다면 기본값으로 빈 문자열("")을 할당함
+// URLSearchParams() : 객체 인스턴스를 반환
+// window.location.search : 현재 페이지의 쿼리 스트링에 접근하여 현재 페이지 URL의 쿼리 스트링 부분을 가져온다.
+memberKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
 
 // 검색어 입력 시 검색 실행
 memberKeywordInput.addEventListener("input", () => {
@@ -116,7 +116,9 @@ const showMemberList = ( { members, pagination } ) => {
     // 이전 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-prev-link" onclick="goToPage(${pagination.currentPage - 1})" rel="prev nofollow">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
                 <span class="pagination-prev-icon" aria-hidden="true">‹</span>
             </a>
         </li>
@@ -129,12 +131,14 @@ const showMemberList = ( { members, pagination } ) => {
                 <a href="#" class="pagination-page-link" onclick="goToPage(${i})">${i}</a>
             </li>
         `;
-    }
+        }
 
     // 다음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-next-link" onclick="goToPage(${pagination.currentPage + 1})" rel="next nofollow">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
                 <span class="pagination-next-icon" aria-hidden="true">›</span>
             </a>
         </li>
@@ -143,7 +147,9 @@ const showMemberList = ( { members, pagination } ) => {
     // 마지막 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-last-link" onclick="goToPage(${pagination.realEnd})" rel="nofollow">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.realEnd})`}" 
+               rel="nofollow">
                 <span class="pagination-last-icon" aria-hidden="true">»</span>
             </a>
         </li>
@@ -218,6 +224,10 @@ const showCorporationList = ( { corporations, pagination } ) => {
 
     CorporationListLayout.innerHTML = text;
 
+    // 동적으로 totalPages 계산
+    const CorporationTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = CorporationTotalPages;
+
     // 페이지 버튼 생성
     let pagingText = '';
 
@@ -233,7 +243,9 @@ const showCorporationList = ( { corporations, pagination } ) => {
     // 이전 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-prev-link" onclick="goToCorPage(${pagination.currentPage - 1})" rel="prev nofollow">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToCorPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
                 <span class="pagination-prev-icon" aria-hidden="true">‹</span>
             </a>
         </li>
@@ -251,8 +263,10 @@ const showCorporationList = ( { corporations, pagination } ) => {
     // 다음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-next-link" onclick="goToCorPage(${pagination.currentPage + 1})" rel="next nofollow">
-                <span class="pagination-next-icon" aria-hidden="true">›</span>
+            <a href="#" class="pagination-next-link"
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToCorPage(${pagination.currentPage + 1})`}"
+               rel="next nofollow">
+                <span class="pagination-next-icon" aria-hidden="true">›</span>   
             </a>
         </li>
     `;
@@ -260,7 +274,9 @@ const showCorporationList = ( { corporations, pagination } ) => {
     // 마지막 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-last-link" onclick="goToCorPage(${pagination.realEnd})" rel="nofollow">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToCorPage(${pagination.realEnd})`}" 
+               rel="nofollow">
                 <span class="pagination-last-icon" aria-hidden="true">»</span>
             </a>
         </li>
@@ -454,6 +470,10 @@ function goToInterviewPage(page) {
     fetchAndShowInterview(page);
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    goToInterviewPage(1);
+})
+
 // 면접 현황 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowInterview = async (page) => {
     const keyword = InterviewKeywordInput.value;
@@ -585,7 +605,7 @@ PositionKeywordInput.addEventListener("input", () => {
 });
 
 // 페이지 이동 - fetchAndShowPosition 호출
-function goToPositionPage(Page) {
+function goToPositionPage(page) {
     fetchAndShowPosition(page);
 }
 
