@@ -12,6 +12,7 @@ import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.payment.PaymentDTO;
+import com.app.positionback.domain.payment.PaymentListDTO;
 import com.app.positionback.domain.position.PositionListDTO;
 import com.app.positionback.domain.post.PostDTO;
 import com.app.positionback.domain.reply.ReplyDTO;
@@ -158,8 +159,27 @@ public class AdminServiceImpl implements AdminService {
 
     // 결제 관리
     // 지원료 결제
-    public List<PaymentDTO> getPayments() {
-        return adminDAO.paymentInformation();
+    @Override
+    public PaymentListDTO getPayments(int page, Pagination pagination, Search search) {
+        PaymentListDTO paymentListDTO = new PaymentListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getPaymentTotal());
+        pagination.progress();
+        paymentListDTO.setPagination(pagination);
+        paymentListDTO.setPayments(adminDAO.paymentInformation(pagination, search));
+        return paymentListDTO;
+    }
+
+    // 지원료 결제 현황 전체 조회
+    @Override
+    public int getPaymentTotal() {
+        return adminDAO.getPaymentTotal();
+    }
+
+    // 지원료 결제 검색 결과 전체 조회
+    @Override
+    public int getTotalWithPaymentSearch(Search search) {
+        return adminDAO.getTotalWithPaymentSearch(search);
     }
 
     // 작성 관리

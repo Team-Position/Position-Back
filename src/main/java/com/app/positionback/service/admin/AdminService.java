@@ -13,6 +13,7 @@ import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.payment.PaymentDTO;
+import com.app.positionback.domain.payment.PaymentListDTO;
 import com.app.positionback.domain.position.PositionDTO;
 import com.app.positionback.domain.position.PositionListDTO;
 import com.app.positionback.domain.post.PostDTO;
@@ -46,7 +47,9 @@ public interface AdminService {
     public int getPositionTotal();
     public int getTotalWithPositionSearch(Search search);
     // 결제 관리
-    List<PaymentDTO> getPayments();
+    public PaymentListDTO getPayments(int page, Pagination pagination, Search search);
+    public int getPaymentTotal();
+    public int getTotalWithPaymentSearch(Search search);
     // 작성 관리
     List<NoticeDTO> getNotices();
     List<PostDTO> getPosts();

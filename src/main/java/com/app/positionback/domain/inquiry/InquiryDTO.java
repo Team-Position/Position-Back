@@ -17,6 +17,9 @@ public class InquiryDTO {
     private String updatedDate;
     private Long memberId;
     private String memberEmail;
+    private String fileName; // 업로드된 파일명
+    private String filePath; // 업로드된 파일 경로
+    private String fileSize; // 업로드된 파일 크기
 
     public InquiryVO toVO() {
         return new InquiryVO(id, inquiryType, inquiryCategory, inquiryTitle, inquiryContent, createdDate, updatedDate, memberId, memberEmail);

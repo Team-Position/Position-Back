@@ -10,3 +10,6 @@ memberService.fetchCorporationMembers(1, corporationKeywordInput.value, showCorp
 applyService.fetchApply(1, ApplyKeywordInput.value, applySelectedSort, showApplyList);
 applyService.fetchInterview(1, InterviewKeywordInput.value, interviewSelectedSort, showInterviewList);
 applyService.fetchPosition(1, PositionKeywordInput.value, positionSelectedSort, showPositionList);
+
+// 결제 관리 데이터 불러오기 및 표시
+paymentService.fetchPayment();

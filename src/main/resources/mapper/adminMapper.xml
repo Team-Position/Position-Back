@@ -282,6 +282,45 @@
         <include refid="PositionSearch"/>
     </select>
 
+    <!-- 결제 내역 관리 -->
+    <!-- 결제 내역 목록 페이징 -->
+    <sql id="PaymentSearch">
+        <where>
+            <if test="search.keyword != null nad search.keyword != ''">
+                and (
+                member_name like concat('%', #{search.keyword}, '%')
+                or notice_title like concat('%', #{search.keyword}, '%')
+                or member_phone like concat('%', #{search.keyword}, '%')
+                )
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectAllPayment" resultType="paymentDTO">
+        select id, m.member_name, p.created_date, n.notice_title, p.payment_amount, m.member_phone, p.payment_method, p.payment_status
+        from tbl_payment p
+        join tbl_member m on p.member_id = m.id
+        join tbl_notice n on p.notice_id = n.id
+        <include refid="PaymentSearch"/>
+        order by createdDate desc
+        limit #{pagination.startRow}, #{pagination.rowCount}
+    </select>
+
+    <select id="selectPaymentTotal">
+        select count(*)
+        from tbl_payment p
+        join tbl_member m on p.member_id = m.id
+        join tbl_notice n on p.notice_id = n.id
+    </select>
+
+    <select id="selectTotalWithPaymentSearch">
+        select count(*)
+        from tbl_payment p
+        join tbl_member m on p.member_id = m.id
+        join tbl_notice n on p.notice_id = n.id
+        <include refid="PaymentSearch"></include>
+    </select>
+
     <!-- 문의 관리 -->
     <!-- 일반 문의 목록 페이징 -->
     <sql id="MemberInquirySearch">

@@ -1964,13 +1964,13 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                class="sort-filter-option selected"
+                                                class="sort-filter-option paymentSort selected"
                                                 >최신순</span
                                             >
-                                            <span class="sort-filter-option"
+                                            <span class="sort-filter-option paymentSort"
                                                 >결제 완료</span
                                             >
-                                            <span class="sort-filter-option"
+                                            <span class="sort-filter-option paymentSort"
                                                 >결제 취소</span
                                             >
                                         </div>
@@ -1980,10 +1980,11 @@
                                                 type="text"
                                                 class="Filter_searchInput"
                                                 placeholder="검색어 입력"
+                                                name="paymentSearchInput"
                                             />
                                         </div>
                                     </div>
-                                    <!-- 면접 내역 테이블 -->
+                                    <!-- 결제 내역 테이블 -->
                                     <div class="paymentTable_container">
                                         <div
                                             class="paymentTable_row paymentTable_header"
@@ -2184,7 +2185,7 @@
                                     </div>
                                 </div>
                                 <nav class="pagination">
-                                    <ul class="pagination-list">
+                                    <ul class="pagination-list payment">
                                         <!-- 처음 페이지로 이동하는 버튼 -->
                                         <li class="pagination-first">
                                             <a

@@ -16,6 +16,7 @@ import com.app.positionback.domain.member.MemberDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.payment.PaymentDTO;
+import com.app.positionback.domain.payment.PaymentListDTO;
 import com.app.positionback.domain.position.PositionDTO;
 import com.app.positionback.domain.position.PositionListDTO;
 import com.app.positionback.domain.post.PostDTO;
@@ -133,10 +134,19 @@ public class AdminController {
 
     // 결제 관리
     // 지원료 결제
-    @GetMapping("/position/payment")
+    @GetMapping("/position/payment/{page}")
     @ResponseBody
-    public List<PaymentDTO> getPayments(){
-        return adminService.getPayments();
+    public PaymentListDTO getPayments(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithPaymentSearch(search));
+        } else {
+            pagination.setTotal(adminService.getPaymentTotal());
+        }
+        pagination.progress();
+        return adminService.getPayments(page, pagination, search);
     }
 
     // 작성 관리

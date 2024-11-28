@@ -16,3 +16,38 @@ create table tbl_payment (
 select *
 from tbl_payment;
 
+insert into tbl_payment (
+    payment_amount,
+    payment_status,
+    payment_method,
+    notice_id,
+    member_id
+) values (
+    '10000',
+    '결제 완료',
+    '카카오페이',
+    5,
+    5
+         );
+
+# 이름 : member_name / 결제일 : created_date / 결제 상품 : notice_job_category_name / 결제 금액 : payment_amount
+# 전화번호 : member_phone / 결제수단 : payment_method / 결제 상태 : payment_status
+
+SELECT
+    m.member_name,
+    p.created_date,
+    n.notice_title,
+    p.payment_amount,
+    m.member_phone,
+    p.payment_method,
+    p.payment_status
+FROM
+    tbl_payment p
+        JOIN
+    tbl_member m
+    ON
+        p.member_id = m.id
+        JOIN
+    tbl_notice n
+    ON
+        p.notice_id = n.id;

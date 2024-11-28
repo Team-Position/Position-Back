@@ -107,8 +107,18 @@ public class AdminDAO {
 
     // 결제 관리
     // 지원료 결제
-    public List<PaymentDTO> paymentInformation() {
-        return adminMapper.selectAllPayment();
+    public List<PaymentDTO> paymentInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllPayment(pagination, search);
+    }
+
+    // 지원료 결제 현황 전체 조회
+    public int getPaymentTotal() {
+        return adminMapper.selectPaymentTotal();
+    }
+
+    // 지원료 결제 검색 결과 전체 조회
+    public int getTotalWithPaymentSearch(Search search) {
+        return adminMapper.selectTotalWithPaymentSearch(search);
     }
 
     // 작성 관리

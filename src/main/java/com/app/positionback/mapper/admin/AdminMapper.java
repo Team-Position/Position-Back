@@ -50,7 +50,9 @@ public interface AdminMapper {
     public int selectPositionTotal();
     public int selectTotalWithPositionSearch(@Param("search")Search search);
     // 결제 관리
-    List<PaymentDTO> selectAllPayment();
+    public List<PaymentDTO> selectAllPayment(@Param("pagination") Pagination pagination, @Param("search")Search search);
+    public int selectPaymentTotal();
+    public int selectTotalWithPaymentSearch(@Param("search")Search search);
     // 작성 관리
     List<NoticeDTO> selectAllNotice();
     List<PostDTO> selectAllPost();
