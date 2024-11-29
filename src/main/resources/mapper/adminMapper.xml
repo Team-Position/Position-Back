@@ -286,7 +286,7 @@
     <!-- 결제 내역 목록 페이징 -->
     <sql id="PaymentSearch">
         <where>
-            <if test="search.keyword != null nad search.keyword != ''">
+            <if test="search.keyword != null and search.keyword != ''">
                 and (
                 member_name like concat('%', #{search.keyword}, '%')
                 or notice_title like concat('%', #{search.keyword}, '%')
@@ -296,13 +296,23 @@
         </where>
     </sql>
 
-    <select id="selectAllPayment" resultType="paymentDTO">
-        select id, m.member_name, p.created_date, n.notice_title, p.payment_amount, m.member_phone, p.payment_method, p.payment_status
+    <select id="selectAllPayment">
+        select m.member_name, p.created_date, n.notice_title, p.payment_amount, m.member_phone, p.payment_method, p.payment_status
         from tbl_payment p
         join tbl_member m on p.member_id = m.id
         join tbl_notice n on p.notice_id = n.id
         <include refid="PaymentSearch"/>
-        order by createdDate desc
+        <choose>
+            <when test="search.types[0] == 'paymentcomplete'">
+                order by (payment_status == '결제 완료') desc, p.created_date desc
+            </when>
+            <when test="search.types[0] == 'paymentcancel'">
+                order by (payment_status == '결제 취소') desc, p.updated_date desc
+            </when>
+            <otherwise>
+                order by p.created_date desc
+            </otherwise>
+        </choose>
         limit #{pagination.startRow}, #{pagination.rowCount}
     </select>
 
