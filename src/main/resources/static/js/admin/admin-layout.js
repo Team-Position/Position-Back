@@ -45,20 +45,25 @@ document.addEventListener('DOMContentLoaded', () => {
     goToPage(1);
 });
 
-// 기존 selectedSort 변수를 활용
 const fetchAndShowMembers = async (page) => {
     const keyword = memberKeywordInput.value;
-    const sortType = selectedSort; // 선택된 정렬 옵션만 전달
+    const sortType = selectedSort;
 
     try {
-        // 서버 요청에 정렬 옵션 포함
+        // 서버 요청
         const response = await fetch(`/admin/position/members/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
-        // 데이터가 없을 경우 처리
+        // 페이지 초과 요청 처리
+        if (page > data.pagination.totalPages) {
+            alert("더 이상 데이터가 없습니다."); // 사용자에게 경고 메시지 표시
+            return; // 기존 데이터를 유지하며 함수 종료
+        }
+
+        // 데이터가 없을 경우 메시지 표시 (단, 기존 데이터는 유지)
         if (!data.members || data.members.length === 0) {
-            MemberListLayout.innerHTML = `<p>해당 조건에 맞는 회원이 없습니다.</p>`;
-            return;
+            alert("더 이상 해당 조건에 맞는 회원이 없습니다.");
+            return; // 기존 데이터를 유지하며 함수 종료
         }
 
         // 데이터 표시
@@ -68,6 +73,7 @@ const fetchAndShowMembers = async (page) => {
         console.error(`페이지 ${page} 로딩 중 오류 발생:`, error);
     }
 };
+
 
 // 멤버 목록과 페이지네이션을 표시하는 함수
 const showMemberList = ( { members, pagination } ) => {

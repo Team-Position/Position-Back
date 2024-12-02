@@ -54,31 +54,7 @@ public class AdminController {
 
     // 회원 관리
     // 일반 회원 정보 조회
-    @GetMapping("/position/members/{page}")
-    @ResponseBody
-    public MemberListDTO getMembers(
-            @PathVariable("page") Integer page,
-            Pagination pagination,
-            Search search) {
 
-        // 정렬 옵션이 없거나 비어 있는 경우 기본값 설정
-        if (search.getTypes() == null || search.getTypes().length == 0 || search.getTypes()[0].isEmpty()) {
-            search.setTypes(new String[]{"recent"}); // 기본값으로 "recent" 설정
-        }
-
-        // 검색 조건이 있을 경우 총 개수 설정
-        if (search.getKeyword() != null && !search.getKeyword().isEmpty()) {
-            pagination.setTotal(adminService.getTotalWithMemberSearch(search));
-        } else {
-            pagination.setTotal(adminService.getMemberTotal());
-        }
-
-        // 페이징 계산
-        pagination.progress();
-
-        // 데이터 반환
-        return adminService.getMembers(page, pagination, search);
-    }
 
 
     // 기업 회원 정보 조회
@@ -96,20 +72,41 @@ public class AdminController {
 
     // 지원 현황 관리
     // 지원 현황
-    @GetMapping("/position/apply/{page}")
+    @GetMapping("/position/members/{page}")
     @ResponseBody
-    public ApplyListDTO getApplys(@PathVariable("page") Integer page, Pagination pagination, Search search) {
-        if (search.getTypes() == null || search.getTypes().length == 0) {
+    public MemberListDTO getMembers(
+            @PathVariable("page") Integer page,
+            Pagination pagination,
+            Search search) {
+
+        // 정렬 옵션 기본값 설정
+        if (search.getTypes() == null || search.getTypes().length == 0 || search.getTypes()[0].isEmpty()) {
             search.setTypes(new String[]{"recent"});
         }
-        if (search.getKeyword() != null || search.getTypes() != null) {
-            pagination.setTotal(adminService.getTotalWithApplySearch(search));
-        } else {
-            pagination.setTotal(adminService.getApplyTotal());
-        }
+
+        // 총 개수 계산
+        int totalCount = (search.getKeyword() != null && !search.getKeyword().isEmpty())
+                ? adminService.getTotalWithMemberSearch(search)
+                : adminService.getMemberTotal();
+
+        // Pagination에 총 개수 설정
+        pagination.setTotal(totalCount);
+
+        // 페이지네이션 계산 (Pagination의 progress() 호출)
         pagination.progress();
-        return adminService.getApplys(page, pagination, search);
+
+        // 잘못된 페이지 요청 시 마지막 페이지 데이터 반환
+        if (page > pagination.getRealEnd()) { // 총 페이지(realEnd)를 초과한 요청
+            page = pagination.getRealEnd();   // 마지막 페이지로 설정
+        }
+
+        // 요청한 페이지 설정
+        pagination.setPage(page);
+
+        // 데이터 조회
+        return adminService.getMembers(page, pagination, search);
     }
+
 
     // 면접 현황
     @GetMapping("/position/interview/{page}")
