@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Setter
+@ToString
 public class FileVO {
     @EqualsAndHashCode.Include
     private Long id;
