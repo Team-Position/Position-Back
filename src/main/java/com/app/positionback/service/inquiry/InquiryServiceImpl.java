@@ -1,7 +1,9 @@
 package com.app.positionback.service.inquiry;
 
 import com.app.positionback.domain.file.FileDTO;
+import com.app.positionback.domain.file.FileVO;
 import com.app.positionback.domain.file.InquiryFileDTO;
+import com.app.positionback.domain.file.InquiryFileVO;
 import com.app.positionback.domain.inquiry.InquiryDTO;
 import com.app.positionback.domain.inquiry.InquiryVO;
 import com.app.positionback.repository.file.FileDAO;
@@ -34,20 +36,42 @@ public class InquiryServiceImpl implements InquiryService {
 
     @Override
     public void writeInquiry(InquiryDTO inquiryDTO) {
-        InquiryFileDTO inquiryFileDTO = new InquiryFileDTO();
+        // 문의글 저장
+        inquiryDAO.insertInquiry(inquiryDTO); // 이 시점에 inquiryDTO.id가 설정됨
 
-        // 문의 페이지 작성
-        inquiryDAO.insertInquiry(inquiryDTO);
+        // 파일 정보가 있는 경우 처리
+        if (inquiryDTO.getFileName() != null && !inquiryDTO.getFileName().isEmpty()) {
+            // 파일 정보 저장
+            FileVO fileVO = new FileVO();
+            fileVO.setFileName(inquiryDTO.getFileName());
 
-        // 파일 저장 및 정보 생성
-        FileDTO fileDTO = new FileDTO();
+            // 파일 경로 재설정
+            String filePath = getPath();
+            fileVO.setFilePath(filePath);
 
-        // 파일 정보 저장 및 ID 설정
-        fileDAO.save(fileDTO.toVO());
+            // 파일 크기 재설정
+            File file = new File("C:/upload/" + filePath + "/" + inquiryDTO.getFileName());
+            if (file.exists()) {
+                fileVO.setFileSize(String.valueOf(file.length()));
+            } else {
+                log.error("파일을 찾을 수 없습니다: {}", file.getAbsolutePath());
+                throw new RuntimeException("파일을 찾을 수 없습니다.");
+            }
 
-        // 문의 작성페이지와 첨부파일 간 관계 저장
-        inquiryFileDAO.linkInquiryWithFile(inquiryFileDTO.toVO());
-    };
+            // 로그로 파일 정보 확인
+            log.info("저장할 파일 정보: {}", fileVO);
+
+            // 파일 정보 저장
+            fileDAO.save(fileVO); // 이 시점에 fileVO.id가 설정됨
+
+            // 문의글과 파일의 관계 저장
+            InquiryFileDTO inquiryFileDTO = new InquiryFileDTO();
+            inquiryFileDTO.setInquiryId(inquiryDTO.getId());
+            inquiryFileDTO.setFileId(fileVO.getId());
+
+            inquiryFileDAO.linkInquiryWithFile(inquiryFileDTO);
+        }
+    }
 
     private String getPath() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
