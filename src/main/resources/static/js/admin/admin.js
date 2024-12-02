@@ -200,9 +200,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     // 채용중, 채용 마감 글자 색
-    document.querySelectorAll(".announcementTable_row").forEach((row) => {
+    document.querySelectorAll(".noticeTable_row").forEach((row) => {
         const statusCell = row.querySelector(
-            ".announcementTable_cell:nth-child(8)"
+            ".noticeTable_cell:nth-child(8)"
         );
         if (statusCell) {
             const statusText = statusCell.textContent.trim();

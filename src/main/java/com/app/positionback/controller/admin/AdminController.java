@@ -15,11 +15,15 @@ import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
 import com.app.positionback.domain.member.MemberDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
+import com.app.positionback.domain.notice.NoticeListDTO;
 import com.app.positionback.domain.payment.PaymentDTO;
+import com.app.positionback.domain.payment.PaymentListDTO;
 import com.app.positionback.domain.position.PositionDTO;
 import com.app.positionback.domain.position.PositionListDTO;
 import com.app.positionback.domain.post.PostDTO;
+import com.app.positionback.domain.post.PostListDTO;
 import com.app.positionback.domain.reply.ReplyDTO;
+import com.app.positionback.domain.reply.ReplyListDTO;
 import com.app.positionback.service.admin.AdminService;
 import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
@@ -52,22 +56,30 @@ public class AdminController {
     // 일반 회원 정보 조회
     @GetMapping("/position/members/{page}")
     @ResponseBody
-    public MemberListDTO getMembers(@PathVariable("page") Integer page, Pagination pagination, Search search) {
-        // 정렬 순서가 없을 경우 기본값 설정
-        if (search.getTypes() == null || search.getTypes().length == 0) {  // types 배열이 비어있거나 null인 경우
-            search.setTypes(new String[]{"recent"});    // 기본값으로 "recent" 설정
+    public MemberListDTO getMembers(
+            @PathVariable("page") Integer page,
+            Pagination pagination,
+            Search search) {
+
+        // 정렬 옵션이 없거나 비어 있는 경우 기본값 설정
+        if (search.getTypes() == null || search.getTypes().length == 0 || search.getTypes()[0].isEmpty()) {
+            search.setTypes(new String[]{"recent"}); // 기본값으로 "recent" 설정
         }
+
         // 검색 조건이 있을 경우 총 개수 설정
-        if (search.getKeyword() != null || search.getTypes() != null) {
+        if (search.getKeyword() != null && !search.getKeyword().isEmpty()) {
             pagination.setTotal(adminService.getTotalWithMemberSearch(search));
         } else {
             pagination.setTotal(adminService.getMemberTotal());
         }
-        // 페이징 진행
+
+        // 페이징 계산
         pagination.progress();
-        // 검색 조건에 맞는 목록 반환
+
+        // 데이터 반환
         return adminService.getMembers(page, pagination, search);
     }
+
 
     // 기업 회원 정보 조회
     @GetMapping("/position/corporation-members/{page}")
@@ -133,30 +145,68 @@ public class AdminController {
 
     // 결제 관리
     // 지원료 결제
-    @GetMapping("/position/payment")
+    @GetMapping("/position/payment/{page}")
     @ResponseBody
-    public List<PaymentDTO> getPayments(){
-        return adminService.getPayments();
+    public PaymentListDTO getPayments(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithPaymentSearch(search));
+        } else {
+            pagination.setTotal(adminService.getPaymentTotal());
+        }
+        pagination.progress();
+        return adminService.getPayments(page, pagination, search);
     }
 
     // 작성 관리
     // 공고 작성
-    @GetMapping("/position/notice")
+    @GetMapping("/position/notice/{page}")
     @ResponseBody
-    public List<NoticeDTO> getNotices(){
-        return adminService.getNotices();
+    public NoticeListDTO getNotices(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithNoticeSearch(search));
+        } else {
+            pagination.setTotal(adminService.getNoticeTotal());
+        }
+        pagination.progress();
+        return adminService.getNotices(page, pagination, search);
     }
+
     // 게시글 작성
-    @GetMapping("/position/post")
+    @GetMapping("/position/post/{page}")
     @ResponseBody
-    public List<PostDTO> getPosts(){
-        return adminService.getPosts();
+    public PostListDTO getPosts(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithPostSearch(search));
+        } else {
+            pagination.setTotal(adminService.getPostTotal());
+        }
+        pagination.progress();
+        return adminService.getPosts(page, pagination, search);
     }
+
     // 댓글 작성
-    @GetMapping("/position/reply")
+    @GetMapping("/position/reply/{page}")
     @ResponseBody
-    public List<ReplyDTO> getReplys(){
-        return adminService.getReplys();
+    public ReplyListDTO getReplys(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithReplySearch(search));
+        } else {
+            pagination.setTotal(adminService.getReplyTotal());
+        }
+        pagination.progress();
+        return adminService.getReplys(page, pagination, search);
     }
 
     // 후기 관리

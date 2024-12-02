@@ -11,10 +11,14 @@ import com.app.positionback.domain.interview.InterviewListDTO;
 import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
+import com.app.positionback.domain.notice.NoticeListDTO;
 import com.app.positionback.domain.payment.PaymentDTO;
+import com.app.positionback.domain.payment.PaymentListDTO;
 import com.app.positionback.domain.position.PositionListDTO;
 import com.app.positionback.domain.post.PostDTO;
+import com.app.positionback.domain.post.PostListDTO;
 import com.app.positionback.domain.reply.ReplyDTO;
+import com.app.positionback.domain.reply.ReplyListDTO;
 import com.app.positionback.repository.admin.AdminDAO;
 import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
@@ -158,22 +162,100 @@ public class AdminServiceImpl implements AdminService {
 
     // 결제 관리
     // 지원료 결제
-    public List<PaymentDTO> getPayments() {
-        return adminDAO.paymentInformation();
+    @Override
+    public PaymentListDTO getPayments(int page, Pagination pagination, Search search) {
+        PaymentListDTO paymentListDTO = new PaymentListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getPaymentTotal());
+        pagination.progress();
+        paymentListDTO.setPagination(pagination);
+        paymentListDTO.setPayments(adminDAO.paymentInformation(pagination, search));
+        return paymentListDTO;
+    }
+
+    // 지원료 결제 현황 전체 조회
+    @Override
+    public int getPaymentTotal() {
+        return adminDAO.getPaymentTotal();
+    }
+
+    // 지원료 결제 검색 결과 전체 조회
+    @Override
+    public int getTotalWithPaymentSearch(Search search) {
+        return adminDAO.getTotalWithPaymentSearch(search);
     }
 
     // 작성 관리
-    // 공고 작성
-    public List<NoticeDTO> getNotices() {
-        return adminDAO.noticeInformation();
+    // 공고 작성 관리
+    @Override
+    public NoticeListDTO getNotices(int page, Pagination pagination, Search search) {
+        NoticeListDTO noticeListDTO = new NoticeListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getNoticeTotal());
+        pagination.progress();
+        noticeListDTO.setPagination(pagination);
+        noticeListDTO.setNotices(adminDAO.noticeInformation(pagination, search));
+        return noticeListDTO;
     }
-    // 게시글 작성
-    public List<PostDTO> getPosts() {
-        return adminDAO.postInformation();
+
+    // 공고 작성 갯수 전체 조회
+    @Override
+    public int getNoticeTotal() {
+        return adminDAO.getNoticeTotal();
     }
-    // 댓글 작성
-    public List<ReplyDTO> getReplys() {
-        return adminDAO.replyInformation();
+
+    // 공고 작성 검색 결과 전체 조회
+    @Override
+    public int getTotalWithNoticeSearch(Search search) {
+        return adminDAO.getTotalWithNoticeSearch(search);
+    }
+
+    // 게시글 작성 관리
+    @Override
+    public PostListDTO getPosts(int page, Pagination pagination, Search search) {
+        PostListDTO postListDTO = new PostListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getPostTotal());
+        pagination.progress();
+        postListDTO.setPagination(pagination);
+        postListDTO.setPosts(adminDAO.postInformation(pagination, search));
+        return postListDTO;
+    }
+
+    // 게시글 작성 갯수 전제 조회
+    @Override
+    public int getPostTotal() {
+        return adminDAO.getPostTotal();
+    }
+
+    // 게시글 작성 검색 결과 전체 조회
+    @Override
+    public int getTotalWithPostSearch(Search search) {
+        return adminDAO.getTotalWithPostSearch(search);
+    }
+
+    // 댓글 작성 관리
+    @Override
+    public ReplyListDTO getReplys(int page, Pagination pagination, Search search) {
+        ReplyListDTO replyListDTO = new ReplyListDTO();
+        pagination.setPage(page);
+        pagination.setTotal(adminDAO.getReplyTotal());
+        pagination.progress();
+        replyListDTO.setPagination(pagination);
+        replyListDTO.setReplies(adminDAO.replyInformation(pagination, search));
+        return replyListDTO;
+    }
+
+    // 댓글 작성 갯수 전체 조회
+    @Override
+    public int getReplyTotal() {
+        return adminDAO.getReplyTotal();
+    }
+
+    // 댓글 작성 검색 결과 전체 조회
+    @Override
+    public int getTotalWithReplySearch(Search search) {
+        return adminDAO.getTotalWithReplySearch(search);
     }
 
     // 후기 관리

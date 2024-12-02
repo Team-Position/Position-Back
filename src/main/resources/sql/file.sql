@@ -7,8 +7,4 @@ create table tbl_file(
     updated_date datetime default  current_timestamp
 );
 
-select *
-from tbl_file;
-
-
-alter table  tbl_file add(file_size varchar(255) not null);
+select * from tbl_file;

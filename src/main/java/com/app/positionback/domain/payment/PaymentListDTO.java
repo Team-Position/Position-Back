@@ -1,4 +1,4 @@
-package com.app.positionback.domain.reply;
+package com.app.positionback.domain.payment;
 
 import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
@@ -11,8 +11,8 @@ import java.util.List;
 
 @Component
 @Getter @Setter @ToString
-public class ReplyListDTO {
-    private List<ReplyDTO> replies;
+public class PaymentListDTO {
+    private List<PaymentDTO> payments;
     private Pagination pagination;
     private Search search;
 }

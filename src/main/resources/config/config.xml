@@ -18,7 +18,14 @@
         <typeAlias type="com.app.positionback.domain.reply.ReplyVO" alias="replyVO"/>
         <typeAlias type="com.app.positionback.domain.reply.ReplyDTO" alias="replyDTO"/>
         <typeAlias type="com.app.positionback.domain.resume.ResumeVO" alias="resumeVO" />
-        <typeAlias type="com.app.positionback.domain.resume.ResumeDTO" alias="resumeDTO" />
+        <typeAlias type="com.app.positionback.domain.resume.ResumeDTO" alias="ResumeDTO" />
+        <typeAlias type="com.app.positionback.domain.file.FileDTO" alias="FileDTO" />
+        <typeAlias type="com.app.positionback.domain.file.FileVO" alias="FileVO" />
+        <typeAlias type="com.app.positionback.domain.file.InquiryFileDTO" alias="InquiryFileDTO" />
+        <typeAlias type="com.app.positionback.domain.file.InquiryFileVO" alias="InquiryFileVO" />
+        <typeAlias type="com.app.positionback.domain.payment.PaymentDTO" alias="PaymentDTO" />
+        <typeAlias type="com.app.positionback.domain.payment.PaymentVO" alias="PaymentVO" />
+        <typeAlias type="com.app.positionback.domain.payment.PaymentListDTO" alias="PaymentListDTO" />
 
 
     </typeAliases>

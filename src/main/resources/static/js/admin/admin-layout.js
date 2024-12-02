@@ -9,27 +9,27 @@ const corporationKeywordInput = document.getElementById("corporationSearchInput"
 const sortOptions = document.querySelectorAll(".sort-filter-option"); // 정렬 옵션
 let selectedSort = "가입일 순"; // 기본 정렬 설정
 
+// 정렬 옵션 이벤트 설정
+sortOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+        selectedSort = option.getAttribute("data-type");
+
+        // 기존 선택 해제 후 현재 선택 항목 강조
+        sortOptions.forEach((option) => option.classList.remove("selected"));
+        option.classList.add("selected");
+
+        // 현재 정렬 옵션에 따라 데이터를 새로 로드
+        fetchAndShowMembers(1);
+    });
+});
+
+
 // 검색어 초기화
 // URL 쿼리 문자열에서 "keyword"라는 이름의 매개변수 값을 가져옴
 // 만약 URL에 "keyword" 매개변수가 없다면 기본값으로 빈 문자열("")을 할당함
 // URLSearchParams() : 객체 인스턴스를 반환
 // window.location.search : 현재 페이지의 쿼리 스트링에 접근하여 현재 페이지 URL의 쿼리 스트링 부분을 가져온다.
 memberKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
-
-// 정렬 옵션 이벤트 설정
-sortOptions.forEach((option) => {
-    option.addEventListener("click", () => {
-        // 선택한 옵션의 data-type 속성을 가져와서 selectedSort에 저장
-        selectedSort = option.getAttribute("data-type");
-
-        // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
-        sortOptions.forEach((opt) => opt.classList.remove("selected"));
-        option.classList.add("selected");
-
-        // 검색어와 정렬 기준을 사용하여 멤버 목록 새로고침
-        fetchAndShowMembers(1);
-    });
-});
 
 // 검색어 입력 시 검색 실행
 memberKeywordInput.addEventListener("input", () => {
@@ -45,17 +45,23 @@ document.addEventListener('DOMContentLoaded', () => {
     goToPage(1);
 });
 
-// 일반 회원 목록을 서버에서 가져오고 화면에 표시
+// 기존 selectedSort 변수를 활용
 const fetchAndShowMembers = async (page) => {
     const keyword = memberKeywordInput.value;
-    const sortType = selectedSort;
+    const sortType = selectedSort; // 선택된 정렬 옵션만 전달
 
     try {
-        // 데이터를 서버에서 가져오는 요청
+        // 서버 요청에 정렬 옵션 포함
         const response = await fetch(`/admin/position/members/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
-        // 페이지 데이터와 멤버 데이터를 표시하는 함수 호출
+        // 데이터가 없을 경우 처리
+        if (!data.members || data.members.length === 0) {
+            MemberListLayout.innerHTML = `<p>해당 조건에 맞는 회원이 없습니다.</p>`;
+            return;
+        }
+
+        // 데이터 표시
         data.pagination.currentPage = page;
         showMemberList(data);
     } catch (error) {
@@ -91,7 +97,7 @@ const showMemberList = ( { members, pagination } ) => {
                 <div class="UserTable_cell">
                     <button class="editBtn">수정</button>
                 </div>
-            </div>    
+            </div>
         `;
     });
 
@@ -116,7 +122,9 @@ const showMemberList = ( { members, pagination } ) => {
     // 이전 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-prev-link" onclick="goToPage(${pagination.currentPage - 1})" rel="prev nofollow">
+            <a href="#" class="pagination-prev-link"
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToPage(${pagination.currentPage - 1})`}"
+               rel="prev nofollow">
                 <span class="pagination-prev-icon" aria-hidden="true">‹</span>
             </a>
         </li>
@@ -129,12 +137,14 @@ const showMemberList = ( { members, pagination } ) => {
                 <a href="#" class="pagination-page-link" onclick="goToPage(${i})">${i}</a>
             </li>
         `;
-    }
+        }
 
     // 다음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-next-link" onclick="goToPage(${pagination.currentPage + 1})" rel="next nofollow">
+            <a href="#" class="pagination-next-link"
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.currentPage + 1})`}"
+               rel="next nofollow">
                 <span class="pagination-next-icon" aria-hidden="true">›</span>
             </a>
         </li>
@@ -143,7 +153,9 @@ const showMemberList = ( { members, pagination } ) => {
     // 마지막 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-last-link" onclick="goToPage(${pagination.realEnd})" rel="nofollow">
+            <a href="#" class="pagination-last-link"
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.realEnd})`}"
+               rel="nofollow">
                 <span class="pagination-last-icon" aria-hidden="true">»</span>
             </a>
         </li>
@@ -212,11 +224,15 @@ const showCorporationList = ( { corporations, pagination } ) => {
                 <div class="CorporationTable_cell">${corporation.corporationGen || ''}</div>
                 <div class="CorporationTable_cell">${corporation.corporationCode || ''}</div>
                 <div class="CorporationTable_cell"><button class="editBtn">수정</button></div>
-            </div>    
+            </div>
         `;
     });
 
     CorporationListLayout.innerHTML = text;
+
+    // 동적으로 totalPages 계산
+    const CorporationTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = CorporationTotalPages;
 
     // 페이지 버튼 생성
     let pagingText = '';
@@ -233,7 +249,9 @@ const showCorporationList = ( { corporations, pagination } ) => {
     // 이전 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-prev-link" onclick="goToCorPage(${pagination.currentPage - 1})" rel="prev nofollow">
+            <a href="#" class="pagination-prev-link"
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToCorPage(${pagination.currentPage - 1})`}"
+               rel="prev nofollow">
                 <span class="pagination-prev-icon" aria-hidden="true">‹</span>
             </a>
         </li>
@@ -251,7 +269,9 @@ const showCorporationList = ( { corporations, pagination } ) => {
     // 다음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-next-link" onclick="goToCorPage(${pagination.currentPage + 1})" rel="next nofollow">
+            <a href="#" class="pagination-next-link"
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToCorPage(${pagination.currentPage + 1})`}"
+               rel="next nofollow">
                 <span class="pagination-next-icon" aria-hidden="true">›</span>
             </a>
         </li>
@@ -260,7 +280,9 @@ const showCorporationList = ( { corporations, pagination } ) => {
     // 마지막 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-last-link" onclick="goToCorPage(${pagination.realEnd})" rel="nofollow">
+            <a href="#" class="pagination-last-link"
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToCorPage(${pagination.realEnd})`}"
+               rel="nofollow">
                 <span class="pagination-last-icon" aria-hidden="true">»</span>
             </a>
         </li>
@@ -374,6 +396,10 @@ const showApplyList = ({ applies, pagination }) => {
 
     let pagingText = '';
 
+    // 동적으로 totalPages 계산
+    const applyTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = applyTotalPages;
+
     // 처음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
@@ -386,7 +412,9 @@ const showApplyList = ({ applies, pagination }) => {
     // 이전 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-prev-link" onclick="goToApplyPage(${pagination.currentPage - 1})" rel="prev nofollow">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToApplyPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
                 <span class="pagination-prev-icon" aria-hidden="true">‹</span>
             </a>
         </li>
@@ -404,7 +432,9 @@ const showApplyList = ({ applies, pagination }) => {
     // 다음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-next-link" onclick="goToApplyPage(${pagination.currentPage + 1})" rel="next nofollow">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToApplyPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
                 <span class="pagination-next-icon" aria-hidden="true">›</span>
             </a>
         </li>
@@ -413,7 +443,9 @@ const showApplyList = ({ applies, pagination }) => {
     // 마지막 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-last-link" onclick="goToApplyPage(${pagination.realEnd})" rel="nofollow">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToApplyPage(${pagination.realEnd})`}" 
+               rel="nofollow">
                 <span class="pagination-last-icon" aria-hidden="true">»</span>
             </a>
         </li>
@@ -453,6 +485,10 @@ InterviewKeywordInput.addEventListener("input", () => {
 function goToInterviewPage(page) {
     fetchAndShowInterview(page);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    goToInterviewPage(1);
+})
 
 // 면접 현황 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowInterview = async (page) => {
@@ -499,12 +535,16 @@ const showInterviewList = ({interviews, pagination}) => {
                 <div class="InterviewTable_cell">${interview.memberPhone}</div>
                 <div class="InterviewTable_cell">${interview.noticeJobCategoryName}</div>
                 <div class="InterviewTable_cell">${interview.interviewStatus}</div>
-                <div class="InterviewTable_cell">수정</div>
+                <div class="InterviewTable_cell"><button class="editBtn">수정</button></div>
             </div>
         `;
     });
 
     InterviewListLayout.innerHTML = text;
+
+    // 동적으로 totalPages 계산
+    const interviewTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = interviewTotalPages;
 
     let pagingText = '';
 
@@ -520,7 +560,9 @@ const showInterviewList = ({interviews, pagination}) => {
     // 이전 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-prev-link" onclick="goToInterviewPage(${pagination.currentPage - 1})" rel="prev nofollow">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToInterviewPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
                 <span class="pagination-prev-icon" aria-hidden="true">‹</span>
             </a>
         </li>
@@ -538,7 +580,9 @@ const showInterviewList = ({interviews, pagination}) => {
     // 다음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-next-link" onclick="goToInterviewPage(${pagination.currentPage + 1})" rel="next nofollow">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToInterviewPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
                 <span class="pagination-next-icon" aria-hidden="true">›</span>
             </a>
         </li>
@@ -547,7 +591,9 @@ const showInterviewList = ({interviews, pagination}) => {
     // 마지막 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-last-link" onclick="goToInterviewPage(${pagination.realEnd})" rel="nofollow">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToInterviewPage(${pagination.realEnd})`}" 
+               rel="nofollow">
                 <span class="pagination-last-icon" aria-hidden="true">»</span>
             </a>
         </li>
@@ -559,7 +605,7 @@ const showInterviewList = ({interviews, pagination}) => {
 };
 
 // 포지션 현황 기본 정렬 설정
-let positionSelectedSort = "최신순";
+let positionSelectedSort = "포지션 근무일순";
 
 // 포지션 현황 정렬 옵션 이벤트 설정
 PositionStatusSortOptions.forEach((option) => {
@@ -585,7 +631,7 @@ PositionKeywordInput.addEventListener("input", () => {
 });
 
 // 페이지 이동 - fetchAndShowPosition 호출
-function goToPositionPage(Page) {
+function goToPositionPage(page) {
     fetchAndShowPosition(page);
 }
 
@@ -638,13 +684,18 @@ const showPositionList = ({positions, pagination}) => {
                 <div class="PositionTable_cell">${position.memberPhone}</div>
                 <div class="PositionTable_cell">${position.noticeJobCategoryName}</div>
                 <div class="PositionTable_cell">${position.positionStatus}</div>
-                <div class="PositionTable_cell">수정</div>
+                <div class="PositionTable_cell"><button class="editBtn">수정</button></div>
             </div>
         `;
     });
 
     PositionListLayout.innerHTML = text;
 
+    // 동적으로 totalPages 계산
+    const positionTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = positionTotalPages;
+
+    // 페이지 버튼 생성
     let pagingText = '';
 
     // 처음 페이지로 이동하는 버튼
@@ -659,7 +710,9 @@ const showPositionList = ({positions, pagination}) => {
     // 이전 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-prev-link" onclick="goToPositionPage(${pagination.currentPage - 1})" rel="prev nofollow">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToPositionPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
                 <span class="pagination-prev-icon" aria-hidden="true">‹</span>
             </a>
         </li>
@@ -677,7 +730,9 @@ const showPositionList = ({positions, pagination}) => {
     // 다음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-next-link" onclick="goToPositionPage(${pagination.currentPage + 1})" rel="next nofollow">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPositionPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
                 <span class="pagination-next-icon" aria-hidden="true">›</span>
             </a>
         </li>
@@ -686,7 +741,9 @@ const showPositionList = ({positions, pagination}) => {
     // 마지막 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-last-link" onclick="goToPositionPage(${pagination.realEnd})" rel="nofollow">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPositionPage(${pagination.realEnd})`}" 
+               rel="nofollow">
                 <span class="pagination-last-icon" aria-hidden="true">»</span>
             </a>
         </li>
@@ -696,7 +753,180 @@ const showPositionList = ({positions, pagination}) => {
     PositionListPaging.innerHTML = pagingText;
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// 결제 관리
+const PaymentListLayout = document.querySelector(".paymentTable_container"); // 결제 목록 표시
+const PaymentListPaging = document.querySelector(".pagination-list.payment"); // 페이지네이션 요소
+const PaymentKeywordInput = document.getElementById("paymentSearchInput"); // 검색어 입력 필드
+const PaymentSortOptions = document.querySelectorAll(".sort-filter-option.paymentSort"); // 정렬 옵션
+let paymentSelectedSort = "최신순"; // 기본 정렬 설정
+
+// 정렬 옵션 이벤트 설정
+PaymentSortOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+        // 선택한 옵션의 data-type 속성을 가져와서 selectedSort에 저장
+        paymentSelectedSort = option.getAttribute("data-type");
+
+        // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
+        PaymentSortOptions.forEach((opt) => opt.classList.remove("selected"));
+        option.classList.add("selected");
+
+        // 검색어와 정렬 기준을 사용하여 결제 목록 새로고침
+        fetchAndShowPayment(1);
+    });
+});
+
+// 검색어 초기화
+PaymentKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
+
+// 검색어 입력 시 검색 실행
+PaymentKeywordInput.addEventListener("input", () => {
+    fetchAndShowPayment(1);
+});
+
+// 페이지 이동 - fetchAndShowPayment 호출
+function goToPaymentPage(page) {
+    fetchAndShowPayment(page);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    goToPaymentPage(1);
+});
+
+// 결제 목록을 서버에서 가져오고 화면에 표시
+const fetchAndShowPayment = async (page) => {
+    const keyword = PaymentKeywordInput.value;
+    const sortType = paymentSelectedSort;
+
+    try {
+        // 데이터를 서버에서 가져오는 요청
+        const response = await fetch(`/admin/position/payment/${page}?keyword=${keyword}&types=${sortType}`);
+        const data = await response.json();
+
+        // 페이지 데이터와 결제 데이터를 표시하는 함수 호출
+        data.pagination.currentPage = page;
+        showPaymentList(data);
+    } catch (error) {
+        console.error(`페이지 ${page} 로딩 중 오류 발생:`, error);
+    }
+};
+
+// 결제 목록과 페이지네이션을 표시하는 함수
+const showPaymentList = ( { payments, pagination }) => {
+    let text = `
+        <div class="paymentTable_row paymentTable_header">
+            <div class="paymentTable_cell"><input type="checkbox" id="selectAll"></div>
+            <div class="paymentTable_cell">이름</div>
+            <div class="paymentTable_cell">결제일</div>
+            <div class="paymentTable_cell">결제한 공고 제목</div>
+            <div class="paymentTable_cell">결제 금액</div>
+            <div class="paymentTable_cell">전화번호</div>
+            <div class="paymentTable_cell">결제 수단</div>
+            <div class="paymentTable_cell">상태</div>
+            <div class="paymentTable_cell">Action</div>
+        </div>
+    `;
+
+    payments.forEach((payment) => {
+        text += `
+            <div class="paymentTable_cell"><input type="checkbox" id="selectAll"></div>
+            <div class="paymentTable_cell">${payment.memberName || ''}</div>
+            <div class="paymentTable_cell">${payment.createdDate || ''}</div>
+            <div class="paymentTable_cell">${payment.noticeTitle || ''}</div>
+            <div class="paymentTable_cell">${payment.paymentAmount || ''}</div>
+            <div class="paymentTable_cell">${payment.memberPhone}</div>
+            <div class="paymentTable_cell">${payment.paymentMethod}</div>
+            <div class="paymentTable_cell">${payment.paymentStatus}</div>
+            <div class="paymentTable_cell">
+                <button class="editBtn">수정</button>
+            </div>
+        `;
+    });
+
+    PaymentListLayout.innerHTML = text;
+
+    // 동적으로 totalPages 계산
+    const paymentTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = paymentTotalPages;
+
+    // 페이지 버튼 생성
+    let pagingText = '';
+
+    // 처음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-first-link" onclick="goToPaymentPage(1)" rel="nofollow">
+                <span class="pagination-first-icon" aria-hidden="true">«</span>
+            </a>
+        </li>
+    `;
+
+    // 이전 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
+                <span class="pagination-prev-icon" aria-hidden="true">‹</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지 번호 버튼
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        pagingText += `
+            <li class="pagination-page ${i === pagination.currentPage ? 'active' : ''}">
+                <a href="#" class="pagination-page-link" onclick="goToPaymentPage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // 다음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
+                <span class="pagination-next-icon" aria-hidden="true">›</span>
+            </a>
+        </li>
+    `;
+
+    // 마지막 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.realEnd})`}" 
+               rel="nofollow">
+                <span class="pagination-last-icon" aria-hidden="true">»</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지네이션을 동적으로 추가
+    PaymentListPaging.innerHTML = pagingText;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// // 공고 작성 관리
+// const NoticeListLayout = document.querySelector(".noticeTable_container"); // 공고 작성 목록 표시
+// const NoticeListPaging = document.querySelector(".pagination-list.notice"); // 페이지네이션 요소
+// const NoticeKeywordInput = document.getElementById("noticeSearchInput"); // 검색어 입력 필드
+// const NoticeSortOptions = document.querySelector(".sort-filter-option.noticeSort"); // 정렬 옵션
+// let noticeSelectSort = "포지션 근무일순" // 기본 정렬 설정
+//
+// // 정렬 옵션 이벤트 설정
+// NoticeSortOptions.forEach((option) => {
+//     option.addEventListener("click", () => {
+//         // 선택한 옵션의 data-type 속성을 가져와서 noticeSelectSort에 저장
+//         noticeSelectSort = option.getAttribute("data-type");
+//
+//         // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
+//         NoticeSortOptions.forEach(())
+//     })
+// })
 
 
 
