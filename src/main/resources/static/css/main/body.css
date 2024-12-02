@@ -87,7 +87,7 @@
     z-index: 2;
     width: 40px;
     height: 40px;
-    background-image: url('/static/images/main/test1.svg');
+    background-image: url('/images/main/test1.svg');
     content: "";
 }
 
@@ -121,7 +121,7 @@
 }
 
 .main-greetings .btn-greeting+.btn-greeting:after {
-    background-image: url('/static/images/main/test2.svg');
+    background-image: url('/images/main/test2.svg');
 }
 
 .main-greetings .btn-greeting-link {
@@ -448,7 +448,7 @@
 .main-cont .btn-prev:after, .main-cont .btn-next:after {
     width: 9px;
     height: 15px;
-    background-image: url('/static/images/main/back-btn.svg');
+    background-image: url('/images/main/back-btn.svg');
     content: "";
 }
 

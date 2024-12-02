@@ -1,5 +1,6 @@
 const noticeLayout = document.getElementById("notice-list");
-const noticeTop4Layout = document.getElementById("notice-top-4")
+const noticeTop4Layout = document.getElementById("notice-top-4");
+const emptyMessageContainer = document.querySelector(".info-empty");
 
 noticeLayout.innerHTML=``;
 noticeTop4Layout.innerHTML=``;
@@ -9,6 +10,19 @@ const showListScroll = ({notices, pagination}) =>{
 
     // console.log("pagination.rowCount:", pagination.rowCount);
     // console.log("notices.length:", notices.length);
+
+    // 기존에 li가 있는지 확인
+    const hasExistingItems = noticeLayout.querySelectorAll("li").length > 0;
+
+    // 검색 결과가 없고, 기존에 li가 없는 경우
+    if (notices.length === 0 && !hasExistingItems) {
+        noticeLayout.innerHTML = ``; // 기존 리스트 초기화
+        emptyMessageContainer.style.display = "block"; // 안내 메시지 표시
+        return; // 함수 종료
+    } else {
+        emptyMessageContainer.style.display = "none"; // 안내 메시지 숨김
+    }
+
     // 다음 페이지 없을 때,
     if(pagination.rowCount >= notices.length){
         globalThis.loadingFlag = true;
@@ -164,6 +178,7 @@ function updateTotalAndFetchData() {
     // 데이터를 가져오고 total 값을 업데이트
     matchingService.getList(globalThis.page, formData, showListScroll);
 }
+
 function calculateDaysLeft(endDate) {
     const today = new Date();
     const end = new Date(endDate);

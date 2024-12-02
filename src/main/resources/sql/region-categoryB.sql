@@ -36,6 +36,10 @@ VALUES
     ('강남구', 1), ('강북구', 1), ('구로구', 1), ('노원구', 1), ('마포구', 1), ('성동구', 1),
     ('송파구', 1), ('양천구', 1), ('영등포구', 1), ('용산구', 1), ('중구', 1);
 
+INSERT INTO tbl_region_categoryB (region_categoryB_name, region_categoryA_id)
+VALUES
+ ('종로구', 1);
+
 -- 인천
 INSERT INTO tbl_region_categoryB (region_categoryB_name, region_categoryA_id)
 VALUES

@@ -23,12 +23,12 @@ const showApplyList = ({applies, pagination,ongoingCount, closedCount}) =>{
                 <div class="row -apply-list" id="apply-list-${apply.applyId}">
                     <div class="col-summary">
                         <strong class="corp">
-                            <a href="/zf-user/company-info/view?csn=${apply.corporationId}" target="-blank">
+                            <a href="#" target="-blank">
                                 ${apply.memberName}
                             </a>
                         </strong>
                         <div class="recruit">
-                            <a href="/zf-user/jobs/relay/view?rec-idx=${apply.applyId}&view-type=apply-status&t-ref=apply-status-list&t-ref-content=generic" target="-blank">
+                            <a href="#" target="-blank">
                                 <span class="division">${apply.noticeTitle}</span>
                                 <div class="TipBox resume-btn">
                                     <span>${apply.noticeJobCategoryName}</span>
@@ -39,7 +39,7 @@ const showApplyList = ({applies, pagination,ongoingCount, closedCount}) =>{
                        
                         <div class="status">
                             <em class="txt-status">${apply.applyStatus}</em>
-                            <span class="txt-sub">${formatDate(apply.createdDate)}</span>
+                            <span class="txt-sub">지원일: ${formatDate(apply.createdDate)}</span>
                         </div>
                     </div>
                     <div class="col-btns col-btn">
@@ -58,12 +58,12 @@ const showApplyList = ({applies, pagination,ongoingCount, closedCount}) =>{
                 <div class="row -apply-list" id="apply-list-${apply.applyId}">
                     <div class="col-summary">
                         <strong class="corp">
-                            <a href="/zf-user/company-info/view?csn=${apply.corporationId}" target="-blank">
+                            <a href="#" target="-blank">
                                 ${apply.memberName}
                             </a>
                         </strong>
                         <div class="recruit">
-                            <a href="/zf-user/jobs/relay/view?rec-idx=${apply.applyId}&view-type=apply-status&t-ref=apply-status-list&t-ref-content=generic" target="-blank">
+                            <a href="#" target="-blank">
                                 <span class="division">${apply.noticeTitle}</span>
                                 <div class="TipBox resume-btn">
                                     <span>${apply.noticeJobCategoryName}</span>
@@ -74,7 +74,7 @@ const showApplyList = ({applies, pagination,ongoingCount, closedCount}) =>{
                        
                         <div class="status">
                             <em class="txt-status">${apply.applyStatus}</em>
-                            <span class="txt-sub">${formatDate(apply.createdDate)}</span>
+                            <span class="txt-sub">지원일: ${formatDate(apply.createdDate)}</span>
                         </div>
                     </div>
                     <div class="col-btns col-btn">
@@ -93,12 +93,12 @@ const showApplyList = ({applies, pagination,ongoingCount, closedCount}) =>{
         
                     <div class="col-summary">
                             <strong class="corp">
-                                <a href="/zf-user/company-info/view?csn=${apply.corporationId}" target="-blank">
+                                <a href="#" target="-blank">
                                     ${apply.memberName}
                                 </a>
                             </strong>
                             <div class="recruit">
-                                <a href="/zf-user/jobs/relay/view?rec-idx=${apply.applyId}&view-type=apply-status&t-ref=apply-status-list&t-ref-content=generic" target="-blank">
+                                <a href="#" target="-blank">
                                     <span class="division">${apply.noticeTitle}</span>
                                     <div class="TipBox">
                                         <span>${apply.noticeJobCategoryName}</span>
@@ -125,8 +125,7 @@ const showApplyList = ({applies, pagination,ongoingCount, closedCount}) =>{
                             `}
                             <div class="status">
                                 <em class="txt-status">${apply.applyStatus}</em>
-                                <span class="txt-sub">미열람</span>
-                                
+                                <span class="txt-sub">지원일: ${formatDate(apply.createdDate)}</span>
                             </div>
                     </div>
                     <div class="col-btns col-btn">
@@ -149,12 +148,12 @@ const showApplyList = ({applies, pagination,ongoingCount, closedCount}) =>{
             
                         <div class="col-summary">
                             <strong class="corp">
-                                <a href="/zf-user/company-info/view?csn=${apply.corporationId}" target="-blank">
+                                <a href="#" target="-blank">
                                     ${apply.memberName}
                                 </a>
                             </strong>
                             <div class="recruit">
-                                <a href="/zf-user/jobs/relay/view?rec-idx=${apply.applyId}&view-type=apply-status&t-ref=apply-status-list&t-ref-content=generic" target="-blank">
+                                <a href="#" target="-blank">
                                     <span class="division">${apply.noticeTitle}</span>
                                     <div class="TipBox">
                                         <span>${apply.noticeJobCategoryName}</span>
@@ -180,7 +179,7 @@ const showApplyList = ({applies, pagination,ongoingCount, closedCount}) =>{
                             `}
                             <div class="status">
                                 <em class="txt-status">${apply.applyStatus}</em>
-                                <span class="txt-sub">미열람</span>
+                                <span class="txt-sub">지원일: ${formatDate(apply.createdDate)}</span>
                                 <button type="button" class="btn-report -ai-report complain-btn" data-id="${apply.applyId}">
                                     <svg aria-hidden="true" focusable="false" class="ic">
                                         <use xlink:href="#icon_report"></use>

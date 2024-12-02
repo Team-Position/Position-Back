@@ -9,14 +9,20 @@
         />
         <link rel="stylesheet" href="/css/matching/matching-main.css" />
         <link rel="stylesheet" href="/css/main.css" />
-        <link
-                rel="stylesheet"
-                href="/css/main/other-logout-header.css"
-        />
+        <link rel="stylesheet" href="/css/main/other-login-header.css" />
+        <link rel="stylesheet" th:href="@{/css/main/other-logout-header.css}"/>
         <title>매칭 페이지</title>
     </head>
     <body id="main">
-    <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    <!-- 일반 회원일 때 -->
+    <th:block th:if="${session.member != null}">
+        <header th:replace="~{/main/other-login-header :: header-login}"></header>
+    </th:block>
+
+    <!-- 로그아웃 상태일 때 -->
+    <th:block th:if="${session.member == null}">
+        <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
+    </th:block>
     <div id="position-section" class="layout-wide has-banner">
             <div id="position-wrap">
                 <div id="content">
@@ -27,11 +33,7 @@
                         id="search-panel-wrapper"
                         class="recruit-search-panel job-category"
                     >
-                        <form
-                            action=""
-                            id="search-panel-form"
-                            name="serch-panel-form"
-                        >
+
                             <!-- 좀만 있다가 -->
                             <fieldset>
                                 <div
@@ -78,7 +80,7 @@
                                                 >
                                                     <span
                                                         class="input-placeholder"
-                                                        >검색어 입력</span
+                                                        >회사명 검색</span
                                                     >
                                                     <span
                                                         class="input-text"
@@ -93,7 +95,7 @@
                                                 class="option-content job-category-section"
                                             >
                                                 <h2 class="blind">직업 선택</h2>
-                                                <div class="select-keyword">
+                                                <!--<div class="select-keyword">
                                                     <div
                                                         class="wrap-auto-keyword"
                                                     >
@@ -121,7 +123,7 @@
                                                                 삭제
                                                             </button>
                                                         </span>
-                                                        <!-- 검색창 누르면 block 돼서 연관 검색어 뜸-->
+                                                        &lt;!&ndash; 검색창 누르면 block 돼서 연관 검색어 뜸&ndash;&gt;
                                                         <div
                                                             class="wrap-result has-result"
                                                             id="autocomplete-has-result"
@@ -157,7 +159,7 @@
                                                                             top: 0px;
                                                                         "
                                                                     >
-                                                                        <!-- keyword 꽂혀야됨 -->
+                                                                        &lt;!&ndash; keyword 꽂혀야됨 &ndash;&gt;
                                                                         <ul
                                                                             class="list-keyword"
                                                                         ></ul>
@@ -175,7 +177,7 @@
                                                                 </button>
                                                             </div>
                                                         </div>
-                                                        <!-- 검색어가 없을때, display:none 시켜야됨 -->
+                                                        &lt;!&ndash; 검색어가 없을때, display:none 시켜야됨 &ndash;&gt;
                                                         <div
                                                             class="wrap-result no-result"
                                                             id="autocomplete-no-result"
@@ -201,7 +203,7 @@
                                                             <div
                                                                 class="area-btn"
                                                             >
-                                                                <!-- 버튼 누르면  wrap-result no-result 부분 display:none-->
+                                                                &lt;!&ndash; 버튼 누르면  wrap-result no-result 부분 display:none&ndash;&gt;
                                                                 <button
                                                                     type="button"
                                                                     class="btn-close"
@@ -211,7 +213,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                 <!-- 카테고리 depth -->
                                                 <!-- 위에 직업 카테고리가 선택 되면 style="max-height: 202px;" -->
                                                 <div
@@ -311,7 +313,7 @@
                                                 class="option-content area-section"
                                             >
                                                 <h2 class="blind">지역 선택</h2>
-                                                <div class="select-keyword">
+                                                <!--<div class="select-keyword">
                                                     <div
                                                         class="wrap-auto-keyword"
                                                     >
@@ -415,7 +417,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                 <!-- 지역 카테고리 depth -->
                                                 <div
                                                     class="wrap-depth-category"
@@ -526,8 +528,8 @@
                                             >
                                                 <div class="layer-search-keyword no-suggest" id="keywordAutoComplete">
                                                     <div class="ipt-keyword">
-                                                        <label for="total-ipt-keyword" class="blind">검색어 입력</label>
-                                                        <input type="text" name="" id="total-ipt-keyword" class="search-keyword" maxlength="30" placeholder="검색어 입력" autocomplete="off">
+                                                        <label for="total-ipt-keyword" class="blind">회사명 검색</label>
+                                                        <input type="text" name="" id="total-ipt-keyword" class="search-keyword" maxlength="30" placeholder="회사명 검색" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -586,7 +588,7 @@
                                     </div>
                                 </div>
                             </fieldset>
-                        </form>
+
                     </div>
                     <!-- 공고 리스트 -->
                     <div id="banner-list" class="banner-list">
@@ -754,202 +756,218 @@
                                 </h2>
 
                             </div>
-                            <ul class="list-product list-premium" id="notice-list">
-                                <!-- 공고 썸네일 4X12-->
-                                <li class="item">
-                                    <a
-                                        href=""
-                                        title="신입/경력직 모집(개발,인사,급여,영업,사내변호사 등)"
-                                    >
-                                        <span class="logo">
-                                            <img
-                                                src="https://webpds.saramin.co.kr/pds/united_company/logo/14002_logo_7.jpg"
-                                                alt="웹케시(주)"
-                                        /></span>
-                                        <strong class="tit"
-                                            >신입/경력직
-                                            모집(개발,인사,급여,영업,사내변호사
-                                            등)</strong
-                                        >
-                                        <span class="corp">웹케시(주)</span>
-                                        <ul class="desc">
-                                            <li class="company-local ellipsis">
-                                                서울전체
-                                            </li>
-                                            <li>신입/경력</li>
-                                            <li>
-                                                대졸
-                                                <span class="above">이상</span>
-                                            </li>
+                            <div class="list-body">
+                                <div class="info-empty">
+                                    <div class="info-title">
+                                        <strong class="title">선택한 조건의 채용정보가 없습니다.</strong>
+                                        <p class="text">선택하신 조건을 다시 확인해주세요.</p>
+                                    </div>
+                                    <div class="info-detail">
+                                        <strong class="detail-tit">채용정보, 이렇게 찾아보세요!</strong>
+                                        <ul>
+                                            <li>원하는 지역, 직무 등 조건이 올바르게 선택됐는지 확인해 보세요.</li>
+                                            <li>선택한 조건에 채용정보가 없을 경우, 조건을 완화해 보세요.</li>
+                                            <li>찾으시는 직무, 기업명이 있을 경우 통합검색으로 검색해 보세요.</li>
                                         </ul>
-                                        <span class="date">D-2</span>
-                                        <span class="badge">
-                                            <svg>
-                                                <use
-                                                    xlink:href="#rec_title_tag_emoji_mActive"
-                                                ></use>
-                                            </svg>
-                                            <span>기획·전략 지원 TOP100</span>
-                                        </span>
-                                    </a>
-
-                                    <button
-                                        type="button"
-                                        class="btn-scrap scrap-49129663"
-                                        title="스크랩"
-                                    >
-                                        <!-- 즐겨 찾기 별 star뒤에 on 붙이면 됨 -->
-                                        <img
-                                            src="//www.saraminimage.co.kr/common/bul_sri_star.png"
-                                            alt="스크랩"
-                                        />
-                                    </button>
-                                </li>
-                                <li class="item">
-                                    <a
-                                        href=""
-                                        title="신입/경력직 모집(개발,인사,급여,영업,사내변호사 등)"
-                                    >
-                                        <span class="logo">
-                                            <img
-                                                src="https://webpds.saramin.co.kr/pds/united_company/logo/14002_logo_7.jpg"
-                                                alt="웹케시(주)"
-                                        /></span>
-                                        <strong class="tit"
-                                            >신입/경력직
-                                            모집(개발,인사,급여,영업,사내변호사
-                                            등)</strong
+                                    </div>
+                                </div>
+                                <ul class="list-product list-premium" id="notice-list">
+                                    <!-- 공고 썸네일 4X12-->
+                                    <li class="item">
+                                        <a
+                                            href=""
+                                            title="신입/경력직 모집(개발,인사,급여,영업,사내변호사 등)"
                                         >
-                                        <span class="corp">웹케시(주)</span>
-                                        <ul class="desc">
-                                            <li class="company-local ellipsis">
-                                                서울전체
-                                            </li>
-                                            <li>신입/경력</li>
-                                            <li>
-                                                대졸
-                                                <span class="above">이상</span>
-                                            </li>
-                                        </ul>
-                                        <span class="date">D-2</span>
-                                        <span class="badge">
-                                            <svg>
-                                                <use
-                                                    xlink:href="#rec_title_tag_emoji_mActive"
-                                                ></use>
-                                            </svg>
-                                            <span>기획·전략 지원 TOP100</span>
-                                        </span>
-                                    </a>
+                                            <span class="logo">
+                                                <img
+                                                    src="https://webpds.saramin.co.kr/pds/united_company/logo/14002_logo_7.jpg"
+                                                    alt="웹케시(주)"
+                                            /></span>
+                                            <strong class="tit"
+                                                >신입/경력직
+                                                모집(개발,인사,급여,영업,사내변호사
+                                                등)</strong
+                                            >
+                                            <span class="corp">웹케시(주)</span>
+                                            <ul class="desc">
+                                                <li class="company-local ellipsis">
+                                                    서울전체
+                                                </li>
+                                                <li>신입/경력</li>
+                                                <li>
+                                                    대졸
+                                                    <span class="above">이상</span>
+                                                </li>
+                                            </ul>
+                                            <span class="date">D-2</span>
+                                            <span class="badge">
+                                                <svg>
+                                                    <use
+                                                        xlink:href="#rec_title_tag_emoji_mActive"
+                                                    ></use>
+                                                </svg>
+                                                <span>기획·전략 지원 TOP100</span>
+                                            </span>
+                                        </a>
 
-                                    <button
-                                        type="button"
-                                        class="btn-scrap scrap-49129663"
-                                        title="스크랩"
-                                    >
-                                        <img
-                                            src="//www.saraminimage.co.kr/common/bul_sri_star.png"
-                                            alt="스크랩"
-                                        />
-                                    </button>
-                                </li>
-                                <li class="item">
-                                    <a
-                                        href=""
-                                        title="신입/경력직 모집(개발,인사,급여,영업,사내변호사 등)"
-                                    >
-                                        <span class="logo">
-                                            <img
-                                                src="https://webpds.saramin.co.kr/pds/united_company/logo/14002_logo_7.jpg"
-                                                alt="웹케시(주)"
-                                        /></span>
-                                        <strong class="tit"
-                                            >신입/경력직
-                                            모집(개발,인사,급여,영업,사내변호사
-                                            등)</strong
+                                        <button
+                                            type="button"
+                                            class="btn-scrap scrap-49129663"
+                                            title="스크랩"
                                         >
-                                        <span class="corp">웹케시(주)</span>
-                                        <ul class="desc">
-                                            <li class="company-local ellipsis">
-                                                서울전체
-                                            </li>
-                                            <li>신입/경력</li>
-                                            <li>
-                                                대졸
-                                                <span class="above">이상</span>
-                                            </li>
-                                        </ul>
-                                        <span class="date">D-2</span>
-                                        <span class="badge">
-                                            <svg>
-                                                <use
-                                                    xlink:href="#rec_title_tag_emoji_mActive"
-                                                ></use>
-                                            </svg>
-                                            <span>기획·전략 지원 TOP100</span>
-                                        </span>
-                                    </a>
-
-                                    <button
-                                        type="button"
-                                        class="btn-scrap scrap-49129663"
-                                        title="스크랩"
-                                    >
-                                        <img
-                                            src="//www.saraminimage.co.kr/common/bul_sri_star.png"
-                                            alt="스크랩"
-                                        />
-                                    </button>
-                                </li>
-                                <li class="item">
-                                    <a
-                                        href=""
-                                        title="신입/경력직 모집(개발,인사,급여,영업,사내변호사 등)"
-                                    >
-                                        <span class="logo">
+                                            <!-- 즐겨 찾기 별 star뒤에 on 붙이면 됨 -->
                                             <img
-                                                src="https://webpds.saramin.co.kr/pds/united_company/logo/14002_logo_7.jpg"
-                                                alt="웹케시(주)"
-                                        /></span>
-                                        <strong class="tit"
-                                            >신입/경력직
-                                            모집(개발,인사,급여,영업,사내변호사
-                                            등)</strong
+                                                src="//www.saraminimage.co.kr/common/bul_sri_star.png"
+                                                alt="스크랩"
+                                            />
+                                        </button>
+                                    </li>
+                                    <li class="item">
+                                        <a
+                                            href=""
+                                            title="신입/경력직 모집(개발,인사,급여,영업,사내변호사 등)"
                                         >
-                                        <span class="corp">웹케시(주)</span>
-                                        <ul class="desc">
-                                            <li class="company-local ellipsis">
-                                                서울전체
-                                            </li>
-                                            <li>신입/경력</li>
-                                            <li>
-                                                대졸
-                                                <span class="above">이상</span>
-                                            </li>
-                                        </ul>
-                                        <span class="date">D-2</span>
-                                        <span class="badge">
-                                            <svg>
-                                                <use
-                                                    xlink:href="#rec_title_tag_emoji_mActive"
-                                                ></use>
-                                            </svg>
-                                            <span>기획·전략 지원 TOP100</span>
-                                        </span>
-                                    </a>
+                                            <span class="logo">
+                                                <img
+                                                    src="https://webpds.saramin.co.kr/pds/united_company/logo/14002_logo_7.jpg"
+                                                    alt="웹케시(주)"
+                                            /></span>
+                                            <strong class="tit"
+                                                >신입/경력직
+                                                모집(개발,인사,급여,영업,사내변호사
+                                                등)</strong
+                                            >
+                                            <span class="corp">웹케시(주)</span>
+                                            <ul class="desc">
+                                                <li class="company-local ellipsis">
+                                                    서울전체
+                                                </li>
+                                                <li>신입/경력</li>
+                                                <li>
+                                                    대졸
+                                                    <span class="above">이상</span>
+                                                </li>
+                                            </ul>
+                                            <span class="date">D-2</span>
+                                            <span class="badge">
+                                                <svg>
+                                                    <use
+                                                        xlink:href="#rec_title_tag_emoji_mActive"
+                                                    ></use>
+                                                </svg>
+                                                <span>기획·전략 지원 TOP100</span>
+                                            </span>
+                                        </a>
 
-                                    <button
-                                        type="button"
-                                        class="btn-scrap scrap-49129663"
-                                        title="스크랩"
-                                    >
-                                        <img
-                                            src="//www.saraminimage.co.kr/common/bul_sri_star.png"
-                                            alt="스크랩"
-                                        />
-                                    </button>
-                                </li>
-                            </ul>
+                                        <button
+                                            type="button"
+                                            class="btn-scrap scrap-49129663"
+                                            title="스크랩"
+                                        >
+                                            <img
+                                                src="//www.saraminimage.co.kr/common/bul_sri_star.png"
+                                                alt="스크랩"
+                                            />
+                                        </button>
+                                    </li>
+                                    <li class="item">
+                                        <a
+                                            href=""
+                                            title="신입/경력직 모집(개발,인사,급여,영업,사내변호사 등)"
+                                        >
+                                            <span class="logo">
+                                                <img
+                                                    src="https://webpds.saramin.co.kr/pds/united_company/logo/14002_logo_7.jpg"
+                                                    alt="웹케시(주)"
+                                            /></span>
+                                            <strong class="tit"
+                                                >신입/경력직
+                                                모집(개발,인사,급여,영업,사내변호사
+                                                등)</strong
+                                            >
+                                            <span class="corp">웹케시(주)</span>
+                                            <ul class="desc">
+                                                <li class="company-local ellipsis">
+                                                    서울전체
+                                                </li>
+                                                <li>신입/경력</li>
+                                                <li>
+                                                    대졸
+                                                    <span class="above">이상</span>
+                                                </li>
+                                            </ul>
+                                            <span class="date">D-2</span>
+                                            <span class="badge">
+                                                <svg>
+                                                    <use
+                                                        xlink:href="#rec_title_tag_emoji_mActive"
+                                                    ></use>
+                                                </svg>
+                                                <span>기획·전략 지원 TOP100</span>
+                                            </span>
+                                        </a>
+
+                                        <button
+                                            type="button"
+                                            class="btn-scrap scrap-49129663"
+                                            title="스크랩"
+                                        >
+                                            <img
+                                                src="//www.saraminimage.co.kr/common/bul_sri_star.png"
+                                                alt="스크랩"
+                                            />
+                                        </button>
+                                    </li>
+                                    <li class="item">
+                                        <a
+                                            href=""
+                                            title="신입/경력직 모집(개발,인사,급여,영업,사내변호사 등)"
+                                        >
+                                            <span class="logo">
+                                                <img
+                                                    src="https://webpds.saramin.co.kr/pds/united_company/logo/14002_logo_7.jpg"
+                                                    alt="웹케시(주)"
+                                            /></span>
+                                            <strong class="tit"
+                                                >신입/경력직
+                                                모집(개발,인사,급여,영업,사내변호사
+                                                등)</strong
+                                            >
+                                            <span class="corp">웹케시(주)</span>
+                                            <ul class="desc">
+                                                <li class="company-local ellipsis">
+                                                    서울전체
+                                                </li>
+                                                <li>신입/경력</li>
+                                                <li>
+                                                    대졸
+                                                    <span class="above">이상</span>
+                                                </li>
+                                            </ul>
+                                            <span class="date">D-2</span>
+                                            <span class="badge">
+                                                <svg>
+                                                    <use
+                                                        xlink:href="#rec_title_tag_emoji_mActive"
+                                                    ></use>
+                                                </svg>
+                                                <span>기획·전략 지원 TOP100</span>
+                                            </span>
+                                        </a>
+
+                                        <button
+                                            type="button"
+                                            class="btn-scrap scrap-49129663"
+                                            title="스크랩"
+                                        >
+                                            <img
+                                                src="//www.saraminimage.co.kr/common/bul_sri_star.png"
+                                                alt="스크랩"
+                                            />
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <!--<div class="wrap-list-banner">
                             <div class="area-title">
@@ -1331,5 +1349,4 @@
     <script src="/js/matching/main/matching-service.js"></script>
     <script src="/js/matching/main/matching-layout.js"></script>
     <script src="/js/matching/main/matching-event.js"></script>
-    <script src="/js/main/other-logout-header.js"></script>
 </html>

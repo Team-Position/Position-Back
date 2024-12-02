@@ -10,7 +10,7 @@ create table tbl_payment (
     constraint fk_payment_member foreign key (member_id)
                          references tbl_member(id),
     constraint  fk_payment_notice foreign key (notice_id)
-                         references  tbl_notice(id)
+                         references  tbl_notice(id) on delete cascade
 );
 
 select *
@@ -51,3 +51,11 @@ FROM
     tbl_notice n
     ON
         p.notice_id = n.id;
+
+ALTER TABLE tbl_payment DROP FOREIGN KEY fk_payment_notice;
+ALTER TABLE tbl_payment
+    ADD CONSTRAINT fk_payment_notice
+        FOREIGN KEY (notice_id)
+            REFERENCES tbl_notice(id)
+            ON DELETE CASCADE;
+

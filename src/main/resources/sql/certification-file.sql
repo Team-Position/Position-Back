@@ -4,7 +4,7 @@ create table tbl_certification_file(
     constraint fk_certification_file_file foreign key (id)
                                    references tbl_file(id),
     constraint fk_certification_file_position foreign key (apply_id)
-                                   references  tbl_apply(id)
+                                   references  tbl_apply(id) on delete cascade
 );
 
 select *

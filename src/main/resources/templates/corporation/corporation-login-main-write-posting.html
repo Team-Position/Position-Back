@@ -26,12 +26,12 @@
                         <h1 class="title-common">
                             기업 공고 등록
                         </h1>
-                        <p class="txt-write-info">
+                        <!--<p class="txt-write-info">
                             등록된 이력서의 최근 3년 이내의 입사 경력을
                             불러옵니다. 작성해주신 포지셔너 후기는
                             <b>익명</b>
                             으로 등록됩니다.
-                        </p>
+                        </p>-->
                     </div>
                     <div class="wrap-interview-review">
                         <form th:action="@{/corporation/corporation-login-main-write-posting}" method="post" th:object="${noticeDTO}" enctype="multipart/form-data" name="review-form">
@@ -961,21 +961,21 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <p
+                                        <!--<p
                                             class="txt-copyright"
                                         >
                                             포지셔너 후기에 대한 저작권은
                                             <b>Position</b>
                                             에 있습니다. 등록하신 컨텐츠는
                                             임의로 삭제하실 수 없습니다.
-                                        </p>
+                                        </p>-->
                                     </div>
                                     <button
                                         type="submit"
                                         class="btn-confirm"
                                         id="submitBtn"
                                     >
-                                        등록 요청
+                                        등록 하기
                                     </button>
                                 </div>
                             </fieldset>

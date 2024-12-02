@@ -9,17 +9,10 @@
         <link rel="stylesheet" href="/css/main/footer.css" />
         <link rel="stylesheet" href="/css/main/other-login-header.css" />
         <link rel="stylesheet" th:href="@{/css/main/other-logout-header.css}"/>
-        <link rel="stylesheet" th:href="@{/css/main/other-login-header.css}" />
     </head>
-    <body>
+    <body id="main">
     <!-- 일반 회원일 때 -->
-    <!-- 일반 회원일 때 -->
-    <th:block th:if="${session.member != null and session.member.memberType == 'Personal'}">
-        <header th:replace="~{/main/other-login-header :: header-login}"></header>
-    </th:block>
-
-    <!-- 기업 회원일 때 -->
-    <th:block th:if="${session.member != null and session.member.memberType == 'Corporation'}">
+    <th:block th:if="${session.member != null}">
         <header th:replace="~{/main/other-login-header :: header-login}"></header>
     </th:block>
 
@@ -27,7 +20,6 @@
     <th:block th:if="${session.member == null}">
         <header th:replace="~{/main/other-logout-header :: header-logout}"></header>
     </th:block>
-
     <section
             role="region"
             aria-label="추천공고"
@@ -39,7 +31,6 @@
                     <a
                         href="/zf-user/member/my-siat/promotion"
                         class="btn-greeting"
-                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut', 'my-siat')"
                     >
                         <svg class="bg" aria-hidden="true" focusable="false">
                             <use xlink:href="#main-greetings-bg"></use>
@@ -51,13 +42,12 @@
                         >
                             <use xlink:href="#main-greetings-border"></use>
                         </svg>
-                        <strong>커뮤니티<br />후기</strong>
+                        <strong>면접<br />후기</strong>
                         <span>후기를<br />보고 싶다면?</span>
                     </a>
                     <a
                         href="/zf-user/member/mock-exam/public-company"
                         class="btn-greeting"
-                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut', 'mock-exam')"
                     >
                         <svg class="bg" aria-hidden="true" focusable="false">
                             <use xlink:href="#main-greetings-bg"></use>
@@ -69,14 +59,13 @@
                         >
                             <use xlink:href="#main-greetings-border"></use>
                         </svg>
-                        <strong>지원서<br />작성</strong>
+                        <strong>이력서<br />작성</strong>
                         <span>꿈을 향해 한걸음<br />더 나아가자!</span>
                     </a>
                     <a
                         href="https://www.saramingig.co.kr/exhibition/EX00000034?utm-source=saramin&amp;utm-medium=menu&amp;utm-campaign=gnb-sub"
                         target="-blank"
                         class="btn-greeting-link"
-                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut', 'sri-market')"
                     >
                         <span class="icon">
                             <svg
@@ -90,13 +79,12 @@
                             </svg>
                         </span>
                         <span class="txt"
-                            >전문가와 합격률 UP! <b>합격마켓</b></span
+                            >다양한 취준생을 위한! <b>커뮤니티</b></span
                         >
                     </a>
                     <a
                         href="https://mentor-match.saramin.co.kr"
                         class="btn-greeting-link"
-                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut', 'mentor-match')"
                         target="-blank"
                     >
                         <span class="icon">
@@ -111,13 +99,13 @@
                             </svg>
                         </span>
                         <span class="txt"
-                            >현직자와 1:1 대화! <b>멘토링 매치</b></span
+                            >나에게 맞는 공고를 검색! <b>포지션 매칭</b></span
                         >
                     </a>
                 </div>
                 <div class="main-cont">
                     <ul class="tab">
-                        <li data-value="recommendRecruit">
+                        <!--<li data-value="recommendRecruit">
                             <button type="button" class="tab-recruit">
                                 <svg
                                     class="border"
@@ -132,7 +120,7 @@
                                     추천공고</span
                                 >
                             </button>
-                        </li>
+                        </li>-->
                         <li data-value="majorCompany">
                             <button type="button" class="tab-jobs-major active">
                                 <svg
@@ -146,7 +134,7 @@
                                 ><span>지금 핫한 대기업 공고</span>
                             </button>
                         </li>
-                        <li data-value="publicEnterprise">
+                        <!--<li data-value="publicEnterprise">
                             <button type="button" class="tab-jobs-public">
                                 <svg
                                     class="border"
@@ -158,603 +146,339 @@
                                     ></use></svg
                                 ><span>공사·공기업 공고</span>
                             </button>
-                        </li>
+                        </li>-->
                     </ul>
                     <div class="wrap-cont">
                         <div class="wrap-swiper">
-                            <div
-                                class="wrap-slides swiper-container-horizontal"
-                            >
-                                <ul
-                                    class="items swiper-wrapper"
-                                    style="
-                                        transform: translate3d(0px, 0px, 0px);
-                                        transition-duration: 0ms;
-                                    "
-                                >
-                                    <li
-                                        th:each="notice : ${notices}"
-                                        class="item item-recruit swiper-slide swiper-slide-active"
-                                    >
-                                        <a
-                                            th:href="@{/notice-detail(id=${notice.id})}"
-                                            class="inner"
-                                            data-ga="major-recruit"
-                                            data-click-url=""
-                                        >
+                            <div class="wrap-slides swiper-container-horizontal">
+                                <ul class="items swiper-wrapper" style="transition: transform 0.5s; transform: translateX(0px);">
+                                    <li class="item item-recruit swiper-slide swiper-slide-active">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49109253&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
                                             <div class="item-header">
                                                 <div class="logo">
-                                                    <img
-                                                            th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
-                                                        class="img"
-                                                        alt=""
-                                                        loading="lazy"
-                                                    />
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/3641_logo.png" class="img" alt="" loading="lazy">
                                                 </div>
                                             </div>
                                             <div class="item-body">
-                                                <strong
-                                                        th:text="${notice.noticeTitle}"
-                                                    >다우기술 경력•신입 대규모
-                                                    인재영입</strong
-                                                >
-                                                <span
-                                                        th:text="${notice.corporationName}"
-                                                >(주)다우기술</span>
+                                                <strong>다우기술 경력•신입 대규모
+                                                    인재영입</strong>
+                                                <span>(주)다우기술</span>
                                             </div>
-                                            <div
-                                                    th:text="'D-' + ${T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).now(), T(java.time.LocalDate).parse(notice.noticeEndDate))}"
-                                                    class="item-footer">D-3</div>
+                                            <div class="item-footer">D-3</div>
                                         </a>
                                     </li>
-<!--                                    <li-->
-<!--                                        class="item item-recruit swiper-slide swiper-slide-next"-->
-<!--                                    >-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49108696&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://pds.saramin.co.kr/company/logo/202111/09/r2aefd_aj07-1mldvrb_logo.png"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >원격관제 신입/경력직-->
-<!--                                                    채용</strong-->
-<!--                                                >-->
-<!--                                                <span>에스케이쉴더스(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-2</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49115634&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/12587_logo_1.jpg"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >어플라이드 머티어리얼즈-->
-<!--                                                    코리아 신입/경력 엔지니어-->
-<!--                                                    채용(학사, 전문학사)</strong-->
-<!--                                                >-->
-<!--                                                <span-->
-<!--                                                    >어플라이드머티어리얼즈코리아(주)</span-->
-<!--                                                >-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-3</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49141440&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/74306_logo.png"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >[네이버] SNOW 품질보증 지원-->
-<!--                                                    담당자 모집 (계약직)</strong-->
-<!--                                                >-->
-<!--                                                <span>스노우(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-5</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49155756&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/2178_logo.gif"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >안성공장 2024년 하반기-->
-<!--                                                    채용(기숙사 있음)</strong-->
-<!--                                                >-->
-<!--                                                <span>(주)디에이피</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-6</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49105385&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/32471_logo_2.gif"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >2024년 9차 kt telecop-->
-<!--                                                    SG사원 상시채용</strong-->
-<!--                                                >-->
-<!--                                                <span>케이티텔레캅(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-2</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49141209&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/6933_logo.jpg"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >2024 넥슨컴퍼니 채용형-->
-<!--                                                    인턴십, 넥토리얼</strong-->
-<!--                                                >-->
-<!--                                                <span>(주)넥슨코리아</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">-->
-<!--                                                ~10.21(월)-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49077090&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://pds.saramin.co.kr/company/logo/oldfile_v1/neople.jpg"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >[홈페이지지원][서울지사][인프라기술실]-->
-<!--                                                    웹프로그래머 모집</strong-->
-<!--                                                >-->
-<!--                                                <span>(주)네오플</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">-->
-<!--                                                ~10.25(금)-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49133668&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/477_logo.jpg"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >2024년 3분기 분야별-->
-<!--                                                    공개채용</strong-->
-<!--                                                >-->
-<!--                                                <span>극동건설(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">-->
-<!--                                                ~10.31(목)-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49155472&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/980_logo.jpg"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >(주)도화엔지니어링 2025년도-->
-<!--                                                    대졸 신입사원-->
-<!--                                                    공개채용</strong-->
-<!--                                                >-->
-<!--                                                <span>(주)도화엔지니어링</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-6</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49105172&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/72911_logo.png"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >Generative Model-based-->
-<!--                                                    Simulation Research-->
-<!--                                                    Intern</strong-->
-<!--                                                >-->
-<!--                                                <span>네이버랩스(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-6</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49120499&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://pds.saramin.co.kr/company/logo/202307/31/ryng6f_3krp-1klc26s_logo.png"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >[IDC] 카카오 뱅크-->
-<!--                                                    데이터센터 엔지니어-->
-<!--                                                    채용</strong-->
-<!--                                                >-->
-<!--                                                <span>(주)디케이테크인</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">-->
-<!--                                                ~11.01(금)-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49132039&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/38184_logo_1.jpg"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >채용 전환형 인턴-->
-<!--                                                    채용</strong-->
-<!--                                                >-->
-<!--                                                <span>(주)이노션</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-7</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49145209&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/15639_logo_1.gif"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >[천재교육그룹 공개채용]-->
-<!--                                                    부문별 인재 모집</strong-->
-<!--                                                >-->
-<!--                                                <span>(주)천재교육</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">-->
-<!--                                                ~10.21(월)-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49109343&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/877_logo_1.gif"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >각 부문별-->
-<!--                                                    채용(전산팀/사류영업/니트원단-->
-<!--                                                    영업,생산/니트의류-->
-<!--                                                    영업/IR)</strong-->
-<!--                                                >-->
-<!--                                                <span>디아이동일(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">-->
-<!--                                                오늘마감-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=48909091&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://pds.saramin.co.kr/company/logo/202409/09/sjj546_ecdb-suclxr_logo.png"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >[NHN Enterprise] IDC 운영자-->
-<!--                                                    (판교)</strong-->
-<!--                                                >-->
-<!--                                                <span>엔에이치엔(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">-->
-<!--                                                채용시-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49083753&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/16_.gif"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >에이닷 앱 서비스 운영 지원-->
-<!--                                                    담당자</strong-->
-<!--                                                >-->
-<!--                                                <span>SK텔레콤(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-2</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49084032&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/219_.gif"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >[동서] 2024년 동서식품 대졸-->
-<!--                                                    신입사원 채용</strong-->
-<!--                                                >-->
-<!--                                                <span>동서식품(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">-->
-<!--                                                15시마감-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=49089575&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://webpds.saramin.co.kr/pds/united_company/logo/955_logo_1.gif"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >2024 명화공업 및 관계사-->
-<!--                                                    수시 채용 (신입 및-->
-<!--                                                    경력)</strong-->
-<!--                                                >-->
-<!--                                                <span>명화공업(주)</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">D-3</div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="item item-recruit swiper-slide">-->
-<!--                                        <a-->
-<!--                                            href="/zf-user/jobs/relay/view?rec-idx=48805171&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view"-->
-<!--                                            class="inner"-->
-<!--                                            data-ga="major-recruit"-->
-<!--                                            data-click-url=""-->
-<!--                                        >-->
-<!--                                            <div class="item-header">-->
-<!--                                                <div class="logo">-->
-<!--                                                    <img-->
-<!--                                                        src="https://pds.saramin.co.kr/company/logo/201707/27/otqn5e_o0m3-gyv0pu_logo.jpg"-->
-<!--                                                        class="img"-->
-<!--                                                        alt=""-->
-<!--                                                        loading="lazy"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-body">-->
-<!--                                                <strong-->
-<!--                                                    >(주)유니크 SW설계 연구직-->
-<!--                                                    채용(판교)</strong-->
-<!--                                                >-->
-<!--                                                <span>(주)유니크</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="item-footer">-->
-<!--                                                채용시-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
+                                    <li class="item item-recruit swiper-slide swiper-slide-next">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49108696&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://pds.saramin.co.kr/company/logo/202111/09/r2aefd_aj07-1mldvrb_logo.png" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>원격관제 신입/경력직
+                                                    채용</strong>
+                                                <span>에스케이쉴더스(주)</span>
+                                            </div>
+                                            <div class="item-footer">D-2</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49115634&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/12587_logo_1.jpg" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>어플라이드 머티어리얼즈
+                                                    코리아 신입/경력 엔지니어
+                                                    채용(학사, 전문학사)</strong>
+                                                <span>어플라이드머티어리얼즈코리아(주)</span>
+                                            </div>
+                                            <div class="item-footer">D-3</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49141440&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/74306_logo.png" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>[네이버] SNOW 품질보증 지원
+                                                    담당자 모집 (계약직)</strong>
+                                                <span>스노우(주)</span>
+                                            </div>
+                                            <div class="item-footer">D-5</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49155756&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/2178_logo.gif" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>안성공장 2024년 하반기
+                                                    채용(기숙사 있음)</strong>
+                                                <span>(주)디에이피</span>
+                                            </div>
+                                            <div class="item-footer">D-6</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49105385&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/32471_logo_2.gif" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>2024년 9차 kt telecop
+                                                    SG사원 상시채용</strong>
+                                                <span>케이티텔레캅(주)</span>
+                                            </div>
+                                            <div class="item-footer">D-2</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49141209&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/6933_logo.jpg" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>2024 넥슨컴퍼니 채용형
+                                                    인턴십, 넥토리얼</strong>
+                                                <span>(주)넥슨코리아</span>
+                                            </div>
+                                            <div class="item-footer">
+                                                ~10.21(월)
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49077090&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://pds.saramin.co.kr/company/logo/oldfile_v1/neople.jpg" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>[홈페이지지원][서울지사][인프라기술실]
+                                                    웹프로그래머 모집</strong>
+                                                <span>(주)네오플</span>
+                                            </div>
+                                            <div class="item-footer">
+                                                ~10.25(금)
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49133668&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/477_logo.jpg" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>2024년 3분기 분야별
+                                                    공개채용</strong>
+                                                <span>극동건설(주)</span>
+                                            </div>
+                                            <div class="item-footer">
+                                                ~10.31(목)
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49155472&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/980_logo.jpg" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>(주)도화엔지니어링 2025년도
+                                                    대졸 신입사원
+                                                    공개채용</strong>
+                                                <span>(주)도화엔지니어링</span>
+                                            </div>
+                                            <div class="item-footer">D-6</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49105172&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/72911_logo.png" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>Generative Model-based
+                                                    Simulation Research
+                                                    Intern</strong>
+                                                <span>네이버랩스(주)</span>
+                                            </div>
+                                            <div class="item-footer">D-6</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49120499&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://pds.saramin.co.kr/company/logo/202307/31/ryng6f_3krp-1klc26s_logo.png" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>[IDC] 카카오 뱅크
+                                                    데이터센터 엔지니어
+                                                    채용</strong>
+                                                <span>(주)디케이테크인</span>
+                                            </div>
+                                            <div class="item-footer">
+                                                ~11.01(금)
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49132039&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/38184_logo_1.jpg" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>채용 전환형 인턴
+                                                    채용</strong>
+                                                <span>(주)이노션</span>
+                                            </div>
+                                            <div class="item-footer">D-7</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49145209&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/15639_logo_1.gif" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>[천재교육그룹 공개채용]
+                                                    부문별 인재 모집</strong>
+                                                <span>(주)천재교육</span>
+                                            </div>
+                                            <div class="item-footer">
+                                                ~10.21(월)
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49109343&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/877_logo_1.gif" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>각 부문별
+                                                    채용(전산팀/사류영업/니트원단
+                                                    영업,생산/니트의류
+                                                    영업/IR)</strong>
+                                                <span>디아이동일(주)</span>
+                                            </div>
+                                            <div class="item-footer">
+                                                오늘마감
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=48909091&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://pds.saramin.co.kr/company/logo/202409/09/sjj546_ecdb-suclxr_logo.png" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>[NHN Enterprise] IDC 운영자
+                                                    (판교)</strong>
+                                                <span>엔에이치엔(주)</span>
+                                            </div>
+                                            <div class="item-footer">
+                                                채용시
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49083753&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/16_.gif" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>에이닷 앱 서비스 운영 지원
+                                                    담당자</strong>
+                                                <span>SK텔레콤(주)</span>
+                                            </div>
+                                            <div class="item-footer">D-2</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49084032&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/219_.gif" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>[동서] 2024년 동서식품 대졸
+                                                    신입사원 채용</strong>
+                                                <span>동서식품(주)</span>
+                                            </div>
+                                            <div class="item-footer">
+                                                15시마감
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=49089575&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://webpds.saramin.co.kr/pds/united_company/logo/955_logo_1.gif" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>2024 명화공업 및 관계사
+                                                    수시 채용 (신입 및
+                                                    경력)</strong>
+                                                <span>명화공업(주)</span>
+                                            </div>
+                                            <div class="item-footer">D-3</div>
+                                        </a>
+                                    </li>
+                                    <li class="item item-recruit swiper-slide">
+                                        <a href="/zf-user/jobs/relay/view?rec-idx=48805171&amp;view-type=list&amp;t-ref=main&amp;t-ref-content=major-company&amp;t-category=relay-view" class="inner" data-ga="major-recruit" data-click-url="">
+                                            <div class="item-header">
+                                                <div class="logo">
+                                                    <img src="https://pds.saramin.co.kr/company/logo/201707/27/otqn5e_o0m3-gyv0pu_logo.jpg" class="img" alt="" loading="lazy">
+                                                </div>
+                                            </div>
+                                            <div class="item-body">
+                                                <strong>(주)유니크 SW설계 연구직
+                                                    채용(판교)</strong>
+                                                <span>(주)유니크</span>
+                                            </div>
+                                            <div class="item-footer">
+                                                채용시
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
-                                <span
-                                    class="swiper-notification"
-                                    aria-live="assertive"
-                                    aria-atomic="true"
-                                ></span>
+                                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
                             </div>
                         </div>
                     </div>
@@ -795,6 +519,41 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="main-links">
+                    <a
+                        href="/zf-user/tools/personal-statement-coaching-service"
+                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut-right', 'personal-statement-coaching')"
+                    >
+                        <svg aria-hidden="true" focusable="false">
+                            <use
+                                xlink:href="#main-link-personal-statement-coaching"
+                            ></use>
+                        </svg>
+                        <span>Ai 자소서 코칭</span>
+                    </a>
+                    <a
+                        href="/zf-user/tools/character-counter"
+                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut-right', 'character-counter')"
+                    >
+                        <svg aria-hidden="true" focusable="false">
+                            <use
+                                xlink:href="#main-link-character-counter"
+                            ></use>
+                        </svg>
+                        <span>맞춤법 검사</span>
+                    </a>
+                    <a
+                        href="/zf-user/tools/salary-calculator"
+                        onmousedown="pushDataLayer('ga-lead', 'main', 'shortcut-right', 'salary-calculator')"
+                    >
+                        <svg aria-hidden="true" focusable="false">
+                            <use
+                                xlink:href="#main-link-salary-calculator"
+                            ></use>
+                        </svg>
+                        <span>연봉계산기</span>
+                    </a>
+                </div> -->
             </div>
         </section>
         <!-- 배너 밑 목록 -->
@@ -803,7 +562,7 @@
             id="section-banner"
             class="main-product"
         >
-            <div class="cont-product prd-platinum">
+           <!-- <div class="cont-product prd-platinum">
                 <div class="inner-cont">
                     <div class="cont-banner">
                         <div class="wrap-banner">
@@ -840,35 +599,28 @@
                             </span>
                         </button>
                     </div>
-                    <!-- 공고 목록 -->
+                    &lt;!&ndash; 공고 목록 &ndash;&gt;
                     <ul class="prd-list plus" id="-platinumPlus">
-                        <li th:each="notice, iterStat : ${notices}"
-                            th:class="${iterStat.index == 0} ? 'expanded' : 'option'"
-                            th:data-rec-idx="${notice.id}">
+                        <li class="expanded" data-rec-idx="49126264">
                             <a
-                                th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
+                                href="/zf-user/jobs/relay/pop-view?rec-idx=49126264"
                                 class="link-box track-event"
                                 data-track-event="main|Ads-click|platinum-plus-onlyexpandoption|1"
                                 rel="sponsored, nofollow"
                             >
                                 <span class="logo"
                                     ><img
-                                        th:if="${notice.fileDTO != null}"
-                                        th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/skt1nt_8xul-2so27i_platinum7403469Guide150120.png"
                                         class="img"
-                                        th:alt="${notice.corporationName}"
+                                        alt="차병원·바이오그룹 "
                                         loading="lazy"
-                                /> <img th:if="${notice.fileDTO == null}"
-                                        src="/images/default-logo.png" class="img" alt="기본 로고" loading="lazy" />
-                                </span>
-                                <span th:text="${notice.corporationName}" class="c-name">차병원·바이오그룹 </span>
-                                <span th:text="${notice.noticeTitle}" class="title"
+                                /></span>
+                                <span class="c-name">차병원·바이오그룹 </span>
+                                <span class="title"
                                     >2024년 신입/Junior <br />대규모
                                     공개채용</span
                                 >
-                                <span
-                                        th:text="${notice.noticeTitle}"
-                                        class="title-ex"
+                                <span class="title-ex"
                                     >2024년 신입/Junior <br />대규모
                                     공개채용</span
                                 >
@@ -876,30 +628,29 @@
                                     <svg>
                                         <use xlink:href="#job-tag-subway"></use>
                                     </svg>
-                                    <span th:text="${notice.badgeText}">경강선 역세권 기업</span>
+                                    <span>경강선 역세권 기업</span>
                                 </span>
-                                <span th:text="'D-' + ${T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).now(), T(java.time.LocalDate).parse(notice.noticeEndDate))}" class="date">D-6</span>
+                                <span class="date">D-6</span>
                                 <span class="bg"
                                     ><img
-                                        th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
-                                        th:alt="${notice.noticeTitle}"
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/skt1wj_6n30-2so27i_07.jpg"
+                                        alt="2024년 신입/Junior 대규모 공개채용"
                                         loading="lazy"
                                 /></span>
                                 <span class="bg-ex"
                                     ><img
-                                        th:src="@{'/upload/' + ${notice.fileDTO.filePath} + '/' + ${notice.fileDTO.fileName}}"
-                                        th:alt="${notice.noticeTitle}"
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/skt1wj_6n30-2so27i_07.jpg"
+                                        alt="2024년 신입/Junior 대규모 공개채용"
                                         loading="lazy"
                                 /></span>
-                                <span class="cont">
-                                    <span th:text="${notice.corporationBusiness}"></span><br />
-                                    <span th:text="${notice.corporationEmployeesNumber} + '명'"></span><br />
-                                    <span th:text="${notice.corporationAddress}"></span>
-                                </span>
+                                <span class="cont"
+                                    >1960년 설립 (65년차)<br />
+                                    사원수 2,426명 (2024년)</span
+                                >
                             </a>
                             <button
                                 class="btn-scrap track-event"
-                                th:data-track-event="'main|Ads-scrap|platinum-plus-option'"
+                                data-track-event="main|Ads-scrap|platinum-plus-onlyexpandoption"
                                 aria-pressed="false"
                             >
                                 <svg
@@ -916,7 +667,10 @@
                                         stroke="#8491A7"
                                     ></path>
                                 </svg>
-                                <span th:text="${notice.corporationName} + ' ' + ${notice.noticeTitle} + ' 공고 스크랩 버튼'"></span>
+                                <span class="blind"
+                                    >차병원·바이오그룹 2024년 신입/Junior
+                                    <br />대규모 공개채용공고 스크랩 버튼</span
+                                >
                             </button>
                         </li>
                         <li class="option" data-rec-idx="49173937">
@@ -1582,7 +1336,7 @@
                     </ul>
                     <hr />
                 </div>
-            </div>
+            </div>-->
             <!-- 최근의 인기 공고 -->
             <div class="cont-product prd-prime">
                 <div class="inner-cont">
@@ -1611,13 +1365,13 @@
                     <ul class="prd-list plus" id="-primePlus">
                         <li class="option" data-rec-idx="49164063">
                             <a
-                                href="/zf-user/jobs/relay/pop-view?rec-idx=49164063"
-                                class="link-box track-event"
-                                data-track-event="main|Ads-click|prime-plus-fix-expand|1"
-                                rel="sponsored, nofollow"
+                                    href="/zf-user/jobs/relay/pop-view?rec-idx=49164063"
+                                    class="link-box track-event"
+                                    data-track-event="main|Ads-click|prime-plus-fix-expand|1"
+                                    rel="sponsored, nofollow"
                             >
                                 <span class="logo"
-                                    ><img
+                                ><img
                                         src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/08/silrr4_gkp8-2so33s_specialgold2988851Guide150120.png"
                                         class="img"
                                         alt="엘에스엠트론㈜"
@@ -1625,26 +1379,26 @@
                                 /></span>
                                 <span class="c-name">엘에스엠트론㈜</span>
                                 <span class="title"
-                                    >재경부문(CFO) 경력사원 채용</span
+                                >재경부문(CFO) 경력사원 채용</span
                                 >
                                 <span class="title-ex"
-                                    >재경부문(CFO) 경력사원 채용</span
+                                >재경부문(CFO) 경력사원 채용</span
                                 >
                                 <span class="bg-ex"
-                                    ><img
-                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/sl491j-jboc-2so33f-skejv7h6k42so33sHover200x200.png"
+                                ><img
+                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/sl491j_jboc-2so33f_skejv7h6k42so33sHover200x200.png"
                                         alt="재경부문(CFO) 경력사원 채용"
                                         loading="lazy"
                                 /></span>
                                 <span class="tags"
-                                    ><span>경기 안양시</span
-                                    ><span>경력 3년↑</span
-                                    ><span>대학교(4년)↑</span></span
+                                ><span>경기 안양시</span
+                                ><span>경력 3년↑</span
+                                ><span>대학교(4년)↑</span></span
                                 >
                                 <span class="badge">
                                     <svg>
                                         <use
-                                            xlink:href="#job-tag-cominfo"
+                                                xlink:href="#job-tag-cominfo"
                                         ></use>
                                     </svg>
                                     <span>평균연봉 상위 10%</span>
@@ -1652,60 +1406,60 @@
                                 <span class="date">~10.20(일)</span>
                             </a>
                             <button
-                                class="btn-scrap track-event"
-                                data-track-event="main|Ads-scrap|prime-plus-fix-expand"
-                                aria-pressed="false"
+                                    class="btn-scrap track-event"
+                                    data-track-event="main|Ads-scrap|prime-plus-fix-expand"
+                                    aria-pressed="false"
                             >
                                 <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="ic"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="ic"
                                 >
                                     <path
-                                        id="Path"
-                                        d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
-                                        stroke="#8491A7"
+                                            id="Path"
+                                            d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
+                                            stroke="#8491A7"
                                     ></path>
                                 </svg>
                                 <span class="blind"
-                                    >엘에스엠트론㈜ 재경부문(CFO) 경력사원
+                                >엘에스엠트론㈜ 재경부문(CFO) 경력사원
                                     채용공고 스크랩 버튼</span
                                 >
                             </button>
                         </li>
                         <li class="option" data-rec-idx="49035723">
                             <a
-                                href="/zf-user/jobs/relay/pop-view?rec-idx=49035723"
-                                class="link-box track-event"
-                                data-track-event="main|Ads-click|prime-plus-fix-expand|2"
-                                rel="sponsored, nofollow"
+                                    href="/zf-user/jobs/relay/pop-view?rec-idx=49035723"
+                                    class="link-box track-event"
+                                    data-track-event="main|Ads-click|prime-plus-fix-expand|2"
+                                    rel="sponsored, nofollow"
                             >
                                 <span class="logo"
-                                    ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/07/01/shcwve-rp1k-2so1ne-specialgold5579453hanjin.jpg"
+                                ><img
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/07/01/shcwve_rp1k-2so1ne_specialgold5579453hanjin.jpg"
                                         class="img"
                                         alt="(주)한진"
                                         loading="lazy"
                                 /></span>
                                 <span class="c-name">(주)한진</span>
                                 <span class="title"
-                                    >2025년<br />신입사원 채용</span
+                                >2025년<br />신입사원 채용</span
                                 >
                                 <span class="title-ex"
-                                    >2025년<br />신입사원 채용</span
+                                >2025년<br />신입사원 채용</span
                                 >
                                 <span class="bg-ex"
-                                    ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/sk35hn-nf1a-2so33f-Hover200x200.jpg"
+                                ><img
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/sk35hn_nf1a-2so33f_Hover200x200.jpg"
                                         alt="2025년신입사원 채용"
                                         loading="lazy"
                                 /></span>
                                 <span class="tags"
-                                    ><span>서울전체</span><span>신입</span
-                                    ><span>대학교(4년)↑</span></span
+                                ><span>서울전체</span><span>신입</span
+                                ><span>대학교(4년)↑</span></span
                                 >
                                 <span class="badge">
                                     <svg>
@@ -1716,40 +1470,40 @@
                                 <span class="date">~10.28(월)</span>
                             </a>
                             <button
-                                class="btn-scrap track-event"
-                                data-track-event="main|Ads-scrap|prime-plus-fix-expand"
-                                aria-pressed="false"
+                                    class="btn-scrap track-event"
+                                    data-track-event="main|Ads-scrap|prime-plus-fix-expand"
+                                    aria-pressed="false"
                             >
                                 <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="ic"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="ic"
                                 >
                                     <path
-                                        id="Path"
-                                        d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
-                                        stroke="#8491A7"
+                                            id="Path"
+                                            d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
+                                            stroke="#8491A7"
                                     ></path>
                                 </svg>
                                 <span class="blind"
-                                    >(주)한진 2025년<br />신입사원 채용공고
+                                >(주)한진 2025년<br />신입사원 채용공고
                                     스크랩 버튼</span
                                 >
                             </button>
                         </li>
                         <li class="option" data-rec-idx="49107266">
                             <a
-                                href="/zf-user/jobs/relay/pop-view?rec-idx=49107266"
-                                class="link-box track-event"
-                                data-track-event="main|Ads-click|prime-plus-fix-expand|3"
-                                rel="sponsored, nofollow"
+                                    href="/zf-user/jobs/relay/pop-view?rec-idx=49107266"
+                                    class="link-box track-event"
+                                    data-track-event="main|Ads-click|prime-plus-fix-expand|3"
+                                    rel="sponsored, nofollow"
                             >
                                 <span class="logo"
-                                    ><img
-                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2015/11/1446511864-specialgold6876636logo.png"
+                                ><img
+                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2015/11/1446511864_specialgold6876636logo.png"
                                         class="img"
                                         alt="우주텍"
                                         loading="lazy"
@@ -1757,17 +1511,17 @@
                                 <span class="c-name">우주텍</span>
                                 <span class="title">2024 경력<br />채용</span>
                                 <span class="title-ex"
-                                    >2024 경력<br />채용</span
+                                >2024 경력<br />채용</span
                                 >
                                 <span class="bg-ex"
-                                    ><img
-                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/skm8g5-fe8a-2so33z-Hover200x200.png"
+                                ><img
+                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/skm8g5_fe8a-2so33z_Hover200x200.png"
                                         alt="2024 경력채용"
                                         loading="lazy"
                                 /></span>
                                 <span class="tags"
-                                    ><span>경기 안산시</span><span>경력</span
-                                    ><span>학력무관</span></span
+                                ><span>경기 안산시</span><span>경력</span
+                                ><span>학력무관</span></span
                                 >
                                 <span class="badge">
                                     <svg>
@@ -1778,63 +1532,63 @@
                                 <span class="date">~11.02(토)</span>
                             </a>
                             <button
-                                class="btn-scrap track-event"
-                                data-track-event="main|Ads-scrap|prime-plus-fix-expand"
-                                aria-pressed="false"
+                                    class="btn-scrap track-event"
+                                    data-track-event="main|Ads-scrap|prime-plus-fix-expand"
+                                    aria-pressed="false"
                             >
                                 <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="ic"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="ic"
                                 >
                                     <path
-                                        id="Path"
-                                        d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
-                                        stroke="#8491A7"
+                                            id="Path"
+                                            d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
+                                            stroke="#8491A7"
                                     ></path>
                                 </svg>
                                 <span class="blind"
-                                    >우주텍 2024 경력<br />채용공고 스크랩
+                                >우주텍 2024 경력<br />채용공고 스크랩
                                     버튼</span
                                 >
                             </button>
                         </li>
                         <li class="option" data-rec-idx="49084217">
                             <a
-                                href="/zf-user/jobs/relay/pop-view?rec-idx=49084217"
-                                class="link-box track-event"
-                                data-track-event="main|Ads-click|prime-plus-fix-expand|4"
-                                rel="sponsored, nofollow"
+                                    href="/zf-user/jobs/relay/pop-view?rec-idx=49084217"
+                                    class="link-box track-event"
+                                    data-track-event="main|Ads-click|prime-plus-fix-expand|4"
+                                    rel="sponsored, nofollow"
                             >
                                 <span class="logo"
-                                    ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/07/shgpgp-wwij-2so272-specialgold73996682024cfs.png"
+                                ><img
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/07/shgpgp_wwij-2so272_specialgold73996682024cfs.png"
                                         class="img"
                                         alt="쿠팡 주식회사"
                                         loading="lazy"
                                 /></span>
                                 <span class="c-name">쿠팡 주식회사</span>
                                 <span class="title"
-                                    >[쿠팡CFS] 경기 남동부 물류센터<br />운영
+                                >[쿠팡CFS] 경기 남동부 물류센터<br />운영
                                     관리자 로켓채용(Area Manager)</span
                                 >
                                 <span class="title-ex"
-                                    >[쿠팡CFS] 경기 남동부 물류센터<br />운영
+                                >[쿠팡CFS] 경기 남동부 물류센터<br />운영
                                     관리자 로켓채용(Area Manager)</span
                                 >
                                 <span class="bg-ex"
-                                    ><img
-                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/skeoeh-magz-2so33f-.jpg"
+                                ><img
+                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/skeoeh_magz-2so33f_.jpg"
                                         alt="[쿠팡CFS] 경기 남동부 물류센터운영 관리자 로켓채용(Area Manager)"
                                         loading="lazy"
                                 /></span>
                                 <span class="tags"
-                                    ><span>경기 안성시</span
-                                    ><span>신입 · 경력</span
-                                    ><span>대학교(4년)↑</span></span
+                                ><span>경기 안성시</span
+                                ><span>신입 · 경력</span
+                                ><span>대학교(4년)↑</span></span
                                 >
                                 <span class="badge">
                                     <svg>
@@ -1845,26 +1599,26 @@
                                 <span class="date">내일마감</span>
                             </a>
                             <button
-                                class="btn-scrap track-event"
-                                data-track-event="main|Ads-scrap|prime-plus-fix-expand"
-                                aria-pressed="false"
+                                    class="btn-scrap track-event"
+                                    data-track-event="main|Ads-scrap|prime-plus-fix-expand"
+                                    aria-pressed="false"
                             >
                                 <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="ic"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="ic"
                                 >
                                     <path
-                                        id="Path"
-                                        d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
-                                        stroke="#8491A7"
+                                            id="Path"
+                                            d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
+                                            stroke="#8491A7"
                                     ></path>
                                 </svg>
                                 <span class="blind"
-                                    >쿠팡 주식회사 [쿠팡CFS] 경기 남동부
+                                >쿠팡 주식회사 [쿠팡CFS] 경기 남동부
                                     물류센터<br />운영 관리자 로켓채용(Area
                                     Manager)공고 스크랩 버튼</span
                                 >
@@ -1872,35 +1626,35 @@
                         </li>
                         <li class="option" data-rec-idx="48934947">
                             <a
-                                href="/zf-user/jobs/relay/pop-view?rec-idx=48934947"
-                                class="link-box track-event"
-                                data-track-event="main|Ads-click|prime-plus-fix-expand|5"
-                                rel="sponsored, nofollow"
+                                    href="/zf-user/jobs/relay/pop-view?rec-idx=48934947"
+                                    class="link-box track-event"
+                                    data-track-event="main|Ads-click|prime-plus-fix-expand|5"
+                                    rel="sponsored, nofollow"
                             >
                                 <span class="logo"
-                                    ><img
-                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/sj6cnt-c0cm-2so339-specialgold7239785logodbguide.png"
+                                ><img
+                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/sj6cnt_c0cm-2so339_specialgold7239785logodbguide.png"
                                         class="img"
                                         alt="쿠팡 주식회사"
                                         loading="lazy"
                                 /></span>
                                 <span class="c-name">쿠팡 주식회사</span>
                                 <span class="title"
-                                    >[쿠팡CPLB]리테일상품검수/모니터링<br />(단순사무/재택근무가능)</span
+                                >[쿠팡CPLB]리테일상품검수/모니터링<br />(단순사무/재택근무가능)</span
                                 >
                                 <span class="title-ex"
-                                    >[쿠팡CPLB]리테일상품검수/모니터링<br />(단순사무/재택근무가능)</span
+                                >[쿠팡CPLB]리테일상품검수/모니터링<br />(단순사무/재택근무가능)</span
                                 >
                                 <span class="bg-ex"
-                                    ><img
-                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/sj6cuf-2lnr-2so339-Hover200x200.jpg"
+                                ><img
+                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/sj6cuf_2lnr-2so339_Hover200x200.jpg"
                                         alt="[쿠팡CPLB]리테일상품검수/모니터링(단순사무/재택근무가능)"
                                         loading="lazy"
                                 /></span>
                                 <span class="tags"
-                                    ><span>서울 송파구</span
-                                    ><span>경력무관</span
-                                    ><span>학력무관</span></span
+                                ><span>서울 송파구</span
+                                ><span>경력무관</span
+                                ><span>학력무관</span></span
                                 >
                                 <span class="badge">
                                     <svg>
@@ -1911,26 +1665,26 @@
                                 <span class="date">D-7</span>
                             </a>
                             <button
-                                class="btn-scrap track-event"
-                                data-track-event="main|Ads-scrap|prime-plus-fix-expand"
-                                aria-pressed="false"
+                                    class="btn-scrap track-event"
+                                    data-track-event="main|Ads-scrap|prime-plus-fix-expand"
+                                    aria-pressed="false"
                             >
                                 <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="ic"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="ic"
                                 >
                                     <path
-                                        id="Path"
-                                        d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
-                                        stroke="#8491A7"
+                                            id="Path"
+                                            d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
+                                            stroke="#8491A7"
                                     ></path>
                                 </svg>
                                 <span class="blind"
-                                    >쿠팡 주식회사
+                                >쿠팡 주식회사
                                     [쿠팡CPLB]리테일상품검수/모니터링<br />(단순사무/재택근무가능)공고
                                     스크랩 버튼</span
                                 >
@@ -1938,40 +1692,40 @@
                         </li>
                         <li class="option" data-rec-idx="49164063">
                             <a
-                                href="/zf-user/jobs/relay/pop-view?rec-idx=49164063"
-                                class="link-box track-event"
-                                data-track-event="main|Ads-click|prime-plus-fix-expand|6"
-                                rel="sponsored, nofollow"
+                                    href="/zf-user/jobs/relay/pop-view?rec-idx=49164063"
+                                    class="link-box track-event"
+                                    data-track-event="main|Ads-click|prime-plus-fix-expand|6"
+                                    rel="sponsored, nofollow"
                             >
                                 <span class="logo"
-                                    ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/08/silrr4-gkp8-2so33s-specialgold2988851Guide150120.png"
+                                ><img
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/08/silrr4_gkp8-2so33s_specialgold2988851Guide150120.png"
                                         class="img"
                                         alt="엘에스엠트론㈜"
                                         loading="lazy"
                                 /></span>
                                 <span class="c-name">엘에스엠트론㈜</span>
                                 <span class="title"
-                                    >재경부문(CFO) 경력사원 채용</span
+                                >재경부문(CFO) 경력사원 채용</span
                                 >
                                 <span class="title-ex"
-                                    >재경부문(CFO) 경력사원 채용</span
+                                >재경부문(CFO) 경력사원 채용</span
                                 >
                                 <span class="bg-ex"
-                                    ><img
-                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/sl491j-jboc-2so33f-skejv7h6k42so33sHover200x200.png"
+                                ><img
+                                        src="https://www.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/10/sl491j_jboc-2so33f_skejv7h6k42so33sHover200x200.png"
                                         alt="재경부문(CFO) 경력사원 채용"
                                         loading="lazy"
                                 /></span>
                                 <span class="tags"
-                                    ><span>경기 안양시</span
-                                    ><span>경력 3년↑</span
-                                    ><span>대학교(4년)↑</span></span
+                                ><span>경기 안양시</span
+                                ><span>경력 3년↑</span
+                                ><span>대학교(4년)↑</span></span
                                 >
                                 <span class="badge">
                                     <svg>
                                         <use
-                                            xlink:href="#job-tag-cominfo"
+                                                xlink:href="#job-tag-cominfo"
                                         ></use>
                                     </svg>
                                     <span>평균연봉 상위 10%</span>
@@ -1979,63 +1733,63 @@
                                 <span class="date">~10.20(일)</span>
                             </a>
                             <button
-                                class="btn-scrap track-event"
-                                data-track-event="main|Ads-scrap|prime-plus-fix-expand"
-                                aria-pressed="false"
+                                    class="btn-scrap track-event"
+                                    data-track-event="main|Ads-scrap|prime-plus-fix-expand"
+                                    aria-pressed="false"
                             >
                                 <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="ic"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="ic"
                                 >
                                     <path
-                                        id="Path"
-                                        d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
-                                        stroke="#8491A7"
+                                            id="Path"
+                                            d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
+                                            stroke="#8491A7"
                                     ></path>
                                 </svg>
                                 <span class="blind"
-                                    >엘에스엠트론㈜ 재경부문(CFO) 경력사원
+                                >엘에스엠트론㈜ 재경부문(CFO) 경력사원
                                     채용공고 스크랩 버튼</span
                                 >
                             </button>
                         </li>
                         <li class="option" data-rec-idx="49029311">
                             <a
-                                href="/zf-user/jobs/relay/pop-view?rec-idx=49029311"
-                                class="link-box track-event"
-                                data-track-event="main|Ads-click|prime-plus-fix-expand|7"
-                                rel="sponsored, nofollow"
+                                    href="/zf-user/jobs/relay/pop-view?rec-idx=49029311"
+                                    class="link-box track-event"
+                                    data-track-event="main|Ads-click|prime-plus-fix-expand|7"
+                                    rel="sponsored, nofollow"
                             >
                                 <span class="logo"
-                                    ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/08/shw1dl-3j91-2so277-specialgold4289744.png"
+                                ><img
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/08/shw1dl_3j91-2so277_specialgold4289744.png"
                                         class="img"
                                         alt="한국환경산업기술원"
                                         loading="lazy"
                                 /></span>
                                 <span class="c-name">한국환경산업기술원</span>
                                 <span class="title"
-                                    >2024년도 재활용환경성평가<br />전문인력
+                                >2024년도 재활용환경성평가<br />전문인력
                                     양성 교육생 모집</span
                                 >
                                 <span class="title-ex"
-                                    >2024년도 재활용환경성평가<br />전문인력
+                                >2024년도 재활용환경성평가<br />전문인력
                                     양성 교육생 모집</span
                                 >
                                 <span class="bg-ex"
-                                    ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/sk1mcy-1zv8-2so33f-Hover200x200.jpg"
+                                ><img
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/sk1mcy_1zv8-2so33f_Hover200x200.jpg"
                                         alt="2024년도 재활용환경성평가전문인력 양성 교육생 모집"
                                         loading="lazy"
                                 /></span>
                                 <span class="tags"
-                                    ><span>서울 은평구</span
-                                    ><span>경력무관</span
-                                    ><span>학력무관</span></span
+                                ><span>서울 은평구</span
+                                ><span>경력무관</span
+                                ><span>학력무관</span></span
                                 >
                                 <span class="badge">
                                     <svg>
@@ -2046,26 +1800,26 @@
                                 <span class="date">~10.20(일)</span>
                             </a>
                             <button
-                                class="btn-scrap track-event"
-                                data-track-event="main|Ads-scrap|prime-plus-fix-expand"
-                                aria-pressed="false"
+                                    class="btn-scrap track-event"
+                                    data-track-event="main|Ads-scrap|prime-plus-fix-expand"
+                                    aria-pressed="false"
                             >
                                 <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="ic"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="ic"
                                 >
                                     <path
-                                        id="Path"
-                                        d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
-                                        stroke="#8491A7"
+                                            id="Path"
+                                            d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
+                                            stroke="#8491A7"
                                     ></path>
                                 </svg>
                                 <span class="blind"
-                                    >한국환경산업기술원 2024년도
+                                >한국환경산업기술원 2024년도
                                     재활용환경성평가<br />전문인력 양성 교육생
                                     모집공고 스크랩 버튼</span
                                 >
@@ -2073,36 +1827,36 @@
                         </li>
                         <li class="option" data-rec-idx="49092048">
                             <a
-                                href="/zf-user/jobs/relay/pop-view?rec-idx=49092048"
-                                class="link-box track-event"
-                                data-track-event="main|Ads-click|prime-plus-fix-expand|8"
-                                rel="sponsored, nofollow"
+                                    href="/zf-user/jobs/relay/pop-view?rec-idx=49092048"
+                                    class="link-box track-event"
+                                    data-track-event="main|Ads-click|prime-plus-fix-expand|8"
+                                    rel="sponsored, nofollow"
                             >
                                 <span class="logo"
-                                    ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/skgdgv-iz3z-2so30l-specialgold7631368ryfokhrzlw2so348sourceGuide150120.png"
+                                ><img
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/skgdgv_iz3z-2so30l_specialgold7631368ryfokhrzlw2so348sourceGuide150120.png"
                                         class="img"
                                         alt="(사)한국아이씨티기술협회"
                                         loading="lazy"
                                 /></span>
                                 <span class="c-name"
-                                    >(사)한국아이씨티기술협회</span
+                                >(사)한국아이씨티기술협회</span
                                 >
                                 <span class="title"
-                                    >[국비무료IT취업]<br />자바파이썬/웹개발/빅데이터/인공지능</span
+                                >[국비무료IT취업]<br />자바파이썬/웹개발/빅데이터/인공지능</span
                                 >
                                 <span class="title-ex"
-                                    >[국비무료IT취업]<br />자바파이썬/웹개발/빅데이터/인공지능</span
+                                >[국비무료IT취업]<br />자바파이썬/웹개발/빅데이터/인공지능</span
                                 >
                                 <span class="bg-ex"
-                                    ><img
-                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/skgsyk-1d3t-2so33s-Hover200x200SGASDF.png"
+                                ><img
+                                        src="https://www2.saraminbanner.co.kr/banner_logo/company/logo_banner/2024/09/skgsyk_1d3t-2so33s_Hover200x200SGASDF.png"
                                         alt="[국비무료IT취업]자바파이썬/웹개발/빅데이터/인공지능"
                                         loading="lazy"
                                 /></span>
                                 <span class="tags"
-                                    ><span>서울전체</span><span>경력무관</span
-                                    ><span>학력무관</span></span
+                                ><span>서울전체</span><span>경력무관</span
+                                ><span>학력무관</span></span
                                 >
                                 <span class="badge">
                                     <svg>
@@ -2113,26 +1867,26 @@
                                 <span class="date">D-2</span>
                             </a>
                             <button
-                                class="btn-scrap track-event"
-                                data-track-event="main|Ads-scrap|prime-plus-fix-expand"
-                                aria-pressed="false"
+                                    class="btn-scrap track-event"
+                                    data-track-event="main|Ads-scrap|prime-plus-fix-expand"
+                                    aria-pressed="false"
                             >
                                 <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="ic"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="ic"
                                 >
                                     <path
-                                        id="Path"
-                                        d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
-                                        stroke="#8491A7"
+                                            id="Path"
+                                            d="M11.997 3L11.8476 3.00643C11.2451 3.05756 10.7058 3.41054 10.44 3.94592L8.63397 7.588L4.47026 8.19015C3.8439 8.2743 3.31128 8.69888 3.09352 9.29322L3.05092 9.4341C2.90687 10.0009 3.07744 10.6001 3.50418 11.0062L6.55197 13.963L5.8451 18.0655C5.7389 18.7091 6.02327 19.35 6.56906 19.7061L6.70636 19.7883C7.22059 20.0652 7.84748 20.0728 8.37407 19.7986L11.999 17.901L15.6248 19.7982C15.8797 19.9312 16.1633 19.9991 16.4506 19.9991C16.8004 19.9991 17.1441 19.8974 17.4354 19.7035L17.5568 19.6142C18.0234 19.2389 18.2559 18.6513 18.1537 18.0647L17.446 13.963L20.499 11.0029C20.9582 10.5667 21.12 9.89947 20.9082 9.29895L20.8468 9.1527C20.5988 8.63058 20.1032 8.26745 19.5247 8.18949L15.365 7.587L13.559 3.94607C13.2819 3.40323 12.7445 3.0512 12.1456 3.00511L11.997 3Z"
+                                            stroke="#8491A7"
                                     ></path>
                                 </svg>
                                 <span class="blind"
-                                    >(사)한국아이씨티기술협회
+                                >(사)한국아이씨티기술협회
                                     [국비무료IT취업]<br />자바파이썬/웹개발/빅데이터/인공지능공고
                                     스크랩 버튼</span
                                 >
@@ -3041,11 +2795,9 @@
             </symbol>
         </svg>
         </section>
-    <footer th:replace="~{/main/footer :: footer}"></footer>
+<!--    <footer th:replace="~{/main/footer :: footer}"></footer>-->
     </body>
     <script src="/js/main/body.js"></script>
-    <script th:src="@{/js/main/other-logout-header.js}"></script>
-    <script th:src="@{/js/main/other-login-header.js}"></script>
     <script th:inline="javascript">
         member = [[${session.member}]];
     </script>
