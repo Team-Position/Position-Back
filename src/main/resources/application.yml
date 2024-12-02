@@ -8,7 +8,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/gb2?serverTimezone=Asia/Seoul
     username: gb
     password: 1234
 
