@@ -24,18 +24,15 @@ import java.util.List;
 @Mapper
 public interface AdminMapper {
     // 회원 관리
-    // 일반 회원 목록 전체 조회
+    // 일반 회원
     public List<MemberDTO> selectAllMembers(@Param("pagination") Pagination pagination, @Param("search")Search search);
-    // 일반 회원 전체 인원 수 조회
     public int selectMemberTotal();
-    // 일반 회원 검색 결과 전체 조회
     public int selectTotalWithMemberSearch(@Param("search")Search search);
-    // 기업 회원 목록 전체 조회
+    // 기업 회원
     public List<CorporationDTO> selectAllCorporationMembers(@Param("pagination") Pagination pagination, @Param("search")Search search);
-    // 기업 회원 전체 인원 수 조회
     public int selectCorporationTotal();
-    // 기업 회원 검색 결과 전체 조회
     public int selectTotalWithCorporationSearch(@Param("search")Search search);
+
     // 지원현황 관리
     // 지원 현황
     public List<ApplyDTO> selectAllApply(@Param("pagination") Pagination pagination, @Param("search")Search search);
@@ -49,18 +46,31 @@ public interface AdminMapper {
     public List<PositionDTO> selectAllPosition(@Param("pagination") Pagination pagination, @Param("search")Search search);
     public int selectPositionTotal();
     public int selectTotalWithPositionSearch(@Param("search")Search search);
+
     // 결제 관리
     public List<PaymentDTO> selectAllPayment(@Param("pagination") Pagination pagination, @Param("search")Search search);
     public int selectPaymentTotal();
     public int selectTotalWithPaymentSearch(@Param("search")Search search);
+
     // 작성 관리
-    List<NoticeDTO> selectAllNotice();
-    List<PostDTO> selectAllPost();
-    List<ReplyDTO> selectAllReply();
+    // 공고 작성
+    public List<NoticeDTO> selectAllNotice(@Param("pagination") Pagination pagination, @Param("search")Search search);
+    public int selectNoticeTotal();
+    public int selectTotalWithNoticeSearch(@Param("search")Search search);
+    // 게시글 작성
+    public List<PostDTO> selectAllPost(@Param("pagination") Pagination pagination, @Param("search")Search search);
+    public int selectPostTotal();
+    public int selectTotalWithPostSearch(@Param("search")Search search);
+    // 댓글 작성
+    public List<ReplyDTO> selectAllReply(@Param("pagination") Pagination pagination, @Param("search")Search search);
+    public int selectReplyTotal();
+    public int selectTotalWithReplySearch(@Param("search")Search search);
+
     // 후기 관리
     List<InterviewReviewDTO> selectAllInterviewReview();
     List<EvaluationCorporationDTO> selectAllEvaluationCorporation();
     List<EvaluationPositionerDTO> selectAllEvaluationPositioner();
+
     // 문의 관리
     // 일반 회원 문의
     public List<InquiryDTO> selectAllMemberInquiry(@Param("pagination") Pagination pagination, @Param("search")Search search);
@@ -70,6 +80,7 @@ public interface AdminMapper {
     public List<InquiryDTO> selectAllCorporationInquiry(@Param("pagination") Pagination pagination, @Param("search")Search search);
     public int selectCorporationInquiryTotal();
     public int selectTotalWithCorporationInquirySearch(@Param("search")Search search);
+
     // 신고 관리
     List<ComplainDTO> selectAllComplain();
 }

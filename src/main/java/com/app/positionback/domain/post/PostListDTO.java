@@ -1,18 +1,16 @@
-package com.app.positionback.domain.reply;
+package com.app.positionback.domain.post;
 
 import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 @Getter @Setter @ToString
-public class ReplyListDTO {
-    private List<ReplyDTO> replies;
+public class PostListDTO {
+    private List<PostDTO> posts;
     private Pagination pagination;
     private Search search;
 }

@@ -49,4 +49,19 @@ INSERT INTO tbl_notice (
              '소프트웨어 개발'  -- Job category name
          );
 
+select
+    c.corporation_name,                     -- 기업명
+    n.notice_work_start_date,               -- 포지션 근무일
+    n.notice_title,                        -- 공고 제목
+    c.corporation_email,                   -- 이메일
+    c.corporation_gen,                     -- 전화번호
+    n.notice_end_date,                     -- 공고 마감일
+    case
+        when n.notice_end_date >= NOW() then '채용중'
+        else '채용마감'
+        end as notice_status                  -- 공고 상태
+from
+    tbl_notice n
+        join
+    tbl_corporation c ON n.corporation_id = c.id;
 

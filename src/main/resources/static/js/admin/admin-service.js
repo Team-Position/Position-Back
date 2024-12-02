@@ -141,7 +141,7 @@ const paymentService = (() => {
             const response = await fetch(`/admin/position/payment/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
-            if (!response.ok) throw new error('회원 정보 fetch 실패');
+            if (!response.ok) throw new error('결제 정보 fetch 실패');
 
             // 응답 데이터를 JSON으로 받음
             const data = await response.json();
@@ -165,190 +165,99 @@ const paymentService = (() => {
 
 // 작성 관리
 
-// 공고 작성
-
+// 공고 작성 관리
 const noticeService = (() => {
-    // 공고 데이터를 서버에서 가져오는 비동기 함수
-    const fetchNotice = async (callback) => {
+    // 공고 작성 데이터를 서버에서 가져오는 비동기 함수
+    const fetchNotice = async (page, keyword = "", sortType = "", callback) => {
         try {
-            // /position/notice 경로로 GET 요청
-            const response = await fetch('/position/notice');
+            page = page || 1;
+            // /admin/positioin/notice 경로로 요청
+            const response = await fetch(`/admin/position/notice/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
-            if (!response.ok) throw new Error('공고 fetch 실패');
+            if (!response.ok) throw new erro(`공고 작성 정보 fetch 실패`);
 
-            // 응답 데이터를 JSON으로 변환
-            const noticeData = await response.json();
+            // 응답 데이터를 JSON으로 받음
+            const data = await response.json();
 
-            // 콜백 함수가 있을 경우 데이터를 콜백 함수에 전달
-            if (callback) {
-                callback(noticeData);
+            // 데이터가 유효한 경우 콜백 호출
+            if (callback && data.notices && data.pagination) {
+                callback({ notices: data.notices, pagination: data.pagination });
+            } else {
+                console.error("응답 데이터 형식이 올바르지 않습니다");
             }
         } catch (error) {
-            // 오류가 발생할 경우 에러 메시지 출력
-            console.error("오류입니다:", error);
+            // 오류가 발생할 경우 에러 메시지를 출력
+            console.error("오류입니다", error);
         }
     };
 
-    return {
-        fetchNotice: fetchNotice,
-    };
+    return { fetchNotice: fetchNotice };
 })();
 
-// 공고 데이터를 표시하는 함수
-const displayNotices = (notices) => {
-    // 공고가 표시될 컨테이너 선택
-    const noticeListDiv = document.querySelector('#announcement-section .announcementTable_container');
+// 게시글 작성 관리
 
-    // 기존 데이터 제거 (헤더 행 제외)
-    const existingRows = noticeListDiv.querySelectorAll('.announcementTable_row:not(.announcementTable_header)');
-    existingRows.forEach(row => row.remove());
-
-    // `notices` 배열 내의 각 공고 데이터를 반복하여 새 행 생성
-    notices.forEach(notice => {
-        const noticeRow = document.createElement('div');
-        noticeRow.classList.add('announcementTable_row');
-
-        // 각 공고 데이터 (기업명, 공고일, 공고 제목, 작성자 이름, 전화번호, 공고 상태)를 포함하는 HTML 작성
-        noticeRow.innerHTML = `
-            <div class="announcementTable_cell"><input type="checkbox" class="announcementCheckbox" /></div>
-            <div class="announcementTable_cell">${notice.corporationName || ''}</div>
-            <div class="announcementTable_cell">${notice.noticeDate || ''}</div>
-            <div class="announcementTable_cell">${notice.noticeTitle || ''}</div>
-            <div class="announcementTable_cell">${notice.authorName || ''}</div>
-            <div class="announcementTable_cell">${notice.authorPhone || ''}</div>
-            <div class="announcementTable_cell">${notice.noticeType || ''}</div>
-            <div class="announcementTable_cell">${notice.noticeStatus || ''}</div>
-            <div class="announcementTable_cell"><button class="editBtn">수정</button></div>
-        `;
-
-        // 새로 생성한 공고 행을 컨테이너에 추가
-        noticeListDiv.appendChild(noticeRow);
-    });
-};
-
-// 공고 데이터를 가져와 화면에 표시
-noticeService.fetchNotice(displayNotices);
-
-// 게시글 작성 & 댓글 작성
-
-const writeService = (() => {
+const postService = (() => {
     // 게시글 데이터를 서버에서 가져오는 비동기 함수
-    const fetchPosts = async (callback) => {
+    const fetchPost = async (page, keyword = "", sortType = "", callback) => {
         try {
-            // /position/post 경로로 GET 요청
-            const response = await fetch('/position/post');
+            page = page || 1;
+            // /admin/position/payment 경로로 요청
+            const response = await fetch(`/admin/position/post/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
-            if (!response.ok) throw new Error('게시글 정보 fetch 실패');
+            if (!response.ok) throw new error('게시글 정보 fetch 실패');
 
-            // 응답 데이터를 JSON으로 변환
-            const posts = await response.json();
+            // 응답 데이터를 JSON으로 받음
+            const data = await response.json()
 
-            // 콜백 함수가 있을 경우 데이터를 콜백 함수에 전달
-            if (callback) {
-                callback(posts);
+            // 데이터가 유효한 경우 콜백 호출
+            if (callback && data.posts && data.pagination) {
+                callback({ posts: data.posts, pagination: data.pagination });
+            } else {
+                console.error("응답 데이터 형식이 올바르지 않습니다");
             }
         } catch (error) {
-            // 오류가 발생할 경우 에러 메시지 출력
+            // 오류가 발생할 경우 에러 메시지를 출력
             console.error("오류입니다:", error);
         }
     };
 
-    // 댓글 데이터를 서버에서 가져오는 비동기 함수
-    const fetchReplys = async (callback) => {
-        try {
-            // /position/reply 경로로 GET 요청
-            const response = await fetch('/position/reply');
-
-            // 응답 실패 상태일 경우 에러 메시지
-            if (!response.ok) throw new Error('댓글 정보 fetch 실패');
-
-            // 응답 데이터를 JSON으로 변환
-            const replys = await response.json();
-
-            // 콜백 함수가 있을 경우 데이터를 콜백 함수에 전달
-            if (callback) {
-                callback(replys);
-            }
-        } catch (error) {
-            // 오류가 발생할 경우 에러 메시지 출력
-            console.error("오류입니다:", error);
-        }
-    };
-
-    return { fetchPosts: fetchPosts, fetchReplys: fetchReplys };
+    return { fetchPost: fetchPost };
 })();
 
-// 게시글 데이터를 표시하는 함수
-const displayPosts = (posts) => {
-    // 게시글이 표시될 컨테이너 선택
-    const postListDiv = document.querySelector('#Post-section .PostTable_container');
+// 댓글 작성 관리
 
-    // 새로운 데이터를 표시하기 위해 기존의 데이터 제거 (헤더 행 제외)
-    const existingRows = postListDiv.querySelectorAll('.PostTable_row:not(.PostTable_header)');
-    existingRows.forEach(row => row.remove());
+const replyService = (() => {
+    // 댓글 데이터를 서버에서 가져오는 비동기 함수
+    const fetchReply = async (page, keyword = "", sortType = "", callback) => {
+        try {
+            page = page || 1;
+            // /admin/position/reply 경로로 요청
+            const response = await fetch(`/admin/position/reply/${page}?keyword=${keyword}&types=${sortType}`);
 
-    // `posts` 배열 내의 각 게시글 객체를 반복하며 새 행 생성
-    posts.forEach(post => {
-        // 각 게시글에 대한 새 행을 생성
-        const postRow = document.createElement('div');
-        postRow.classList.add('PostTable_row'); // 행에 스타일 클래스 추가
+            // 응답 실패 상태일 경우 에러 메시지
+            if (!response.ok) throw new error('댓글 정보 fetch 실패');
 
-        // 각 게시글 데이터(체크박스, 제목, 작성일, 작성자, 내용, 상태, 수정 버튼)를 포함하는 HTML 작성
-        postRow.innerHTML = `
-            <div class="PostTable_cell"><input type="checkbox" class="PostCheckbox" /></div>
-            <div class="PostTable_cell">${post.title || ''}</div>
-            <div class="PostTable_cell">${post.createdDate || ''}</div>
-            <div class="PostTable_cell">${post.author || ''}</div>
-            <div class="PostTable_cell">${post.content || ''}</div>
-            <div class="PostTable_cell">${getStatusLabel(post.status) || ''}</div>
-            <div class="PostTable_cell"><button class="editBtn">수정</button></div>
-        `;
+            // 응답 데이터를 JSON으로 받음
+            const data = await response.json();
 
-        // 새로 생성한 게시글 행을 컨테이너에 추가
-        postListDiv.appendChild(postRow);
-    });
-};
+            // 데이터가 유효한 경우 콜백 호출
+            if (callback && data.replies && data.pagination) {
+                callback({ replies: data.replies, pagination: data.pagination });
+            } else {
+                console.error("응답 데이터 형식이 올바르지 않습니다");
+            }
+        } catch (error) {
+            // 오류가 발생할 경우 에러 메시지를 출력
+            console.error("오류입니다:", error);
+        }
+    };
 
-// 댓글 데이터를 표시하는 함수
-const displayReplys = (replys) => {
-    // 댓글이 표시될 컨테이너 선택
-    const replyListDiv = document.querySelector('#reply-section .PostTable_container');
+    return { fetchReply: fetchReply };
+})();
 
-    // 새로운 데이터를 추가하기 위해 기존의 데이터 제거 (헤더 행 제외)
-    const existingRows = replyListDiv.querySelectorAll('.PostTable_row:not(.PostTable_header)');
-    existingRows.forEach(row => row.remove());
-
-    // `replys` 배열 내의 각 댓글 객체를 반복하며 새 행 생성
-    replys.forEach(reply => {
-        // 각 댓글에 대한 새 행을 생성
-        const replyRow = document.createElement('div');
-        replyRow.classList.add('PostTable_row'); // 행에 스타일 클래스 추가
-
-        // 각 댓글 데이터(체크박스, 작성일, 작성자, 댓글 내용, 상태, 수정 버튼)를 포함하는 HTML 작성
-        replyRow.innerHTML = `
-            <div class="PostTable_cell"><input type="checkbox" class="PostCheckbox" /></div>
-            <div class="PostTable_cell">${reply.communityType || ''}</div>
-            <div class="PostTable_cell">${reply.createdDate || ''}</div>
-            <div class="PostTable_celll">${reply.postTitle || ''}</div>
-            <div class="PostTable_cell">${reply.replyContent || ''}</div>
-            <div class="PostTable_cell">${getStatusLabel(reply.membername) || ''}</div>
-            <div class="PostTable_cell"><button class="editBtn">수정</button></div>
-        `;
-
-        // 새로 생성한 댓글 행을 컨테이너에 추가
-        replyListDiv.appendChild(replyRow);
-    });
-};
-
-// 데이터 불러오기 및 표시 실행
-// 게시글 데이터를 불러와 표시하기 위해 `fetchPosts` 호출
-writeService.fetchPosts(displayPosts);
-// 댓글 데이터를 불러와 표시하기 위해 `fetchReplys` 호출
-writeService.fetchReplys(displayReplys);
-
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 후기 관리
 
@@ -697,6 +606,7 @@ const displayComplains = (complains) => {
 
 // 후기 신고 데이터를 가져와 화면에 표시
 complainService.fetchComplain(displayComplains);
+
 
 
 

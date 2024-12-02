@@ -15,12 +15,15 @@ import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
 import com.app.positionback.domain.member.MemberDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
+import com.app.positionback.domain.notice.NoticeListDTO;
 import com.app.positionback.domain.payment.PaymentDTO;
 import com.app.positionback.domain.payment.PaymentListDTO;
 import com.app.positionback.domain.position.PositionDTO;
 import com.app.positionback.domain.position.PositionListDTO;
 import com.app.positionback.domain.post.PostDTO;
+import com.app.positionback.domain.post.PostListDTO;
 import com.app.positionback.domain.reply.ReplyDTO;
+import com.app.positionback.domain.reply.ReplyListDTO;
 import com.app.positionback.service.admin.AdminService;
 import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
@@ -151,22 +154,51 @@ public class AdminController {
 
     // 작성 관리
     // 공고 작성
-    @GetMapping("/position/notice")
+    @GetMapping("/position/notice/{page}")
     @ResponseBody
-    public List<NoticeDTO> getNotices(){
-        return adminService.getNotices();
+    public NoticeListDTO getNotices(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithNoticeSearch(search));
+        } else {
+            pagination.setTotal(adminService.getNoticeTotal());
+        }
+        pagination.progress();
+        return adminService.getNotices(page, pagination, search);
     }
+
     // 게시글 작성
-    @GetMapping("/position/post")
+    @GetMapping("/position/post/{page}")
     @ResponseBody
-    public List<PostDTO> getPosts(){
-        return adminService.getPosts();
+    public PostListDTO getPosts(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithPostSearch(search));
+        } else {
+            pagination.setTotal(adminService.getPostTotal());
+        }
+        pagination.progress();
+        return adminService.getPosts(page, pagination, search);
     }
+
     // 댓글 작성
-    @GetMapping("/position/reply")
+    @GetMapping("/position/reply/{page}")
     @ResponseBody
-    public List<ReplyDTO> getReplys(){
-        return adminService.getReplys();
+    public ReplyListDTO getReplys(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithReplySearch(search));
+        } else {
+            pagination.setTotal(adminService.getReplyTotal());
+        }
+        pagination.progress();
+        return adminService.getReplys(page, pagination, search);
     }
 
     // 후기 관리

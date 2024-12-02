@@ -12,12 +12,15 @@ import com.app.positionback.domain.interview.InterviewListDTO;
 import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
+import com.app.positionback.domain.notice.NoticeListDTO;
 import com.app.positionback.domain.payment.PaymentDTO;
 import com.app.positionback.domain.payment.PaymentListDTO;
 import com.app.positionback.domain.position.PositionDTO;
 import com.app.positionback.domain.position.PositionListDTO;
 import com.app.positionback.domain.post.PostDTO;
+import com.app.positionback.domain.post.PostListDTO;
 import com.app.positionback.domain.reply.ReplyDTO;
+import com.app.positionback.domain.reply.ReplyListDTO;
 import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
 
@@ -33,6 +36,7 @@ public interface AdminService {
     public CorporationListDTO getCorporationMembers(int page, Pagination pagination, Search search);
     public int getCorporationTotal();
     public int getTotalWithCorporationSearch(Search search);
+
     // 지원 현황 관리
     // 지원 현황
     public ApplyListDTO getApplys(int page, Pagination pagination, Search search);
@@ -46,15 +50,27 @@ public interface AdminService {
     public PositionListDTO getPositions(int page, Pagination pagination, Search search);
     public int getPositionTotal();
     public int getTotalWithPositionSearch(Search search);
+
     // 결제 관리
     public PaymentListDTO getPayments(int page, Pagination pagination, Search search);
     public int getPaymentTotal();
     public int getTotalWithPaymentSearch(Search search);
+
     // 작성 관리
-    List<NoticeDTO> getNotices();
-    List<PostDTO> getPosts();
-    List<ReplyDTO> getReplys();
-    // 후기 관리
+    // 공고 작성 관리
+    public NoticeListDTO getNotices(int page, Pagination pagination, Search search);
+    public int getNoticeTotal();
+    public int getTotalWithNoticeSearch(Search search);
+    // 게시글 작성 관리
+    public PostListDTO getPosts(int page, Pagination pagination, Search search);
+    public int getPostTotal();
+    public int getTotalWithPostSearch(Search search);
+    // 댓글 작성 관리
+    public ReplyListDTO getReplys(int page, Pagination pagination, Search search);
+    public int getReplyTotal();
+    public int getTotalWithReplySearch(Search search);
+
+    // 후기 작성 관리
     List<InterviewReviewDTO> getInterviewReviews();
     List<EvaluationCorporationDTO> getEvaluationCorporations();
     List<EvaluationPositionerDTO> getEvaluationPositioners();

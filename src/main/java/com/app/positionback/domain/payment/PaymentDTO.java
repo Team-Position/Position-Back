@@ -19,6 +19,11 @@ public class PaymentDTO {
     private Long noticeId;
     private Long memberId;
 
+    // 관리자 페이지에서 결제 현황 체크를 위한 추가된 필드
+    private String memberName;
+    private String noticeTitle;
+    private String memberPhone;
+
     public PaymentVO toVO() {
         return new PaymentVO(id, paymentAmount, paymentStatus, paymentMethod, createdDate, updatedDate, noticeId, memberId);
     }
