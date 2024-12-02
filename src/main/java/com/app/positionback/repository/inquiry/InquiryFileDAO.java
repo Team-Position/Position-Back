@@ -1,5 +1,6 @@
 package com.app.positionback.repository.inquiry;
 
+import com.app.positionback.domain.file.InquiryFileDTO;
 import com.app.positionback.domain.file.InquiryFileVO;
 import com.app.positionback.mapper.inquiry.InquiryFileMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,7 @@ public class InquiryFileDAO {
     private final InquiryFileMapper inquiryFileMapper;
 
     // 문의와 첨부파일 연결
-    public void linkInquiryWithFile(InquiryFileVO inquiryFileVO) {
-        inquiryFileMapper.insertInquiryFile(inquiryFileVO);
+    public void linkInquiryWithFile(InquiryFileDTO inquiryFileDTO) {
+        inquiryFileMapper.insertInquiryFile(inquiryFileDTO);
     }
 }

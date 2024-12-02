@@ -57,20 +57,16 @@ public class InquiryController {
 
 
     @PostMapping("inquiry")
-    public RedirectView write(@ModelAttribute InquiryDTO inquiryDTO, HttpSession session) throws IOException {
+    public RedirectView write(
+            @ModelAttribute InquiryDTO inquiryDTO,
+            HttpSession session
+    ) {
         // 세션에서 회원 ID 가져오기
         Long memberId = (Long) session.getAttribute("memberId");
         if (memberId == null) {
             memberId = 1L; // 기본값
         }
         inquiryDTO.setMemberId(memberId);
-
-        log.info("DTO 데이터 확인: {}", inquiryDTO); // 모든 필드 확인
-        if (inquiryDTO.getFileName() == null || inquiryDTO.getFileName().isEmpty()) {
-            log.error("파일 이름이 누락되었습니다.");
-            throw new IllegalArgumentException("File name is missing");
-        }
-
 
         // 서비스 계층 호출
         inquiryService.writeInquiry(inquiryDTO);

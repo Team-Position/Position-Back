@@ -23,8 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 @Slf4j
-public class InquiryFileServiceImpl implements InquiryFileService{
-
+public class InquiryFileServiceImpl implements InquiryFileService {
     private final FileDAO fileDAO;
     private final InquiryFileDAO inquiryFileDAO;
     private final InquiryDAO inquiryDAO;
@@ -45,13 +44,20 @@ public class InquiryFileServiceImpl implements InquiryFileService{
         } catch (IOException e) {
             throw new RuntimeException("파일 저장 실패", e);
         }
-        // 파일 정보 객체 생성 (데이터베이스에 저장하지 않음)
+
+        // 파일 정보 객체 생성
         FileVO fileVO = new FileVO();
         fileVO.setFileName(uniqueFileName);
         fileVO.setFileSize(String.valueOf(file.getSize()));
         fileVO.setFilePath(getPath());
 
-        // 데이터베이스에 저장하지 않고 파일 정보만 반환
+        // 로그로 값 확인
+        log.info("파일 정보: fileName={}, fileSize={}, filePath={}", fileVO.getFileName(), fileVO.getFileSize(), fileVO.getFilePath());
+
+
+        // 필요 시 파일 정보를 데이터베이스에 저장
+        // fileDAO.save(fileVO);
+
         return fileVO;
     }
 
@@ -59,3 +65,4 @@ public class InquiryFileServiceImpl implements InquiryFileService{
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
 }
+
