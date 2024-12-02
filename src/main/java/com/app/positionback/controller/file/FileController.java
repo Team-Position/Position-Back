@@ -46,4 +46,6 @@ public class FileController {
         memberService.logo(uuid, path, file, corporationId);
         return  new RedirectView("/corporation");
     }
+
+
 }

@@ -19,7 +19,12 @@
             </div>
             <div class="help-find help-lost wrap-help">
                 <div class="cont-find">
-                    <form th:action="@{/customer-service-center/inquiry}" method="post" th:object="${inquiryDTO}"id="write-form">
+
+                    <form th:action="@{/customer-service-center/inquiry}" method="post" th:object="${inquiryDTO}"id="write-form" enctype="multipart/form-data">
+                        <input type="hidden" name="fileName" id="hidden-file-name" />
+                        <input type="hidden" name="filePath" id="hidden-file-path" />
+                        <input type="hidden" name="fileSize" id="hidden-file-size" />
+
                         <fieldset>
                             <p class="desc-find-type2">
                                 평일 09시 에서 17시까지 문의하신 내용은

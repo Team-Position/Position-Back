@@ -107,22 +107,64 @@ public class AdminDAO {
 
     // 결제 관리
     // 지원료 결제
-    public List<PaymentDTO> paymentInformation() {
-        return adminMapper.selectAllPayment();
+    public List<PaymentDTO> paymentInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllPayment(pagination, search);
+    }
+
+    // 지원료 결제 현황 전체 조회
+    public int getPaymentTotal() {
+        return adminMapper.selectPaymentTotal();
+    }
+
+    // 지원료 결제 검색 결과 전체 조회
+    public int getTotalWithPaymentSearch(Search search) {
+        return adminMapper.selectTotalWithPaymentSearch(search);
     }
 
     // 작성 관리
     // 공고 작성
-    public List<NoticeDTO> noticeInformation() {
-        return adminMapper.selectAllNotice();
+    public List<NoticeDTO> noticeInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllNotice(pagination, search);
     }
+
+    // 공고 작성 현황 전체 갯수 조회
+    public int getNoticeTotal() {
+        return adminMapper.selectNoticeTotal();
+    }
+
+    // 공고 작성 검색 결과 전체 조회
+    public int getTotalWithNoticeSearch(Search search) {
+        return adminMapper.selectTotalWithNoticeSearch(search);
+    }
+
     // 게시글 작성
-    public List<PostDTO> postInformation() {
-        return adminMapper.selectAllPost();
+    public List<PostDTO> postInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllPost(pagination, search);
     }
+
+    // 게시글 작성 현황 전체 갯수 조회
+    public int getPostTotal() {
+        return adminMapper.selectPostTotal();
+    }
+
+    // 게시글 작성 검색 결과 전체 조회
+    public int getTotalWithPostSearch(Search search) {
+        return adminMapper.selectTotalWithPostSearch(search);
+    }
+
     // 댓글 작성
-    public List<ReplyDTO> replyInformation() {
-        return adminMapper.selectAllReply();
+    public List<ReplyDTO> replyInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllReply(pagination, search);
+    }
+
+    // 댓글 작성 현황 전체 갯수 조회
+    public int getReplyTotal() {
+        return adminMapper.selectReplyTotal();
+    }
+
+    // 댓글 작성 검색 결과 전체 조회
+    public int getTotalWithReplySearch(Search search) {
+        return adminMapper.selectTotalWithReplySearch(search);
     }
 
     // 후기 관리
