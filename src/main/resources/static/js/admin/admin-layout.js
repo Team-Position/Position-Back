@@ -12,17 +12,17 @@ let selectedSort = "가입일 순"; // 기본 정렬 설정
 // 정렬 옵션 이벤트 설정
 sortOptions.forEach((option) => {
     option.addEventListener("click", () => {
-        // 선택한 옵션의 data-type 속성을 가져와서 selectedSort에 저장
         selectedSort = option.getAttribute("data-type");
 
-        // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
+        // 기존 선택 해제 후 현재 선택 항목 강조
         sortOptions.forEach((option) => option.classList.remove("selected"));
         option.classList.add("selected");
 
-        // 검색어와 정렬 기준을 사용하여 멤버 목록 새로고침
+        // 현재 정렬 옵션에 따라 데이터를 새로 로드
         fetchAndShowMembers(1);
     });
 });
+
 
 // 검색어 초기화
 // URL 쿼리 문자열에서 "keyword"라는 이름의 매개변수 값을 가져옴
@@ -45,17 +45,23 @@ document.addEventListener('DOMContentLoaded', () => {
     goToPage(1);
 });
 
-// 일반 회원 목록을 서버에서 가져오고 화면에 표시
+// 기존 selectedSort 변수를 활용
 const fetchAndShowMembers = async (page) => {
     const keyword = memberKeywordInput.value;
-    const sortType = selectedSort;
+    const sortType = selectedSort; // 선택된 정렬 옵션만 전달
 
     try {
-        // 데이터를 서버에서 가져오는 요청
+        // 서버 요청에 정렬 옵션 포함
         const response = await fetch(`/admin/position/members/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
-        // 페이지 데이터와 멤버 데이터를 표시하는 함수 호출
+        // 데이터가 없을 경우 처리
+        if (!data.members || data.members.length === 0) {
+            MemberListLayout.innerHTML = `<p>해당 조건에 맞는 회원이 없습니다.</p>`;
+            return;
+        }
+
+        // 데이터 표시
         data.pagination.currentPage = page;
         showMemberList(data);
     } catch (error) {
