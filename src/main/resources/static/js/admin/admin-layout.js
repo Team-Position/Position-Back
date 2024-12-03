@@ -85,14 +85,14 @@ const showPagination = (pagination) => {
     // 처음 페이지 이동 버튼
     paginationContent += `
         <li class="${pagination.currentPage === 1 ? "disabled" : ""}">
-            <a href="#" onclick="goToPage(1)">«</a>
+            <a href="#" onclick="${pagination.currentPage > 1 ? `goToPage(1)` : "return false;"}">«</a>
         </li>
     `;
 
     // 이전 페이지 이동 버튼
     paginationContent += `
         <li class="${pagination.currentPage === 1 ? "disabled" : ""}">
-            <a href="#" onclick="goToPage(${pagination.currentPage - 1})">‹</a>
+            <a href="#" onclick="${pagination.currentPage > 1 ? `goToPage(${pagination.currentPage - 1})` : "return false;"}">‹</a>
         </li>
     `;
 
@@ -108,20 +108,21 @@ const showPagination = (pagination) => {
     // 다음 페이지 이동 버튼
     paginationContent += `
         <li class="${pagination.currentPage === totalPages ? "disabled" : ""}">
-            <a href="#" onclick="goToPage(${pagination.currentPage + 1})">›</a>
+            <a href="#" onclick="${pagination.currentPage < totalPages ? `goToPage(${pagination.currentPage + 1})` : "return false;"}">›</a>
         </li>
     `;
 
     // 마지막 페이지 이동 버튼
     paginationContent += `
         <li class="${pagination.currentPage === totalPages ? "disabled" : ""}">
-            <a href="#" onclick="goToPage(${totalPages})">»</a>
+            <a href="#" onclick="${pagination.currentPage < totalPages ? `goToPage(${totalPages})` : "return false;"}">»</a>
         </li>
     `;
 
     // 페이지네이션 UI 업데이트
     MemberListPaging.innerHTML = paginationContent;
 };
+
 
 
 // 멤버 목록과 페이지네이션을 표시하는 함수
