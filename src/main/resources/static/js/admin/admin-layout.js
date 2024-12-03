@@ -37,9 +37,11 @@ memberKeywordInput.addEventListener("input", () => {
 });
 
 // 페이지 이동 - fetchAndShowMembers 호출
-function goToPage(page) {
-    fetchAndShowMembers(page);
-}
+const goToPage = (page) => {
+    const keyword = memberKeywordInput.value.trim();
+    const sortType = selectedSort;
+    memberService.fetchMembers(page, keyword, sortType, showMemberList);
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     goToPage(1);
@@ -47,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 일반 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowMembers = async (page) => {
-    const keyword = memberKeywordInput.value.trim();
+    const keyword = memberKeywordInput.value;
     const sortType = selectedSort;
 
     try {
@@ -97,26 +99,26 @@ const showMemberList = ( { members, pagination } ) => {
 
     MemberListLayout.innerHTML = text;
 
+    // 동적으로 totalPages 계산
+    const memberTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = memberTotalPages;
+
     // 페이지 버튼 생성
     let pagingText = '';
 
-    // 검색 조건 URL 생성
-    const keyword = memberKeywordInput.value.trim(); // 검색어
-    const typeParams = `types=${selectedSort}&`; // 정렬 기준
-
-    // 맨 처음 버튼
+    // 처음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="/admin/position/members/1?${typeParams}keyword=${keyword}" rel="nofollow">
+            <a href="#" class="pagination-first-link" onclick="goToPage(1)" rel="nofollow">
                 <span class="pagination-first-icon" aria-hidden="true">«</span>
             </a>
         </li>
     `;
 
-    // 이전 버튼
+    // 이전 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="/admin/position/members/${pagination.currentPage - 1}?${typeParams}keyword=${keyword}" rel="prev nofollow">
+            <a href="#" class="pagination-prev-link" onclick="goToPage(${pagination.currentPage - 1})" rel="prev nofollow">
                 <span class="pagination-prev-icon" aria-hidden="true">‹</span>
             </a>
         </li>
@@ -125,25 +127,25 @@ const showMemberList = ( { members, pagination } ) => {
     // 페이지 번호 버튼
     for (let i = pagination.startPage; i <= pagination.endPage; i++) {
         pagingText += `
-            <li class="pagination-page ${i === pagination.currentPage ? 'active' : ''}">
-                <a href="/admin/position/members/${i}?${typeParams}keyword=${keyword}">${i}</a>
+            <li class="${pagination.currentPage === i ? "active" : ""}">
+                <a href="#" onclick="goToPage(${i})">${i}</a>
             </li>
         `;
     }
 
-    // 다음 버튼
+    // 다음 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="/admin/position/members/${pagination.currentPage + 1}?${typeParams}keyword=${keyword}" rel="next nofollow">
+            <a href="#" class="pagination-next-link" onclick="goToPage(${pagination.currentPage + 1})" rel="next nofollow">
                 <span class="pagination-next-icon" aria-hidden="true">›</span>
             </a>
         </li>
     `;
 
-    // 마지막 버튼
+    // 마지막 페이지로 이동하는 버튼
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="/admin/position/members/${pagination.totalPages}?${typeParams}keyword=${keyword}" rel="nofollow">
+            <a href="#" class="pagination-last-link" onclick="goToPage(${pagination.realEnd})" rel="nofollow">
                 <span class="pagination-last-icon" aria-hidden="true">»</span>
             </a>
         </li>

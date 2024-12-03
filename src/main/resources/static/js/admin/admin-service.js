@@ -1,28 +1,17 @@
 // 관리자 회원 관리
 
 const memberService = (() => {
-    // 일반 회원 데이터를 서버에서 가져오는 비동기 함수
     const fetchMembers = async (page, keyword = "", sortType = "", callback) => {
         try {
-            page = page || 1;
-            // /admin/position/members 경로로 GET 요청
             const response = await fetch(`/admin/position/members/${page}?keyword=${keyword}&types=${sortType}`);
-
-            // 응답 실패 상태일 경우 에러 메시지
             if (!response.ok) throw new Error('회원 정보 fetch 실패');
 
-            // 응답 데이터를 JSON으로 받음
             const data = await response.json();
-
-            // 데이터가 유효한 경우 콜백 호출
             if (callback && data.members && data.pagination) {
                 callback({ members: data.members, pagination: data.pagination });
-            } else {
-                console.error("응답 데이터 형식이 올바르지 않습니다.");
             }
         } catch (error) {
-            // 오류가 발생할 경우 에러 메시지를 출력
-            console.error("오류입니다:", error);
+            console.error("오류:", error);
         }
     };
 

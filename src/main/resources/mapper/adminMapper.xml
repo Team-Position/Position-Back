@@ -33,15 +33,15 @@
                 order by created_date desc
             </when>
             <when test="search.types[0] == 'active'">
-                where member_status = '활동중'
+                and member_status = '활동중'
                 order by created_date desc
             </when>
             <when test="search.types[0] == 'suspended'">
-                where member_status = '정지'
+                and member_status = '정지'
                 order by created_date desc
             </when>
             <when test="search.types[0] == 'withdrawn'">
-                where member_status = '탈퇴'
+                and member_status = '탈퇴'
                 order by created_date desc
             </when>
             <otherwise>
@@ -50,6 +50,7 @@
         </choose>
         limit #{pagination.startRow}, #{pagination.rowCount}
     </select>
+
 
 
     <!-- 일반 회원 전체 인원 확인 -->
