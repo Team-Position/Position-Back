@@ -9,27 +9,27 @@ const corporationKeywordInput = document.getElementById("corporationSearchInput"
 const sortOptions = document.querySelectorAll(".sort-filter-option"); // 정렬 옵션
 let selectedSort = "가입일 순"; // 기본 정렬 설정
 
-// 정렬 옵션 이벤트 설정
-sortOptions.forEach((option) => {
-    option.addEventListener("click", () => {
-        selectedSort = option.getAttribute("data-type");
-
-        // 기존 선택 해제 후 현재 선택 항목 강조
-        sortOptions.forEach((option) => option.classList.remove("selected"));
-        option.classList.add("selected");
-
-        // 현재 정렬 옵션에 따라 데이터를 새로 로드
-        fetchAndShowMembers(1);
-    });
-});
-
-
 // 검색어 초기화
 // URL 쿼리 문자열에서 "keyword"라는 이름의 매개변수 값을 가져옴
 // 만약 URL에 "keyword" 매개변수가 없다면 기본값으로 빈 문자열("")을 할당함
 // URLSearchParams() : 객체 인스턴스를 반환
 // window.location.search : 현재 페이지의 쿼리 스트링에 접근하여 현재 페이지 URL의 쿼리 스트링 부분을 가져온다.
 memberKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
+
+// 정렬 옵션 이벤트 설정
+sortOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+        // 선택한 옵션의 data-type 속성을 가져와서 selectedSort에 저장
+        selectedSort = option.getAttribute("data-type");
+
+        // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
+        sortOptions.forEach((opt) => opt.classList.remove("selected"));
+        option.classList.add("selected");
+
+        // 검색어와 정렬 기준을 사용하여 멤버 목록 새로고침
+        fetchAndShowMembers(1);
+    });
+});
 
 // 검색어 입력 시 검색 실행
 memberKeywordInput.addEventListener("input", () => {
@@ -38,45 +38,51 @@ memberKeywordInput.addEventListener("input", () => {
 
 // 페이지 이동 - fetchAndShowMembers 호출
 function goToPage(page) {
-    fetchAndShowMembers(page);
+    const keyword = memberKeywordInput.value.trim(); // 검색어
+    const sortType = selectedSort; // 정렬 옵션
+    fetchAndShowMembers(page, keyword, sortType);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const keyword = params.get("keyword") || "";
+    const sortType = params.get("types") || "가입일 순";
+
+    memberKeywordInput.value = keyword;
+    selectedSort = sortType;
+
+    // 정렬 옵션 상태 업데이트
+    sortOptions.forEach((option) => {
+        if (option.getAttribute("data-type") === sortType) {
+            option.classList.add("selected");
+        } else {
+            option.classList.remove("selected");
+        }
+    });
+
+    // 첫 페이지 로드
     goToPage(1);
 });
 
+// 일반 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowMembers = async (page) => {
-    const keyword = memberKeywordInput.value;
-    const sortType = selectedSort;
+    const keyword = memberKeywordInput.value.trim(); // 검색어
+    const sortType = selectedSort; // 정렬 옵션
 
     try {
-        // 서버 요청
+        // 데이터를 서버에서 가져오는 요청
         const response = await fetch(`/admin/position/members/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
-        // 페이지 초과 요청 처리
-        if (page > data.pagination.totalPages) {
-            alert("더 이상 데이터가 없습니다."); // 사용자에게 경고 메시지 표시
-            return; // 기존 데이터를 유지하며 함수 종료
-        }
-
-        // 데이터가 없을 경우 메시지 표시 (단, 기존 데이터는 유지)
-        if (!data.members || data.members.length === 0) {
-            alert("더 이상 해당 조건에 맞는 회원이 없습니다.");
-            return; // 기존 데이터를 유지하며 함수 종료
-        }
-
-        // 데이터 표시
-        data.pagination.currentPage = page;
-        showMemberList(data);
+        // 데이터와 검색 조건 전달
+        showMemberList(data, keyword, sortType);
     } catch (error) {
         console.error(`페이지 ${page} 로딩 중 오류 발생:`, error);
     }
 };
 
-
 // 멤버 목록과 페이지네이션을 표시하는 함수
-const showMemberList = ( { members, pagination } ) => {
+const showMemberList = ({ members, pagination }, keyword, sortType) => {
     let text = `
         <div class="UserTable_row UserTable_header">
             <div class="UserTable_cell"><input type="checkbox" class="selectAllCheckbox"/></div>
@@ -90,6 +96,7 @@ const showMemberList = ( { members, pagination } ) => {
         </div>
     `;
 
+    // 검색 결과 렌더링
     members.forEach((member) => {
         text += `
             <div class="UserTable_row">
@@ -109,67 +116,48 @@ const showMemberList = ( { members, pagination } ) => {
 
     MemberListLayout.innerHTML = text;
 
-    // 동적으로 totalPages 계산
-    const memberTotalPages = Math.ceil(pagination.total / pagination.rowCount);
-    pagination.totalPages = memberTotalPages;
-
-    // 페이지 버튼 생성
+    // 페이지네이션 버튼 생성
     let pagingText = '';
 
-    // 처음 페이지로 이동하는 버튼
+    // 처음 버튼
     pagingText += `
         <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-first-link" onclick="goToPage(1)" rel="nofollow">
-                <span class="pagination-first-icon" aria-hidden="true">«</span>
-            </a>
+            <a href="#" onclick="fetchAndShowMembers(1, '${keyword}', '${sortType}')">«</a>
         </li>
     `;
 
-    // 이전 페이지로 이동하는 버튼
+    // 이전 버튼
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-prev-link"
-               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToPage(${pagination.currentPage - 1})`}"
-               rel="prev nofollow">
-                <span class="pagination-prev-icon" aria-hidden="true">‹</span>
-            </a>
+            <a href="#" onclick="fetchAndShowMembers(${pagination.currentPage - 1}, '${keyword}', '${sortType}')">‹</a>
         </li>
     `;
 
-    // 페이지 번호 버튼
-    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+    // 동적 페이지 번호 생성
+    for (let i = 1; i <= pagination.totalPages; i++) {
         pagingText += `
             <li class="pagination-page ${i === pagination.currentPage ? 'active' : ''}">
-                <a href="#" class="pagination-page-link" onclick="goToPage(${i})">${i}</a>
+                <a href="#" onclick="fetchAndShowMembers(${i}, '${keyword}', '${sortType}')">${i}</a>
             </li>
         `;
-        }
+    }
 
-    // 다음 페이지로 이동하는 버튼
+    // 다음 버튼
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-next-link"
-               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.currentPage + 1})`}"
-               rel="next nofollow">
-                <span class="pagination-next-icon" aria-hidden="true">›</span>
-            </a>
+            <a href="#" onclick="fetchAndShowMembers(${pagination.currentPage + 1}, '${keyword}', '${sortType}')">›</a>
         </li>
     `;
 
-    // 마지막 페이지로 이동하는 버튼
+    // 마지막 버튼
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-last-link"
-               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.realEnd})`}"
-               rel="nofollow">
-                <span class="pagination-last-icon" aria-hidden="true">»</span>
-            </a>
+            <a href="#" onclick="fetchAndShowMembers(${pagination.totalPages}, '${keyword}', '${sortType}')">»</a>
         </li>
     `;
 
-    // 페이지네이션을 동적으로 추가
+    // 페이지네이션 렌더링
     MemberListPaging.innerHTML = pagingText;
-
 };
 
 corporationKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";

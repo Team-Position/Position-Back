@@ -56,36 +56,20 @@ public class AdminController {
     // 일반 회원 정보 조회
     @GetMapping("/position/members/{page}")
     @ResponseBody
-    public MemberListDTO getMembers(
-            @PathVariable("page") Integer page,
-            Pagination pagination,
-            Search search) {
-
-        // 정렬 옵션 기본값 설정
-        if (search.getTypes() == null || search.getTypes().length == 0 || search.getTypes()[0].isEmpty()) {
-            search.setTypes(new String[]{"recent"});
+    public MemberListDTO getMembers(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        // 정렬 순서가 없을 경우 기본값 설정
+        if (search.getTypes() == null || search.getTypes().length == 0) {  // types 배열이 비어있거나 null인 경우
+            search.setTypes(new String[]{"recent"});    // 기본값으로 "recent" 설정
         }
-
-        // 총 개수 계산
-        int totalCount = (search.getKeyword() != null && !search.getKeyword().isEmpty())
-                ? adminService.getTotalWithMemberSearch(search)
-                : adminService.getMemberTotal();
-
-        // Pagination에 총 개수 설정
-        pagination.setTotal(totalCount);
-
-        // 페이지네이션 계산 (Pagination의 progress() 호출)
+        // 검색 조건이 있을 경우 총 개수 설정
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithMemberSearch(search));
+        } else {
+            pagination.setTotal(adminService.getMemberTotal());
+        }
+        // 페이징 진행
         pagination.progress();
-
-        // 잘못된 페이지 요청 시 마지막 페이지 데이터 반환
-        if (page > pagination.getRealEnd()) { // 총 페이지(realEnd)를 초과한 요청
-            page = pagination.getRealEnd();   // 마지막 페이지로 설정
-        }
-
-        // 요청한 페이지 설정
-        pagination.setPage(page);
-
-        // 데이터 조회
+        // 검색 조건에 맞는 목록 반환
         return adminService.getMembers(page, pagination, search);
     }
 
