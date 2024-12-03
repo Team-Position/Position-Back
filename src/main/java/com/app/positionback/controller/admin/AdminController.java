@@ -54,24 +54,6 @@ public class AdminController {
 
     // 회원 관리
     // 일반 회원 정보 조회
-
-
-
-    // 기업 회원 정보 조회
-    @GetMapping("/position/corporation-members/{page}")
-    @ResponseBody
-    public CorporationListDTO getCorporationMembers(@PathVariable("page") Integer page, Pagination pagination, Search search) {
-        if (search.getKeyword() != null) {
-            pagination.setTotal(adminService.getTotalWithCorporationSearch(search));
-        } else {
-            pagination.setTotal(adminService.getCorporationTotal());
-        }
-        pagination.progress();
-        return adminService.getCorporationMembers(page, pagination, search);
-    }
-
-    // 지원 현황 관리
-    // 지원 현황
     @GetMapping("/position/members/{page}")
     @ResponseBody
     public MemberListDTO getMembers(
@@ -105,6 +87,36 @@ public class AdminController {
 
         // 데이터 조회
         return adminService.getMembers(page, pagination, search);
+    }
+
+    // 기업 회원 정보 조회
+    @GetMapping("/position/corporation-members/{page}")
+    @ResponseBody
+    public CorporationListDTO getCorporationMembers(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getKeyword() != null) {
+            pagination.setTotal(adminService.getTotalWithCorporationSearch(search));
+        } else {
+            pagination.setTotal(adminService.getCorporationTotal());
+        }
+        pagination.progress();
+        return adminService.getCorporationMembers(page, pagination, search);
+    }
+
+    // 지원 현황 관리
+    // 지원 현황
+    @GetMapping("/position/apply/{page}")
+    @ResponseBody
+    public ApplyListDTO getApplys(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithApplySearch(search));
+        } else {
+            pagination.setTotal(adminService.getApplyTotal());
+        }
+        pagination.progress();
+        return adminService.getApplys(page, pagination, search);
     }
 
 
