@@ -19,36 +19,38 @@
 
     <!-- 일반 회원 목록 조회 -->
     <select id="selectAllMembers" resultType="memberDTO">
-        select id,
+        SELECT id,
         member_name,
-        coalesce(member_email, member_kakao_email) as memberEmail,
+        COALESCE(member_email, member_kakao_email) AS memberEmail,
         member_address,
         member_phone,
         member_status,
         created_date
-        from tbl_member
+        FROM tbl_member
         <include refid="MemberSearch"/>
         <choose>
-            <when test="search.types[0] == 'recent'">
-                order by created_date desc
-            </when>
-            <when test="search.types[0] == 'active'">
-                where member_status = '활동중'
-                order by created_date desc
-            </when>
-            <when test="search.types[0] == 'suspended'">
-                where member_status = '정지'
-                order by created_date desc
-            </when>
-            <when test="search.types[0] == 'withdrawn'">
-                where member_status = '탈퇴'
-                order by created_date desc
+            <when test="search.types != null and search.types.length > 0">
+                <if test="search.types[0] == 'recent'">
+                    ORDER BY created_date DESC
+                </if>
+                <if test="search.types[0] == 'active'">
+                    AND member_status = '활동중'
+                    ORDER BY created_date DESC
+                </if>
+                <if test="search.types[0] == 'suspended'">
+                    AND member_status = '정지'
+                    ORDER BY created_date DESC
+                </if>
+                <if test="search.types[0] == 'withdrawn'">
+                    AND member_status = '탈퇴'
+                    ORDER BY created_date DESC
+                </if>
             </when>
             <otherwise>
-                order by created_date desc
+                ORDER BY created_date DESC
             </otherwise>
         </choose>
-        limit #{pagination.startRow}, #{pagination.rowCount}
+        LIMIT #{pagination.startRow}, #{pagination.rowCount}
     </select>
 
 

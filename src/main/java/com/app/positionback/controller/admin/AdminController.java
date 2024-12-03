@@ -57,18 +57,24 @@ public class AdminController {
     @GetMapping("/position/members/{page}")
     @ResponseBody
     public MemberListDTO getMembers(@PathVariable("page") Integer page, Pagination pagination, Search search) {
-        // 정렬 순서가 없을 경우 기본값 설정
-        if (search.getTypes() == null || search.getTypes().length == 0) {  // types 배열이 비어있거나 null인 경우
-            search.setTypes(new String[]{"recent"});    // 기본값으로 "recent" 설정
+        // 기본값 설정
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
         }
+        if (search.getKeyword() == null) {
+            search.setKeyword("");
+        }
+
         // 검색 조건이 있을 경우 총 개수 설정
-        if (search.getKeyword() != null || search.getTypes() != null) {
+        if (!search.getKeyword().isEmpty() || search.getTypes() != null) {
             pagination.setTotal(adminService.getTotalWithMemberSearch(search));
         } else {
             pagination.setTotal(adminService.getMemberTotal());
         }
+
         // 페이징 진행
         pagination.progress();
+
         // 검색 조건에 맞는 목록 반환
         return adminService.getMembers(page, pagination, search);
     }
