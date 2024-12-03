@@ -15,6 +15,7 @@ const memberService = (() => {
         }
     };
 
+
     const fetchCorporationMembers = async (page, keyword="",callback) => {
         try {
             page = page || 1;

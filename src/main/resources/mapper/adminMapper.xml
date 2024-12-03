@@ -33,15 +33,15 @@
                 order by created_date desc
             </when>
             <when test="search.types[0] == 'active'">
-                and member_status = '활동중'
+                where member_status = '활동중'
                 order by created_date desc
             </when>
             <when test="search.types[0] == 'suspended'">
-                and member_status = '정지'
+                where member_status = '정지'
                 order by created_date desc
             </when>
             <when test="search.types[0] == 'withdrawn'">
-                and member_status = '탈퇴'
+                where member_status = '탈퇴'
                 order by created_date desc
             </when>
             <otherwise>
@@ -53,6 +53,7 @@
 
 
 
+
     <!-- 일반 회원 전체 인원 확인 -->
     <select id="selectMemberTotal">
         select count(*) from tbl_member
@@ -60,9 +61,22 @@
 
     <!-- 일반 회원 목록에서 검색 후 인원 확인 -->
     <select id="selectTotalWithMemberSearch">
-        select count(*) from tbl_member
+        select count(*)
+        from tbl_member
         <include refid="MemberSearch"/>
+        <choose>
+            <when test="search.types[0] == 'active'">
+                where member_status = '활동중'
+            </when>
+            <when test="search.types[0] == 'suspended'">
+                where member_status = '정지'
+            </when>
+            <when test="search.types[0] == 'withdrawn'">
+                where member_status = '탈퇴'
+            </when>
+        </choose>
     </select>
+
 
     <!-- 기업 회원 목록 -->
     <!-- 기업 회원 목록 검색 로직 -->

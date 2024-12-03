@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     goToPage(1);
 });
 
-// 일반 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowMembers = async (page) => {
     const keyword = memberKeywordInput.value.trim();
     const sortType = selectedSort;
@@ -65,14 +64,16 @@ const fetchAndShowMembers = async (page) => {
         const response = await fetch(`/admin/position/members/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
-        // 멤버 및 페이지네이션 동기화
+        // 멤버 리스트 업데이트
         showMemberList(data);
-        data.pagination.currentPage = page; // 현재 페이지 설정
+
+        // 페이지네이션 업데이트
         showPagination(data.pagination);
     } catch (error) {
         console.error(`페이지 ${page} 로딩 중 오류 발생:`, error);
     }
 };
+
 
 
 // 페이지네이션을 렌더링하는 함수

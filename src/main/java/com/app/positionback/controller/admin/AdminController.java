@@ -33,7 +33,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/*")
@@ -58,19 +57,19 @@ public class AdminController {
     @GetMapping("/position/members/{page}")
     @ResponseBody
     public MemberListDTO getMembers(@PathVariable("page") Integer page, Pagination pagination, Search search) {
-        // 기본값 설정
-        search.setTypes(Optional.ofNullable(search.getTypes()).orElse(new String[]{"recent"}));
-        pagination.setPage(page);
-
-        // 검색 및 전체 데이터 개수 가져오기
-        int totalCount = search.getKeyword() != null || search.getTypes() != null
-                ? adminService.getTotalWithMemberSearch(search)
-                : adminService.getMemberTotal();
-
-        pagination.setTotal(totalCount);
+        // 정렬 순서가 없을 경우 기본값 설정
+        if (search.getTypes() == null || search.getTypes().length == 0) {  // types 배열이 비어있거나 null인 경우
+            search.setTypes(new String[]{"recent"});    // 기본값으로 "recent" 설정
+        }
+        // 검색 조건이 있을 경우 총 개수 설정
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithMemberSearch(search));
+        } else {
+            pagination.setTotal(adminService.getMemberTotal());
+        }
+        // 페이징 진행
         pagination.progress();
-
-        // 검색 및 페이징에 맞는 데이터 가져오기
+        // 검색 조건에 맞는 목록 반환
         return adminService.getMembers(page, pagination, search);
     }
 
