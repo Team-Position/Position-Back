@@ -36,12 +36,21 @@ memberKeywordInput.addEventListener("input", () => {
     fetchAndShowMembers(1);
 });
 
-// 페이지 이동 - fetchAndShowMembers 호출
 const goToPage = (page) => {
     const keyword = memberKeywordInput.value.trim();
     const sortType = selectedSort;
-    memberService.fetchMembers(page, keyword, sortType, showMemberList);
+
+    // 데이터 fetch 및 UI 업데이트
+    memberService.fetchMembers(page, keyword, sortType, (data) => {
+        // 멤버 목록 표시
+        showMemberList(data);
+
+        // 페이지네이션 동기화
+        data.pagination.currentPage = page; // 현재 페이지 동기화
+        showPagination(data.pagination);
+    });
 };
+
 
 document.addEventListener('DOMContentLoaded', () => {
     goToPage(1);
@@ -49,24 +58,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 일반 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowMembers = async (page) => {
-    const keyword = memberKeywordInput.value;
+    const keyword = memberKeywordInput.value.trim();
     const sortType = selectedSort;
 
     try {
-        // 데이터를 서버에서 가져오는 요청
         const response = await fetch(`/admin/position/members/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
 
-        // 페이지 데이터와 멤버 데이터를 표시하는 함수 호출
-        data.pagination.currentPage = page;
+        // 멤버 및 페이지네이션 동기화
         showMemberList(data);
+        data.pagination.currentPage = page; // 현재 페이지 설정
+        showPagination(data.pagination);
     } catch (error) {
         console.error(`페이지 ${page} 로딩 중 오류 발생:`, error);
     }
 };
 
+
+// 페이지네이션을 렌더링하는 함수
+const showPagination = (pagination) => {
+    let paginationContent = "";
+
+    // 맨 끝 페이지가 정확히 계산되었는지 확인
+    const totalPages = Math.ceil(pagination.total / pagination.rowCount);
+
+    // 처음 페이지 이동 버튼
+    paginationContent += `
+        <li class="${pagination.currentPage === 1 ? "disabled" : ""}">
+            <a href="#" onclick="goToPage(1)">«</a>
+        </li>
+    `;
+
+    // 이전 페이지 이동 버튼
+    paginationContent += `
+        <li class="${pagination.currentPage === 1 ? "disabled" : ""}">
+            <a href="#" onclick="goToPage(${pagination.currentPage - 1})">‹</a>
+        </li>
+    `;
+
+    // 번호 버튼 생성
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        paginationContent += `
+            <li class="${pagination.currentPage === i ? "active" : ""}">
+                <a href="#" onclick="goToPage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // 다음 페이지 이동 버튼
+    paginationContent += `
+        <li class="${pagination.currentPage === totalPages ? "disabled" : ""}">
+            <a href="#" onclick="goToPage(${pagination.currentPage + 1})">›</a>
+        </li>
+    `;
+
+    // 마지막 페이지 이동 버튼
+    paginationContent += `
+        <li class="${pagination.currentPage === totalPages ? "disabled" : ""}">
+            <a href="#" onclick="goToPage(${totalPages})">»</a>
+        </li>
+    `;
+
+    // 페이지네이션 UI 업데이트
+    MemberListPaging.innerHTML = paginationContent;
+};
+
+
 // 멤버 목록과 페이지네이션을 표시하는 함수
-const showMemberList = ( { members, pagination } ) => {
+const showMemberList = ({ members, pagination }) => {
     let text = `
         <div class="UserTable_row UserTable_header">
             <div class="UserTable_cell"><input type="checkbox" class="selectAllCheckbox"/></div>
@@ -97,63 +156,11 @@ const showMemberList = ( { members, pagination } ) => {
         `;
     });
 
+    // 멤버 목록 UI 업데이트
     MemberListLayout.innerHTML = text;
 
-    // 동적으로 totalPages 계산
-    const memberTotalPages = Math.ceil(pagination.total / pagination.rowCount);
-    pagination.totalPages = memberTotalPages;
-
-    // 페이지 버튼 생성
-    let pagingText = '';
-
-    // 처음 페이지로 이동하는 버튼
-    pagingText += `
-        <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-first-link" onclick="goToPage(1)" rel="nofollow">
-                <span class="pagination-first-icon" aria-hidden="true">«</span>
-            </a>
-        </li>
-    `;
-
-    // 이전 페이지로 이동하는 버튼
-    pagingText += `
-        <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
-            <a href="#" class="pagination-prev-link" onclick="goToPage(${pagination.currentPage - 1})" rel="prev nofollow">
-                <span class="pagination-prev-icon" aria-hidden="true">‹</span>
-            </a>
-        </li>
-    `;
-
-    // 페이지 번호 버튼
-    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
-        pagingText += `
-            <li class="${pagination.currentPage === i ? "active" : ""}">
-                <a href="#" onclick="goToPage(${i})">${i}</a>
-            </li>
-        `;
-    }
-
-    // 다음 페이지로 이동하는 버튼
-    pagingText += `
-        <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-next-link" onclick="goToPage(${pagination.currentPage + 1})" rel="next nofollow">
-                <span class="pagination-next-icon" aria-hidden="true">›</span>
-            </a>
-        </li>
-    `;
-
-    // 마지막 페이지로 이동하는 버튼
-    pagingText += `
-        <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
-            <a href="#" class="pagination-last-link" onclick="goToPage(${pagination.realEnd})" rel="nofollow">
-                <span class="pagination-last-icon" aria-hidden="true">»</span>
-            </a>
-        </li>
-    `;
-
-    // 페이지네이션을 동적으로 추가
-    MemberListPaging.innerHTML = pagingText;
-
+    // 페이지네이션 UI 업데이트 호출
+    showPagination(pagination);
 };
 
 
