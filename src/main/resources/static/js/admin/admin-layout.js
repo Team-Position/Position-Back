@@ -16,20 +16,25 @@ let selectedSort = "가입일 순"; // 기본 정렬 설정
 // window.location.search : 현재 페이지의 쿼리 스트링에 접근하여 현재 페이지 URL의 쿼리 스트링 부분을 가져온다.
 memberKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
 
-// 정렬 옵션 이벤트 설정
 sortOptions.forEach((option) => {
     option.addEventListener("click", () => {
-        // 선택한 옵션의 data-type 속성을 가져와서 selectedSort에 저장
-        selectedSort = option.getAttribute("data-type");
+        // 현재 클릭된 옵션의 data-type 값을 가져와 selectedSort에 저장
+        selectedSort = option.getAttribute("data-type") || "recent";
 
-        // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
+        // 기존 선택 해제: 모든 옵션에서 `selected` 클래스를 제거
         sortOptions.forEach((opt) => opt.classList.remove("selected"));
+
+        // 새로운 선택 항목에 `selected` 클래스 추가
         option.classList.add("selected");
 
-        // 검색어와 정렬 기준을 사용하여 멤버 목록 새로고침
+        console.log(`Selected Sort: ${selectedSort}`); // 디버깅용
+
+        // 정렬에 맞춰 멤버 목록 새로고침
         fetchAndShowMembers(1);
     });
 });
+
+
 
 // 검색어 입력 시 검색 실행
 memberKeywordInput.addEventListener("input", () => {
@@ -61,6 +66,7 @@ const fetchAndShowMembers = async (page) => {
     const keyword = memberKeywordInput.value.trim();
     const sortType = selectedSort;
 
+    console.log(`Fetching: /admin/position/members/${page}?keyword=${keyword}&types=${sortType}`); // 디버깅용
     try {
         const response = await fetch(`/admin/position/members/${page}?keyword=${keyword}&types=${sortType}`);
         const data = await response.json();
@@ -73,6 +79,7 @@ const fetchAndShowMembers = async (page) => {
         console.error(`페이지 ${page} 로딩 중 오류 발생:`, error);
     }
 };
+
 
 
 // 페이지네이션을 렌더링하는 함수

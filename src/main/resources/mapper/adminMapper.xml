@@ -7,15 +7,29 @@
     <sql id="MemberSearch">
         <where>
             <if test="search.keyword != null and search.keyword != ''">
-                and (
-                member_name like concat('%', #{search.keyword}, '%')
-                or member_email like concat('%', #{search.keyword}, '%')
-                or member_address like concat('%', #{search.keyword}, '%')
-                or member_phone like concat('%', #{search.keyword}, '%')
+                (
+                member_name LIKE CONCAT('%', #{search.keyword}, '%')
+                OR member_email LIKE CONCAT('%', #{search.keyword}, '%')
+                OR member_address LIKE CONCAT('%', #{search.keyword}, '%')
+                OR member_phone LIKE CONCAT('%', #{search.keyword}, '%')
                 )
+            </if>
+            <if test="search.types != null and search.types.length > 0">
+                <choose>
+                    <when test="search.types[0] == 'active'">
+                        AND member_status = '활동중'
+                    </when>
+                    <when test="search.types[0] == 'suspended'">
+                        AND member_status = '정지'
+                    </when>
+                    <when test="search.types[0] == 'withdrawn'">
+                        AND member_status = '탈퇴'
+                    </when>
+                </choose>
             </if>
         </where>
     </sql>
+
 
     <!-- 일반 회원 목록 조회 -->
     <select id="selectAllMembers" resultType="memberDTO">
@@ -33,18 +47,6 @@
                 <if test="search.types[0] == 'recent'">
                     ORDER BY created_date DESC
                 </if>
-                <if test="search.types[0] == 'active'">
-                    AND member_status = '활동중'
-                    ORDER BY created_date DESC
-                </if>
-                <if test="search.types[0] == 'suspended'">
-                    AND member_status = '정지'
-                    ORDER BY created_date DESC
-                </if>
-                <if test="search.types[0] == 'withdrawn'">
-                    AND member_status = '탈퇴'
-                    ORDER BY created_date DESC
-                </if>
             </when>
             <otherwise>
                 ORDER BY created_date DESC
@@ -52,6 +54,7 @@
         </choose>
         LIMIT #{pagination.startRow}, #{pagination.rowCount}
     </select>
+
 
 
     <!-- 일반 회원 전체 인원 확인 -->
