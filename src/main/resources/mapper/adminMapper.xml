@@ -42,10 +42,17 @@
         from tbl_member
         <include refid="MemberSearch"/>
         <choose>
-            <when test="search.types != null and search.types.length > 0">
-                <if test="search.types[0] == 'recent'">
-                    order by created_date desc
-                </if>
+            <when test="search.types != null and search.types[0] == 'recent'">
+                order by created_date desc
+            </when>
+            <when test="search.types[0] == 'active'">
+                order by member_status = '활동중' desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'suspended'">
+                order by member_status = '정지' desc, created_date desc
+            </when>
+            <when test="search.types[0] == 'withdrawn'">
+                order by member_status = '탈퇴' desc, created_date desc
             </when>
             <otherwise>
                 order by created_date desc

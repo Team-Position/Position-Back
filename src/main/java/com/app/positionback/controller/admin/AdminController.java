@@ -49,20 +49,14 @@ public class AdminController {
     public MemberListDTO getMembers(@PathVariable("page") Integer page, Pagination pagination, Search search) {
         // 기본값 설정
         if (search.getTypes() == null || search.getTypes().length == 0) {
-            search.setTypes(new String[]{"recent"});
+            search.setTypes(new String[]{"recent"}); // 기본값: 가입일 순
         }
         if (search.getKeyword() == null) {
             search.setKeyword("");
         }
 
-        // 검색 조건이 있을 경우 총 개수 설정
-        if (!search.getKeyword().isEmpty() || search.getTypes() != null) {
-            pagination.setTotal(adminService.getTotalWithMemberSearch(search));
-        } else {
-            pagination.setTotal(adminService.getMemberTotal());
-        }
-
-        // 페이징 진행
+        // 총 개수 설정
+        pagination.setTotal(adminService.getTotalWithMemberSearch(search));
         pagination.progress();
 
         // 검색 조건에 맞는 목록 반환

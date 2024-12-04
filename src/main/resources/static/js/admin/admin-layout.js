@@ -22,7 +22,7 @@ sortOptions.forEach((option) => {
         selectedSort = option.getAttribute("data-type") || "recent";
 
         // 기존 선택 해제: 모든 옵션에서 `selected` 클래스를 제거
-        sortOptions.forEach((opt) => opt.classList.remove("selected"));
+        sortOptions.forEach((option) => option.classList.remove("selected"));
 
         // 새로운 선택 항목에 `selected` 클래스 추가
         option.classList.add("selected");
@@ -55,13 +55,14 @@ const goToPage = (page) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // selectedSort = 'recent' // "가입일 순" 초기화
     goToPage(1);
 });
 
 // 일반 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowMembers = async (page) => {
     const keyword = memberKeywordInput.value.trim();
-    const sortType = selectedSort === "가입일 순" ? "recent" : selectedSort;
+    const sortType = selectedSort; // 선택된 정렬 값
 
     console.log(`Fetching: /admin/position/members/${page}?keyword=${keyword}&types=${sortType}`); // 디버깅용
     try {
@@ -321,7 +322,7 @@ ApplyStatusSortOptions.forEach((option) => {
         applySelectedSort = option.getAttribute("data-type");
 
         // 기전 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
-        ApplyStatusSortOptions.forEach((opt) => opt.classList.remove("selected"));
+        ApplyStatusSortOptions.forEach((option) => option.classList.remove("selected"));
         option.classList.add("selected");
 
         // 검색어와 정렬 기준을 사용하여 지원 목록 새로고침
@@ -466,7 +467,7 @@ InterviewSortOptions.forEach((option) => {
         interviewSelectedSort = option.getAttribute("data-type");
 
         // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
-        InterviewSortOptions.forEach((opt) => opt.classList.remove("selected"));
+        InterviewSortOptions.forEach((option) => option.classList.remove("selected"));
         option.classList.add("selected");
 
         // 검색어와 정렬 기준을 사용하여 면접 현황 목록 새로고침
