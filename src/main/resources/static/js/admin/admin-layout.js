@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // 일반 회원 목록을 서버에서 가져오고 화면에 표시
 const fetchAndShowMembers = async (page) => {
     const keyword = memberKeywordInput.value.trim();
-    const sortType = selectedSort;
+    const sortType = selectedSort === "가입일 순" ? "recent" : selectedSort;
 
     console.log(`Fetching: /admin/position/members/${page}?keyword=${keyword}&types=${sortType}`); // 디버깅용
     try {
