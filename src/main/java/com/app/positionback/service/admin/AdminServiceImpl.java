@@ -70,11 +70,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public CorporationListDTO getCorporationMembers(int page, Pagination pagination, Search search) {
         CorporationListDTO corporationListDTO = new CorporationListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getCorporationTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         corporationListDTO.setPagination(pagination);
         corporationListDTO.setCorporations(adminDAO.corporationInformation(pagination, search));
+
         return corporationListDTO;
     }
 
@@ -96,11 +100,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ApplyListDTO getApplys(int page, Pagination pagination, Search search) {
         ApplyListDTO applyListDTO = new ApplyListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getApplyTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         applyListDTO.setPagination(pagination);
         applyListDTO.setApplies(adminDAO.applyInformation(pagination, search));
+
         return applyListDTO;
     }
 
@@ -120,11 +128,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public InterviewListDTO getInterviews(int page, Pagination pagination, Search search) {
         InterviewListDTO interviewListDTO = new InterviewListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getInterviewTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         interviewListDTO.setPagination(pagination);
         interviewListDTO.setInterviews(adminDAO.interviewInformation(pagination, search));
+
         return interviewListDTO;
     }
 

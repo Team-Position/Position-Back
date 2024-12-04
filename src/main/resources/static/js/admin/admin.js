@@ -460,5 +460,82 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// 일반회원 상태 변경 모달창 자바스크립트
+document.addEventListener('DOMContentLoaded', () => {
+    const tableContainer = document.querySelector('.UserTable_container'); // 수정 버튼이 포함된 부모 컨테이너
+    const modal = document.getElementById('memberStatusModal'); // 모달 창
+    const overlay = document.createElement('div'); // 배경 흐림 효과
+    overlay.className = 'modal-overlay';
+    document.body.appendChild(overlay);
+
+    let currentStatusCell = null; // 현재 상태 셀 참조 변수
+
+    // 부모 컨테이너에 이벤트 위임
+    tableContainer.addEventListener('click', (event) => {
+        // 클릭된 요소가 수정 버튼인지 확인
+        if (event.target.classList.contains('editBtn')) {
+            const currentRow = event.target.closest('.UserTable_row'); // 클릭된 버튼의 행
+            currentStatusCell = currentRow.querySelector('.UserTable_cell:nth-child(7)'); // 상태 셀
+
+            console.log('수정 버튼 클릭!'); // 디버깅 메시지
+            console.log('현재 상태:', currentStatusCell.textContent); // 상태 확인
+
+            // 모달 열기
+            modal.style.display = 'block';
+
+            // 배경 열기
+            overlay.style.display = 'block';
+        }
+    });
+
+    // 상태 변경 버튼 클릭 이벤트
+    modal.addEventListener('click', (event) => {
+        if (event.target.classList.contains('memberStatusChangeBtn')) {
+            const newStatus = event.target.getAttribute('data-status'); // 선택한 상태
+
+            if (currentStatusCell) {
+                currentStatusCell.textContent = newStatus; // 상태 셀 업데이트
+
+                // 서버로 상태 변경 요청 (선택 사항)
+                updateStatusOnServer(currentStatusCell.closest('.UserTable_row').dataset.userId, newStatus);
+            }
+
+            // 모달 닫기
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+    });
+
+    // 모달 닫기 버튼
+    modal.querySelector('.memberCloseModal').addEventListener('click', () => {
+        modal.style.display = 'none'; // 모달 닫기
+        overlay.style.display = 'none'; // 배경 닫기
+    });
+
+    // 모달 외부 클릭 시 닫기
+    overlay.addEventListener('click', () => {
+        modal.style.display = 'none';
+        overlay.style.display = 'none';
+    });
+
+    // 서버 요청 함수 (선택 사항)
+    function updateStatusOnServer(userId, status) {
+        fetch(`/updateStatus`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, status }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('상태 변경 실패');
+                }
+                console.log('상태가 성공적으로 업데이트되었습니다.');
+            })
+            .catch((error) => {
+                console.error('상태 변경 오류:', error);
+            });
+    }
+});
+
 
 

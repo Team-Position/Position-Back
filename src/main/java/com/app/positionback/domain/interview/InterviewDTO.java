@@ -13,7 +13,8 @@ public class InterviewDTO {
     private Long id;
     private Long corporationId;
     private Long resumeId;
-    private String interviewDate;
+//    private String interviewDate;
+    private String interviewApplyPassDate;
     private String interviewStatus = "면접 예정";
 
     // 관리자 페이지 - 면접 현황 관리
@@ -25,6 +26,6 @@ public class InterviewDTO {
     private String noticeJobCategoryName;
 
     public InterviewVO toVO() {
-        return new InterviewVO(id, corporationId, resumeId, interviewDate, interviewStatus);
+        return new InterviewVO(id, corporationId, resumeId, interviewApplyPassDate, interviewStatus);
     }
 }

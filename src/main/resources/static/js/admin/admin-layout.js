@@ -34,8 +34,6 @@ sortOptions.forEach((option) => {
     });
 });
 
-
-
 // 검색어 입력 시 검색 실행
 memberKeywordInput.addEventListener("input", () => {
     fetchAndShowMembers(1);
@@ -55,7 +53,6 @@ const goToPage = (page) => {
         showPagination(data.pagination);
     });
 };
-
 
 document.addEventListener('DOMContentLoaded', () => {
     goToPage(1);
@@ -79,8 +76,6 @@ const fetchAndShowMembers = async (page) => {
         console.error(`페이지 ${page} 로딩 중 오류 발생:`, error);
     }
 };
-
-
 
 // 페이지네이션을 렌더링하는 함수
 const showPagination = (pagination) => {
@@ -535,7 +530,7 @@ const showInterviewList = ({interviews, pagination}) => {
             <div class="InterviewTable_row">
                 <div class="InterviewTable_cell"><input type="checkbox" id="selectAll"></div>
                 <div class="InterviewTable_cell">${interview.corporationName}</div>
-                <div class="InterviewTable_cell">${interview.interviewDate}</div>
+                <div class="InterviewTable_cell">${interview.interviewApplyPassDate}</div>
                 <div class="InterviewTable_cell">${interview.noticeTitle}</div>
                 <div class="InterviewTable_cell">${interview.memberName}</div>
                 <div class="InterviewTable_cell">${interview.memberPhone}</div>
