@@ -4,10 +4,12 @@ import com.app.positionback.domain.apply.ApplyListDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
 import com.app.positionback.domain.corporation.CorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationDTO;
+import com.app.positionback.domain.evaluation.EvaluationCorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationPositionerDTO;
 import com.app.positionback.domain.inquiry.InquiryListDTO;
 import com.app.positionback.domain.interview.InterviewListDTO;
 import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
+import com.app.positionback.domain.interviewreview.InterviewReviewListDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeListDTO;
 import com.app.positionback.domain.payment.PaymentListDTO;
@@ -180,10 +182,7 @@ public class AdminController {
     @GetMapping("/position/reply/{page}")
     @ResponseBody
     public ReplyListDTO getReplys(@PathVariable("page") Integer page, Pagination pagination, Search search) {
-        if (search.getTypes() == null || search.getTypes().length == 0) {
-            search.setTypes(new String[]{"recent"});
-        }
-        if (search.getKeyword() != null || search.getTypes() != null) {
+        if (search.getKeyword() != null) {
             pagination.setTotal(adminService.getTotalWithReplySearch(search));
         } else {
             pagination.setTotal(adminService.getReplyTotal());
@@ -194,22 +193,35 @@ public class AdminController {
 
     // 후기 관리
     // 면접 후기
-    @GetMapping("/position/interview-review")
+    @GetMapping("/position/interview-review/{page}")
     @ResponseBody
-    public List<InterviewReviewDTO> getInterviewReviews(){
-        return adminService.getInterviewReviews();
+    public InterviewReviewListDTO getInterviewReviews(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithInterviewReviewSearch(search));
+        } else {
+            pagination.setTotal(adminService.getInterviewReviewTotal());
+        }
+        pagination.progress();
+        return adminService.getInterviewReviews(page, pagination, search);
     }
-    // 인턴십 후기(기업)
-    @GetMapping("/position/evaluation-corporation")
+
+    // 포지션(인턴십) 후기(기업)
+    @GetMapping("/position/evaluation-corporation/{page}")
     @ResponseBody
-    public List<EvaluationCorporationDTO> getEvaluationCorporations(){
-        return adminService.getEvaluationCorporations();
-    }
-    // 인턴십 후기(인턴)
-    @GetMapping("/position/evaluation-positioner")
-    @ResponseBody
-    public List<EvaluationPositionerDTO> getEvaluationPositioners(){
-        return adminService.getEvaluationPositioners();
+    public EvaluationCorporationListDTO getEvaluationCorporations(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithEvaluationCorporationSearch(search));
+        } else {
+            pagination.setTotal(adminService.getEvaluationCorporationTotal());
+        }
+        pagination.progress();
+        return adminService.getEvaluationCorporations(page, pagination, search);
     }
 
     // 문의 관리
@@ -247,7 +259,7 @@ public class AdminController {
 
     // 신고 관리
     // 기업 후기 신고
-    @GetMapping("/position/complain")
+    @GetMapping("/position/complain/{page}")
     @ResponseBody
     public List<ComplainDTO> getComplains() {
         return adminService.getComplains();

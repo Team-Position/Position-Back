@@ -1367,7 +1367,7 @@ video {
 /* 두번째 열 */
 .notice-headerCell:nth-child(3),
 .noticeTable_cell:nth-child(3) {
-    width: 10%;
+    width: 13%;
 }
 
 /* 세번째 열 */
@@ -1397,7 +1397,7 @@ video {
 /* 여섯번째 열 */
 .notice-headerCell:nth-child(7),
 .noticeTable_cell:nth-child(7) {
-    width: 8%;
+    width: 13%;
 }
 
 /* 일곱 열 */
@@ -1426,8 +1426,8 @@ video {
     opacity: 0.8;
 }
 /* section style 끝 */
-/* Post */
-/* 여기서부터 Post-section */
+/* post */
+/* 여기서부터 post-section */
 /* ******************************************* */
 .common-section {
     padding: 40px 66px;
@@ -1435,11 +1435,11 @@ video {
     flex-direction: column;
 }
 
-/* Post Table Styles */
+/* post Table Styles */
 .CommonLayout_container {
     width: 1400px;
 }
-.PostTable_container {
+.postTable_container {
     width: 100%;
     border: 1px solid #dee2e6;
     border-radius: 8px;
@@ -1449,20 +1449,20 @@ video {
     text-align: center;
 }
 
-.PostTable_row {
+.postTable_row {
     display: table-row;
     width: 100%;
     border: 1px solid #dee2e6;
 }
 
-.PostTable_cell {
+.postTable_cell {
     display: table-cell;
     box-sizing: border-box; /* padding과 border를 포함한 크기 조정 */
     padding: 8px; /* 셀 내용과 셀 경계 사이의 간격 */
     vertical-align: middle; /* 내용이 수직으로 가운데 정렬되도록 */
     border-bottom: 1px solid #dee2e6; /* 셀 아래 테두리 */
 }
-.PostTable_header {
+.postTable_header {
     background-color: #f8f9fa;
     border-bottom: 1px solid #dee2e6;
     border-radius: 8px 8px 0 0 !important; /*헤더 아래 테두리*/
@@ -1470,41 +1470,41 @@ video {
     font-weight: 600;
 }
 
-.PostTable_cell input[type="checkbox"] {
+.postTable_cell input[type="checkbox"] {
     margin: 0 auto;
 }
 
 /* 기존의 너비 설정 유지 */
 /* 체크박스 열 */
-.Post-headerCell:nth-child(1),
-.PostTable_cell:nth-child(1) {
+.post-headerCell:nth-child(1),
+.postTable_cell:nth-child(1) {
     width: 3%;
 }
 
 /* 첫번째 열 */
-.Post-headerCell:nth-child(2),
-.PostTable_cell:nth-child(2) {
-    width: 12%;
+.post-headerCell:nth-child(2),
+.postTable_cell:nth-child(2) {
+    width: 6%;
 }
 
 /* 두번째 열 */
-.Post-headerCell:nth-child(3),
-.PostTable_cell:nth-child(3) {
+.post-headerCell:nth-child(3),
+.postTable_cell:nth-child(3) {
     width: 12%;
 }
 
 /* 세번째 열 */
-.Post-headerCell:nth-child(4),
-.PostTable_cell:nth-child(4) {
-    width: 17%;
+.post-headerCell:nth-child(4),
+.postTable_cell:nth-child(4) {
+    width: 16%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 /* 네번째 열 */
-.Post-headerCell:nth-child(5),
-.PostTable_cell:nth-child(5) {
+.post-headerCell:nth-child(5),
+.postTable_cell:nth-child(5) {
     width: 24%;
     white-space: nowrap;
     overflow: hidden;
@@ -1512,8 +1512,8 @@ video {
 }
 
 /* 다섯번째 열 */
-.Post-headerCell:nth-child(6),
-.PostTable_cell:nth-child(6) {
+.post-headerCell:nth-child(6),
+.postTable_cell:nth-child(6) {
     width: 8%;
     white-space: nowrap;
     overflow: hidden;
@@ -1521,19 +1521,19 @@ video {
 }
 
 /* 여섯번째 열 */
-.Post-headerCell:nth-child(7),
-.PostTable_cell:nth-child(7) {
+.post-headerCell:nth-child(7),
+.postTable_cell:nth-child(7) {
     width: 9%;
 }
 
 /* 일곱 열 */
-.Post-headerCell:nth-child(8),
-.PostTable_cell:nth-child(8) {
+.post-headerCell:nth-child(8),
+.postTable_cell:nth-child(8) {
     width: 8%;
 }
 /* 마지막 열 */
-/* .Post-headerCell:nth-child(9),
-.PostTable_cell:nth-child(9) {
+/* .post-headerCell:nth-child(9),
+.postTable_cell:nth-child(9) {
     width: 8%;
 } */
 
@@ -1551,6 +1551,103 @@ video {
 .editBtn:hover {
     opacity: 0.8;
 }
+
+/* reply */
+/* 여기서부터 reply-section */
+
+.replyTable_container {
+    width: 100%;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+    display: table; /* 테이블처럼 보이도록 설정 */
+    table-layout: fixed; /* 모든 열이 지정된 비율에 맞게 크기를 고정 */
+    text-align: center;
+}
+
+.replyTable_row {
+    display: table-row;
+    width: 100%;
+    border: 1px solid #dee2e6;
+}
+
+.replyTable_cell {
+    display: table-cell;
+    box-sizing: border-box; /* padding과 border를 포함한 크기 조정 */
+    padding: 8px; /* 셀 내용과 셀 경계 사이의 간격 */
+    vertical-align: middle; /* 내용이 수직으로 가운데 정렬되도록 */
+    border-bottom: 1px solid #dee2e6; /* 셀 아래 테두리 */
+}
+.replyTable_header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 8px 8px 0 0 !important; /*헤더 아래 테두리*/
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.replyTable_cell input[type="checkbox"] {
+    margin: 0 auto;
+}
+
+/* 기존의 너비 설정 유지 */
+/* 체크박스 열 */
+.reply-headerCell:nth-child(1),
+.replyTable_cell:nth-child(1) {
+    width: 3%;
+}
+
+/* 첫번째 열 */
+.reply-headerCell:nth-child(2),
+.replyTable_cell:nth-child(2) {
+    width: 6%;
+}
+
+/* 두번째 열 */
+.reply-headerCell:nth-child(3),
+.replyTable_cell:nth-child(3) {
+    width: 10%;
+}
+
+/* 세번째 열 */
+.reply-headerCell:nth-child(4),
+.replyTable_cell:nth-child(4) {
+    width: 14%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 네번째 열 */
+.reply-headerCell:nth-child(5),
+.replyTable_cell:nth-child(5) {
+    width: 24%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 다섯번째 열 */
+.reply-headerCell:nth-child(6),
+.replyTable_cell:nth-child(6) {
+    width: 8%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 여섯번째 열 */
+.reply-headerCell:nth-child(7),
+.replyTable_cell:nth-child(7) {
+    width: 9%;
+}
+
+/* 일곱 열 */
+.reply-headerCell:nth-child(8),
+.replyTable_cell:nth-child(8) {
+    width: 8%;
+}
+
 /* section style 끝 */
 /* payment */
 /* 여기서부터 payment-section */
@@ -1610,19 +1707,19 @@ video {
 /* 첫번째 열 */
 .payment-headerCell:nth-child(2),
 .paymentTable_cell:nth-child(2) {
-    width: 12%;
+    width: 6%;
 }
 
 /* 두번째 열 */
 .payment-headerCell:nth-child(3),
 .paymentTable_cell:nth-child(3) {
-    width: 12%;
+    width: 13%;
 }
 
 /* 세번째 열 */
 .payment-headerCell:nth-child(4),
 .paymentTable_cell:nth-child(4) {
-    width: 17%;
+    width: 12%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1631,7 +1728,7 @@ video {
 /* 네번째 열 */
 .payment-headerCell:nth-child(5),
 .paymentTable_cell:nth-child(5) {
-    width: 10%;
+    width: 7%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1649,7 +1746,7 @@ video {
 /* 여섯번째 열 */
 .payment-headerCell:nth-child(7),
 .paymentTable_cell:nth-child(7) {
-    width: 18%;
+    width: 8%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1658,7 +1755,7 @@ video {
 /* 일곱 열 */
 .payment-headerCell:nth-child(8),
 .paymentTable_cell:nth-child(8) {
-    width: 8%;
+    width: 6%;
 }
 /* 마지막 열 */
 .payment-headerCell:nth-child(9),
@@ -1690,7 +1787,7 @@ video {
     flex-direction: column;
 }
 
-/* Post Table Styles */
+/* inquiry Table Styles */
 .CommonLayout_container {
     width: 1400px;
 }

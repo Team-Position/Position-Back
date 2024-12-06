@@ -39,6 +39,9 @@ public class NoticeDTO {
     private String corporationGen; // 추가된 필드들
     private FileDTO fileDTO;
 
+    // 관리자 페이지 - 공고 작성 관리에 필요한 필드 추가
+    private String noticeStatus;
+
     public NoticeVO toVO(){
         return new NoticeVO(id,corporationId,noticeTitle,noticeCareer,noticeEducation,noticeEndDate,createdDate,updatedDate,noticeWorkStartTime,noticeWorkEndTime,noticeWorkStartDate,noticeWorkEndDate,noticeJobCategoryName,noticeReadCount);
     }

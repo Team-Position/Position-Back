@@ -100,7 +100,7 @@ const applyService = (() => {
             const response = await fetch(`/admin/position/position/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
-            if (!response.ok) throw new Error('인턴십 현황 fetch 실패');
+            if (!response.ok) throw new Error('포지션 현황 fetch 실패');
 
             // 응답 데이터를 JSON으로 변환
             const data = await response.json();
@@ -165,7 +165,7 @@ const noticeService = (() => {
             const response = await fetch(`/admin/position/notice/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
-            if (!response.ok) throw new erro(`공고 작성 정보 fetch 실패`);
+            if (!response.ok) throw new error(`공고 작성 정보 fetch 실패`);
 
             // 응답 데이터를 JSON으로 받음
             const data = await response.json();
@@ -192,7 +192,7 @@ const postService = (() => {
     const fetchPost = async (page, keyword = "", sortType = "", callback) => {
         try {
             page = page || 1;
-            // /admin/position/payment 경로로 요청
+            // /admin/position/post 경로로 요청
             const response = await fetch(`/admin/position/post/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
@@ -217,7 +217,6 @@ const postService = (() => {
 })();
 
 // 댓글 작성 관리
-
 const replyService = (() => {
     // 댓글 데이터를 서버에서 가져오는 비동기 함수
     const fetchReply = async (page, keyword = "", sortType = "", callback) => {

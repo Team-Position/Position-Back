@@ -5,19 +5,17 @@ import com.app.positionback.domain.apply.ApplyListDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
 import com.app.positionback.domain.corporation.CorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationDTO;
+import com.app.positionback.domain.evaluation.EvaluationCorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationPositionerDTO;
 import com.app.positionback.domain.inquiry.InquiryListDTO;
 import com.app.positionback.domain.interview.InterviewListDTO;
 import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
+import com.app.positionback.domain.interviewreview.InterviewReviewListDTO;
 import com.app.positionback.domain.member.MemberListDTO;
-import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.notice.NoticeListDTO;
-import com.app.positionback.domain.payment.PaymentDTO;
 import com.app.positionback.domain.payment.PaymentListDTO;
 import com.app.positionback.domain.position.PositionListDTO;
-import com.app.positionback.domain.post.PostDTO;
 import com.app.positionback.domain.post.PostListDTO;
-import com.app.positionback.domain.reply.ReplyDTO;
 import com.app.positionback.domain.reply.ReplyListDTO;
 import com.app.positionback.repository.admin.AdminDAO;
 import com.app.positionback.utill.Pagination;
@@ -156,11 +154,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public PositionListDTO getPositions(int page, Pagination pagination, Search search) {
         PositionListDTO positionListDTO = new PositionListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getPositionTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         positionListDTO.setPagination(pagination);
         positionListDTO.setPositions(adminDAO.positionInformation(pagination, search));
+
         return positionListDTO;
     }
 
@@ -181,11 +183,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public PaymentListDTO getPayments(int page, Pagination pagination, Search search) {
         PaymentListDTO paymentListDTO = new PaymentListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getPaymentTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         paymentListDTO.setPagination(pagination);
         paymentListDTO.setPayments(adminDAO.paymentInformation(pagination, search));
+
         return paymentListDTO;
     }
 
@@ -206,11 +212,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public NoticeListDTO getNotices(int page, Pagination pagination, Search search) {
         NoticeListDTO noticeListDTO = new NoticeListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getNoticeTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         noticeListDTO.setPagination(pagination);
         noticeListDTO.setNotices(adminDAO.noticeInformation(pagination, search));
+
         return noticeListDTO;
     }
 
@@ -230,11 +240,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public PostListDTO getPosts(int page, Pagination pagination, Search search) {
         PostListDTO postListDTO = new PostListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getPostTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         postListDTO.setPagination(pagination);
         postListDTO.setPosts(adminDAO.postInformation(pagination, search));
+
         return postListDTO;
     }
 
@@ -254,11 +268,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ReplyListDTO getReplys(int page, Pagination pagination, Search search) {
         ReplyListDTO replyListDTO = new ReplyListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getReplyTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         replyListDTO.setPagination(pagination);
         replyListDTO.setReplies(adminDAO.replyInformation(pagination, search));
+
         return replyListDTO;
     }
 
@@ -276,16 +294,59 @@ public class AdminServiceImpl implements AdminService {
 
     // 후기 관리
     // 면접 후기
-    public List<InterviewReviewDTO> getInterviewReviews() {
-        return adminDAO.InterviewReviewInformation();
+    @Override
+    public InterviewReviewListDTO getInterviewReviews(int page, Pagination pagination, Search search) {
+        InterviewReviewListDTO interviewReviewListDTO = new InterviewReviewListDTO();
+
+        // Pagination 설정
+        pagination.setPage(page);
+        pagination.progress();
+
+        // 데이터 가져오기
+        interviewReviewListDTO.setPagination(pagination);
+        interviewReviewListDTO.setInterviewReviews(adminDAO.InterviewReviewInformation(pagination, search));
+
+        return interviewReviewListDTO;
     }
-    // 인턴십 후기(기업)
-    public List<EvaluationCorporationDTO> getEvaluationCorporations() {
-        return adminDAO.EvaluationCorporationInformation();
+
+    // 면접 후기 작성 갯수 전체 조회
+    @Override
+    public int getInterviewReviewTotal() {
+        return adminDAO.getInterviewReviewTotal();
     }
-    // 인턴십 후기(인턴)
-    public List<EvaluationPositionerDTO> getEvaluationPositioners() {
-        return adminDAO.EvaluationPositionerInformation();
+
+    // 면접 후기 작성 검색 결과 전체 조회
+    @Override
+    public int getTotalWithInterviewReviewSearch(Search search) {
+        return adminDAO.getTotalWithInterviewReviewSearch(search);
+    }
+
+    // 포지션(인턴십) 후기(기업)
+    @Override
+    public EvaluationCorporationListDTO getEvaluationCorporations(int page, Pagination pagination, Search search) {
+        EvaluationCorporationListDTO evaluationCorporationListDTO = new EvaluationCorporationListDTO();
+
+        // Pagination 설정
+        pagination.setPage(page);
+        pagination.progress();
+
+        // 데이터 가져오기
+        evaluationCorporationListDTO.setPagination(pagination);
+        evaluationCorporationListDTO.setEvaluationCorporations(adminDAO.EvaluationCorporationInformation(pagination, search));
+
+        return evaluationCorporationListDTO;
+    }
+
+    // 포지션(인턴십) 후기(기업) 작성 갯수 전체 조회
+    @Override
+    public int getEvaluationCorporationTotal() {
+        return adminDAO.getEvaluationCorporationTotal();
+    }
+
+    // 포지션(인턴십) 후기(기업) 작성 검색 결과 전체 조회
+    @Override
+    public int getTotalWithEvaluationCorporationSearch(Search search) {
+        return adminDAO.getTotalWithEvaluationCorporationSearch(search);
     }
 
     // 문의 관리

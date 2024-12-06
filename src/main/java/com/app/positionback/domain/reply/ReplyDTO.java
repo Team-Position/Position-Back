@@ -18,6 +18,10 @@ public class ReplyDTO {
     private String createdDate;
     private String updatedDate;
 
+    // 관리자 페이지 댓글 작성 관리 부분 추가
+    private String memberName;
+    private String postTitle;
+
     public ReplyVO toVO() {
         return new ReplyVO(id, memberId,memberNickname, postId, replyContent, createdDate, updatedDate);
     }

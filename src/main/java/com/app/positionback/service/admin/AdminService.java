@@ -5,11 +5,13 @@ import com.app.positionback.domain.apply.ApplyListDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
 import com.app.positionback.domain.corporation.CorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationDTO;
+import com.app.positionback.domain.evaluation.EvaluationCorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationPositionerDTO;
 import com.app.positionback.domain.inquiry.InquiryListDTO;
 import com.app.positionback.domain.interview.InterviewDTO;
 import com.app.positionback.domain.interview.InterviewListDTO;
 import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
+import com.app.positionback.domain.interviewreview.InterviewReviewListDTO;
 import com.app.positionback.domain.member.MemberListDTO;
 import com.app.positionback.domain.notice.NoticeDTO;
 import com.app.positionback.domain.notice.NoticeListDTO;
@@ -71,9 +73,15 @@ public interface AdminService {
     public int getTotalWithReplySearch(Search search);
 
     // 후기 작성 관리
-    List<InterviewReviewDTO> getInterviewReviews();
-    List<EvaluationCorporationDTO> getEvaluationCorporations();
-    List<EvaluationPositionerDTO> getEvaluationPositioners();
+    // 면접 후기 작성 관리
+    public InterviewReviewListDTO getInterviewReviews(int page, Pagination pagination, Search search);
+    public int getInterviewReviewTotal();
+    public int getTotalWithInterviewReviewSearch(Search search);
+    // 포지션(인턴십) 후기 작성 관리
+    public EvaluationCorporationListDTO getEvaluationCorporations(int page, Pagination pagination, Search search);
+    public int getEvaluationCorporationTotal();
+    public int getTotalWithEvaluationCorporationSearch(Search search);
+
     // 문의 관리
     // 일반 회원 문의 목록
     public InquiryListDTO getMemberInquiry(int page, Pagination pagination, Search search);

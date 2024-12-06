@@ -62,7 +62,7 @@ infoButton.addEventListener("click", () => {
                             <img src="https://static.wadiz.kr/studio/funding/static/media/default-zingugi.de76a099.svg" />
                         </span>
                     </span>
-                    <span class="ProjectInfo_makerName">하민지</span>
+                    <span class="ProjectInfo_makerName">김성수</span>
                 </dd>
                 <dt class="BlindText_textHidden">상태</dt>
                 <dd class="ProjectInfo_content ProjectInfo_stateBox">
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 활동중, 탈퇴함 글자 색
     document.querySelectorAll(".UserTable_row").forEach((row) => {
-        const statusCell = row.querySelector(".UserTable_cell:nth-child(8)");
+        const statusCell = row.querySelector(".UserTable_cell:nth-child(7)");
         if (statusCell) {
             const statusText = statusCell.textContent.trim();
 
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 case "활동중":
                     statusCell.style.color = "var(--blue90)";
                     break;
-                case "탈퇴함":
+                case "탈퇴":
                     statusCell.style.color = "var(--gray50)";
                     break;
                 default:

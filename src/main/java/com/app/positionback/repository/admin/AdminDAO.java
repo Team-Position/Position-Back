@@ -169,17 +169,35 @@ public class AdminDAO {
 
     // 후기 관리
     // 면접 후기
-    public List<InterviewReviewDTO> InterviewReviewInformation() {
-        return adminMapper.selectAllInterviewReview();
+    public List<InterviewReviewDTO> InterviewReviewInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllInterviewReview(pagination, search);
     }
-    // 인턴십 후기(기업)
-    public List<EvaluationCorporationDTO> EvaluationCorporationInformation() {
-        return adminMapper.selectAllEvaluationCorporation();
+
+    // 면접 후기 작성 현황 전체 갯수 조회
+    public int getInterviewReviewTotal() {
+        return adminMapper.selectInterviewReviewTotal();
     }
-    // 인턴십 후기(인턴)
-    public List<EvaluationPositionerDTO> EvaluationPositionerInformation() {
-        return adminMapper.selectAllEvaluationPositioner();
+
+    // 면접 후기 작성 검색 결과 전체 조회
+    public int getTotalWithInterviewReviewSearch(Search search) {
+        return adminMapper.selectTotalWithInterviewReviewSearch(search);
     }
+
+    // 포지션(인턴십) 후기(기업)
+    public List<EvaluationCorporationDTO> EvaluationCorporationInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllEvaluationCorporation(pagination, search);
+    }
+
+    // 포지션(인턴십) 후기(기업) 작성 현황 전체 갯수 조회
+    public int getEvaluationCorporationTotal() {
+        return adminMapper.selectEvaluationCorporationTotal();
+    }
+
+    // 포지션(인턴십) 후기(기업) 작성 검색 결과 전체 조회
+    public int getTotalWithEvaluationCorporationSearch(Search search) {
+        return adminMapper.selectTotalWithEvaluationCorporationSearch(search);
+    }
+
 
     // 문의 관리
     // 일반 회원 문의 조회

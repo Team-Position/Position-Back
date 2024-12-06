@@ -8,4 +8,5 @@ create table tbl_evaluation (
 
 select * from tbl_evaluation;
 
-
+# 긍정적 보통 부정적
+# 쉬움 보통 어려움

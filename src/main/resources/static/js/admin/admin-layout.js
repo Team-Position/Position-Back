@@ -312,9 +312,6 @@ const InterviewSortOptions = document.querySelectorAll(".sort-filter-option.inte
 const PositionStatusSortOptions = document.querySelectorAll(".sort-filter-option.positionSort");
 let applySelectedSort = "신청일순" // 기본 정렬 설정
 
-// 검색어 초기화
-ApplyKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
-
 // 정렬 옵션 이벤트 설정
 ApplyStatusSortOptions.forEach((option) => {
     option.addEventListener("click", () => {
@@ -329,6 +326,9 @@ ApplyStatusSortOptions.forEach((option) => {
         fetchAndShowApply(1);
     });
 });
+
+// 검색어 초기화
+ApplyKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
 
 // 검색어 입력 시 검색 실행
 ApplyKeywordInput.addEventListener("input", () => {
@@ -771,7 +771,7 @@ PaymentSortOptions.forEach((option) => {
         paymentSelectedSort = option.getAttribute("data-type");
 
         // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
-        PaymentSortOptions.forEach((opt) => opt.classList.remove("selected"));
+        PaymentSortOptions.forEach((option) => option.classList.remove("selected"));
         option.classList.add("selected");
 
         // 검색어와 정렬 기준을 사용하여 결제 목록 새로고침
@@ -832,17 +832,19 @@ const showPaymentList = ( { payments, pagination }) => {
 
     payments.forEach((payment) => {
         text += `
-            <div class="paymentTable_cell"><input type="checkbox" id="selectAll"></div>
-            <div class="paymentTable_cell">${payment.memberName || ''}</div>
-            <div class="paymentTable_cell">${payment.createdDate || ''}</div>
-            <div class="paymentTable_cell">${payment.noticeTitle || ''}</div>
-            <div class="paymentTable_cell">${payment.paymentAmount || ''}</div>
-            <div class="paymentTable_cell">${payment.memberPhone}</div>
-            <div class="paymentTable_cell">${payment.paymentMethod}</div>
-            <div class="paymentTable_cell">${payment.paymentStatus}</div>
-            <div class="paymentTable_cell">
-                <button class="editBtn">수정</button>
-            </div>
+            <div class="paymentTable_row">
+                <div class="paymentTable_cell"><input type="checkbox" id="selectAll"></div>
+                <div class="paymentTable_cell">${payment.memberName || ''}</div>
+                <div class="paymentTable_cell">${payment.createdDate || ''}</div>
+                <div class="paymentTable_cell">${payment.noticeTitle || ''}</div>
+                <div class="paymentTable_cell">${payment.paymentAmount || ''}</div>
+                <div class="paymentTable_cell">${payment.memberPhone}</div>
+                <div class="paymentTable_cell">${payment.paymentMethod}</div>
+                <div class="paymentTable_cell">${payment.paymentStatus}</div>
+                <div class="paymentTable_cell">
+                    <button class="editBtn">수정</button>
+                </div>
+            </div>    
         `;
     });
 
@@ -868,7 +870,7 @@ const showPaymentList = ( { payments, pagination }) => {
     pagingText += `
         <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
             <a href="#" class="pagination-prev-link" 
-               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToPage(${pagination.currentPage - 1})`}" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToPaymentPage(${pagination.currentPage - 1})`}" 
                rel="prev nofollow">
                 <span class="pagination-prev-icon" aria-hidden="true">‹</span>
             </a>
@@ -888,7 +890,7 @@ const showPaymentList = ( { payments, pagination }) => {
     pagingText += `
         <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
             <a href="#" class="pagination-next-link" 
-               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.currentPage + 1})`}" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPaymentPage(${pagination.currentPage + 1})`}" 
                rel="next nofollow">
                 <span class="pagination-next-icon" aria-hidden="true">›</span>
             </a>
@@ -899,7 +901,7 @@ const showPaymentList = ( { payments, pagination }) => {
     pagingText += `
         <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
             <a href="#" class="pagination-last-link" 
-               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPage(${pagination.realEnd})`}" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPaymentPage(${pagination.realEnd})`}" 
                rel="nofollow">
                 <span class="pagination-last-icon" aria-hidden="true">»</span>
             </a>
@@ -912,27 +914,440 @@ const showPaymentList = ( { payments, pagination }) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// // 공고 작성 관리
-// const NoticeListLayout = document.querySelector(".noticeTable_container"); // 공고 작성 목록 표시
-// const NoticeListPaging = document.querySelector(".pagination-list.notice"); // 페이지네이션 요소
-// const NoticeKeywordInput = document.getElementById("noticeSearchInput"); // 검색어 입력 필드
-// const NoticeSortOptions = document.querySelector(".sort-filter-option.noticeSort"); // 정렬 옵션
-// let noticeSelectSort = "포지션 근무일순" // 기본 정렬 설정
-//
-// // 정렬 옵션 이벤트 설정
-// NoticeSortOptions.forEach((option) => {
-//     option.addEventListener("click", () => {
-//         // 선택한 옵션의 data-type 속성을 가져와서 noticeSelectSort에 저장
-//         noticeSelectSort = option.getAttribute("data-type");
-//
-//         // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
-//         NoticeSortOptions.forEach(())
-//     })
-// })
+// 작성 관리
+// 공고 작성 관리
+const NoticeListLayout = document.querySelector(".noticeTable_container"); // 공고 작성 목록 표시
+const NoticeListPaging = document.querySelector(".pagination-list.notice"); // 페이지네이션 요소
+const NoticeKeywordInput = document.getElementById("noticeSearchInput"); // 검색어 입력 필드
+const NoticeSortOptions = document.querySelectorAll(".sort-filter-option.noticeSort"); // 정렬 옵션
+let noticeSelectSort = "포지션 근무일순" // 기본 정렬 설정
 
+// 정렬 옵션 이벤트 설정
+NoticeSortOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+        // 선택한 옵션의 data-type 속성을 가져와서 noticeSelectSort에 저장
+        noticeSelectSort = option.getAttribute("data-type");
 
+        // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
+        NoticeSortOptions.forEach((option) => option.classList.remove("selected"));
+        option.classList.add("selected");
 
+        // 검색어와 정렬 기준을 사용하여 공고 목록 새로고침
+        fetchAndShowNotice(1);
+    });
+});
 
+// 검색어 초기화
+NoticeKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
+
+// 검색어 입력 시 검색 실행
+NoticeKeywordInput.addEventListener("input", () => {
+    fetchAndShowNotice(1);
+});
+
+// 페이지 이동 - fetchAndShowNotice 호출
+function goToNoticePage(page) {
+    fetchAndShowNotice(page);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    goToNoticePage(1);
+});
+
+// 공고 목록을 서버에서 가져오고 화면에 표시
+const fetchAndShowNotice = async (page) => {
+    const keyword = NoticeKeywordInput.value
+    const sortType = noticeSelectSort;
+
+    try {
+        // 데이터를 서버에서 가져오는 요청
+        const response = await fetch(`/admin/position/notice/${page}?keyword=${keyword}&types=${sortType}`);
+        const data = await response.json();
+
+        // 페이지 데이터와 공고 목록 데이터를 표시하는 함수 호출
+        data.pagination.currentPage = page;
+        showNoticeList(data);
+    } catch (error) {
+        console.log(`페이지 ${page} 로딩 중 오류 발생:`, error);
+    }
+};
+
+// 공고 목록과 페이지네이션을 표시하는 함수
+const showNoticeList = ({ notices, pagination }) => {
+    let text = `
+        <div class="noticeTable_row noticeTable_header">
+            <div class="noticeTable_cell"><input type="checkbox" id="selectAll"></div>
+            <div class="noticeTable_cell">기업명</div>
+            <div class="noticeTable_cell">포지션 근무일</div>
+            <div class="noticeTable_cell">공고 제목</div>
+            <div class="noticeTable_cell">이메일</div>
+            <div class="noticeTable_cell">전화번호</div>
+            <div class="noticeTable_cell">공고 마감</div>
+            <div class="noticeTable_cell">상태</div>
+            <div class="noticeTable_cell">Action</div>
+        </div>
+    `;
+
+    notices.forEach((notice) => {
+        text += `
+            <div class="noticeTable_row">
+                <div class="noticeTable_cell"><input type="checkbox" id="selectAll"></div>
+                <div class="noticeTable_cell">${notice.corporationName}</div>
+                <div class="noticeTable_cell">${notice.noticeWorkStartDate}</div>
+                <div class="noticeTable_cell">${notice.noticeTitle}</div>
+                <div class="noticeTable_cell">${notice.corporationEmail}</div>
+                <div class="noticeTable_cell">${notice.corporationGen0}</div>
+                <div class="noticeTable_cell">${notice.noticeEndDate}</div>
+                <div class="noticeTable_cell">${notice.noticeStatus}</div>
+                <div class="noticeTable_cell">
+                    <button class="editBtn">수정</button>
+                </div>
+            </div>
+        `;
+    });
+
+    NoticeListLayout.innerHTML = text;
+
+    // 동적으로 totalPages 계산
+    const noticeTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = noticeTotalPages;
+
+    let pagingText = '';
+
+    // 처음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-first-link" onclick="goToNoticePage(1)" rel="nofollow">
+                <span class="pagination-first-icon" aria-hidden="true">«</span>
+            </a>
+        </li>
+    `;
+
+    // 이전 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToNoticePage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
+                <span class="pagination-prev-icon" aria-hidden="true">‹</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지 번호 버튼
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        pagingText += `
+            <li class="pagination-page ${i === pagination.currentPage ? 'active' : ''}">
+                <a href="#" class="pagination-page-link" onclick="goToNoticePage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // 다음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToNoticePage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
+                <span class="pagination-next-icon" aria-hidden="true">›</span>
+            </a>
+        </li>
+    `;
+
+    // 마지막 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToNoticePage(${pagination.realEnd})`}" 
+               rel="nofollow">
+                <span class="pagination-last-icon" aria-hidden="true">»</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지네이션을 동적으로 추가
+    NoticeListPaging.innerHTML = pagingText;
+};
+
+// 게시글 작성 관리
+const PostListLayout = document.querySelector(".postTable_container"); // 게시글 작성 목록 표시
+const PostListPaging = document.querySelector(".pagination-list.post"); // 페이지네이션 요소
+const PostKeywordInput = document.getElementById("postSearchInput"); // 검색어 입력 필드
+const PostSortOptions = document.querySelectorAll(".sort-filter-option.postSort"); // 정렬 옵션
+let postSelectSort = "최신순"; // 기본 정렬 설정
+
+// 정렬 옵션 이벤트 설정
+PostSortOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+        // 선택한 옵션의 data-type 속성을 가져와서 postSelectSort에 저장
+        postSelectSort = option.getAttribute("data-type");
+
+        // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
+        PostSortOptions.forEach((option) => option.classList.remove("selected"));
+        option.classList.add("selected");
+
+        // 검색어와 정렬 기준을 사용하여 게시글 작성 목록 새로고침
+        fetchAndShowPost(1);
+    });
+});
+
+// 검색어 초기화
+PostKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
+
+// 검색어 입력 시 검색 실행
+PostKeywordInput.addEventListener("input", () => {
+    fetchAndShowPost(1);
+});
+
+// 페이지 이동 - fetchAndShowPost 호출
+function goToPostPage(page) {
+    fetchAndShowPost(page);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    goToPostPage(1);
+});
+
+const fetchAndShowPost = async (page) => {
+    const keyword = PostKeywordInput.value;
+    const sortType = postSelectSort;
+
+    try {
+        // 데이터를 서버에서 가져오는 요청
+        const response = await fetch(`/admin/position/post/${page}?keyword=${keyword}&types=${sortType}`);
+        const data = await response.json();
+
+        // 페이지 데이터와 게시글 데이터를 표시하는 함수 호출
+        data.pagination.currentPage = page;
+        showPostList(data);
+    } catch (error) {
+        console.error(`페이지 ${page} 로딩 중 오류 발생`, error);
+    }
+};
+
+// 게시글 작성 목록과 페이지네이션을 표시하는 함수
+const showPostList = ({ posts, pagination }) => {
+    let text = `
+        <div class="postTable_row postTable_header">
+            <div class="postTable_cell"><input type="checkbox" id="selectAll"></div>
+            <div class="postTable_cell">작성자</div>
+            <div class="postTable_cell">작성일</div>
+            <div class="postTable_cell">게시글 제목</div>
+            <div class="postTable_cell">게시글 내용</div>
+            <div class="postTable_cell">조회수</div>
+            <div class="postTable_cell">Action</div>
+        </div>       
+    `;
+
+    posts.forEach((post) => {
+        text += `
+        <div class="postTable_row">
+            <div class="postTable_cell"><input type="checkbox" id="selectAll"></div>
+            <div class="postTable_cell">${post.memberName || ''}</div>
+            <div class="postTable_cell">${post.createdDate || ''}</div>
+            <div class="postTable_cell">${post.postTitle}</div>
+            <div class="postTable_cell">${post.postContent}</div>
+            <div class="postTable_cell">${post.postReadCount}</div>
+            <div class="postTable_cell">
+                <button class="editBtn">수정</button>
+            </div>
+        </div>
+        `;
+    });
+
+    PostListLayout.innerHTML = text;
+
+    // 동적으로 totalPages 계산
+    const postTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = postTotalPages;
+
+    // 페이지 버튼 생성
+    let pagingText = '';
+
+    // 처음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-first-link" onclick="goToPostPage(1)" rel="nofollow">
+                <span class="pagination-first-icon" aria-hidden="true">«</span>
+            </a>
+        </li>
+    `;
+
+    // 이전 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToPostPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
+                <span class="pagination-prev-icon" aria-hidden="true">‹</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지 번호 버튼
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        pagingText += `
+            <li class="pagination-page ${i === pagination.currentPage ? 'active' : ''}">
+                <a href="#" class="pagination-page-link" onclick="goToPostPage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // 다음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPostPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
+                <span class="pagination-next-icon" aria-hidden="true">›</span>
+            </a>
+        </li>
+    `;
+
+    // 마지막 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToPostPage(${pagination.realEnd})`}" 
+               rel="nofollow">
+                <span class="pagination-last-icon" aria-hidden="true">»</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지네이션을 동적으로 추가
+    PostListPaging.innerHTML = pagingText;
+};
+
+// 댓글 관리
+const ReplyListLayout = document.querySelector(".replyTable_container"); // 댓글 목록 표시
+const ReplyListPaging = document.querySelector(".pagination-list.reply"); // 페이지네이션 요소
+const ReplyKeywordInput = document.getElementById("replySearchInput"); // 검색어 입력 필드
+
+// 검색어 초기화
+ReplyKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
+
+// 검색어 입력 시 검색 실행
+ReplyKeywordInput.addEventListener("input", () => {
+    fetchAndShowReply(1);
+});
+
+// 페이지 이동 - fetchAndShowReply 호출
+function goToReplyPage(page) {
+    fetchAndShowReply(1);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    goToReplyPage(1);
+});
+
+// 댓글 목록을 서버에서 가져오고 화면에 표시
+const fetchAndShowReply = async (page) => {
+    const keyword = ReplyKeywordInput.value;
+
+    try {
+        // 데이터를 서버에서 가져오는 요청
+        const response = await fetch(`/admin/position/reply/${page}?keyword=${keyword}`)
+        const data = await response.json();
+
+        // 페이지 데이터와 댓글 데이터를 표시하는 함수 호출
+        data.pagination.currentPage = page;
+        showReplyList(data);
+    } catch (error) {
+        console.error(`페이지 ${page} 로딩 중 오류 발생`, error);
+    }
+};
+
+// 댓글 목록과 페이지 처리를 표시
+const showReplyList = ({ replies, pagination }) => {
+    let text = `
+        <div class="replyTable_row replyTable_header">
+            <div class="replyTable_cell"><input type="checkbox" id="selectAll"></div>
+            <div class="replyTable_cell">작성자</div>
+            <div class="replyTable_cell">작성일</div>
+            <div class="replyTable_cell">게시글 제목</div>
+            <div class="replyTable_cell">댓글 내용</div>
+            <div class="replyTable_cell">Action</div>
+        </div>
+    `;
+
+    replies.forEach((reply) => {
+        text += `
+            <div class="replyTable_row">
+                <div class="replyTable_cell"><input type="checkbox" id="selectAll"></div>
+                <div class="replyTable_cell">${reply.memberName}</div>
+                <div class="replyTable_cell">${reply.createdDate}</div>
+                <div class="replyTable_cell">${reply.postTitle}</div>
+                <div class="replyTable_cell">${reply.replyContent}</div>
+                <div class="replyTable_cell">
+                    <button class="editBtn">수정</button>
+                </div>
+            </div>
+        `;
+    });
+
+    ReplyListLayout.innerHTML = text;
+
+    let pagingText = '';
+
+    // 동적으로 totalPages 계산
+    const replyTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = replyTotalPages;
+
+    // 처음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-first-link" onclick="goToReplyPage(1)" rel="nofollow">
+                <span class="pagination-first-icon" aria-hidden="true">«</span>
+            </a>
+        </li>
+    `;
+
+    // 이전 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToReplyPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
+                <span class="pagination-prev-icon" aria-hidden="true">‹</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지 번호 버튼
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        pagingText += `
+            <li class="pagination-page ${i === pagination.currentPage ? 'active' : ''}">
+                <a href="#" class="pagination-page-link" onclick="goToReplyPage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // 다음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToReplyPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
+                <span class="pagination-next-icon" aria-hidden="true">›</span>
+            </a>
+        </li>
+    `;
+
+    // 마지막 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToReplyPage(${pagination.realEnd})`}" 
+               rel="nofollow">
+                <span class="pagination-last-icon" aria-hidden="true">»</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지네이션을 동적으로 추가
+    ReplyListPaging.innerHTML = pagingText;
+};
 
 
 

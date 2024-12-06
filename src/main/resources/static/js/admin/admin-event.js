@@ -14,4 +14,10 @@ applyService.fetchPosition(1, PositionKeywordInput.value, positionSelectedSort, 
 // 결제 관리 데이터 불러오기 및 표시
 paymentService.fetchPayment(1, PaymentKeywordInput.value, paymentSelectedSort, showPaymentList);
 
+// 작성관리
 // 공고 작성 관리 데이터 불러오기 및 표시
+noticeService.fetchNotice(1, NoticeKeywordInput.value, noticeSelectSort, showNoticeList);
+// 게시글 작성 관리 데이터 불러오기 및 표시
+postService.fetchPost(1, PostKeywordInput.value, postSelectSort, showPostList);
+// 댓글 작성 관리 데이터 불러오기 및 표시
+replyService.fetchReply(1, ReplyKeywordInput.value, showReplyList);

@@ -13,3 +13,20 @@ create table tbl_reply (
 
 select *
 from tbl_reply;
+
+# 작성자, 작성일, 게시글 제목, 댓글 내용
+# m.member_name, r.created_date, p.post_title, r.reply_content
+
+select
+    m.member_name,
+    r.created_date,
+    p.post_title,
+    r.reply_content
+from
+    tbl_reply r
+    join tbl_member m on r.member_id = m.id
+    join tbl_post p on r.post_id = p.id
+
+
+
+

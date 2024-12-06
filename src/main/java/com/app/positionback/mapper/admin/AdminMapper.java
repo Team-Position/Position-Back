@@ -67,9 +67,14 @@ public interface AdminMapper {
     public int selectTotalWithReplySearch(@Param("search")Search search);
 
     // 후기 관리
-    List<InterviewReviewDTO> selectAllInterviewReview();
-    List<EvaluationCorporationDTO> selectAllEvaluationCorporation();
-    List<EvaluationPositionerDTO> selectAllEvaluationPositioner();
+    // 면접 후기
+    public List<InterviewReviewDTO> selectAllInterviewReview(@Param("pagination") Pagination pagination, @Param("search")Search search);
+    public int selectInterviewReviewTotal();
+    public int selectTotalWithInterviewReviewSearch(@Param("search")Search search);
+    // 기업이 작성하는 포지션 후기
+    public List<EvaluationCorporationDTO> selectAllEvaluationCorporation(@Param("pagination") Pagination pagination, @Param("search")Search search);
+    public int selectEvaluationCorporationTotal();
+    public int selectTotalWithEvaluationCorporationSearch(@Param("search")Search search);
 
     // 문의 관리
     // 일반 회원 문의

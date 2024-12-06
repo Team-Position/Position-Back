@@ -58,7 +58,7 @@ select
     n.notice_end_date,                     -- 공고 마감일
     case
         when n.notice_end_date >= NOW() then '채용중'
-        else '채용마감'
+        else '채용 마감'
         end as notice_status                  -- 공고 상태
 from
     tbl_notice n
