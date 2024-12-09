@@ -2170,13 +2170,13 @@ video {
 /* 첫번째 열 */
 .corporationInquiry-headerCell:nth-child(2),
 .corporationInquiryTable_cell:nth-child(2) {
-    width: 12%;
+    width: 14%;
 }
 
 /* 두번째 열 */
 .corporationInquiry-headerCell:nth-child(3),
 .corporationInquiryTable_cell:nth-child(3) {
-    width: 12%;
+    width: 14%;
 }
 
 /* 세번째 열 */
@@ -2209,7 +2209,7 @@ video {
 /* 여섯번째 열 */
 .corporationInquiry-headerCell:nth-child(7),
 .corporationInquiryTable_cell:nth-child(7) {
-    width: 9%;
+    width: 16%;
 }
 
 /* 일곱 열 */
@@ -2236,6 +2236,120 @@ video {
 
 .editBtn:hover {
     opacity: 0.8;
+}
+
+/* 여기서부터 complian-section */
+/* ******************************************* */
+.CommonHeader_container {
+    color: #000;
+}
+
+.CommonHeader_container .CommonHeader_title {
+    line-height: 44px;
+    font-size: 36px;
+    margin: 0 0 16px;
+    font-weight: 700;
+}
+
+.CommonHeader_container .CommonHeader_description {
+    margin-bottom: 32px;
+    line-height: 24px;
+    color: #495057;
+    font-size: 17px;
+    margin: 0 0 32px;
+}
+
+/* complain Table Styles */
+.CommonLayout_container {
+    width: 1400px;
+}
+.complainTable_container {
+    width: 100%;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+    display: table; /* 테이블처럼 보이도록 설정 */
+    table-layout: fixed; /* 모든 열이 지정된 비율에 맞게 크기를 고정 */
+    text-align: center;
+}
+
+.complainTable_row {
+    display: table-row;
+    width: 100%;
+    border: 1px solid #dee2e6;
+}
+
+.complainTable_cell {
+    display: table-cell;
+    box-sizing: border-box; /* padding과 border를 포함한 크기 조정 */
+    padding: 8px; /* 셀 내용과 셀 경계 사이의 간격 */
+    vertical-align: middle; /* 내용이 수직으로 가운데 정렬되도록 */
+    border-bottom: 1px solid #dee2e6; /* 셀 아래 테두리 */
+}
+.complainTable_header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 8px 8px 0 0 !important; /*헤더 아래 테두리*/
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.complainTable_cell input[type="checkbox"] {
+    margin: 0 auto;
+}
+
+/* 기존의 너비 설정 유지 */
+/* 체크박스 열 */
+.complain-headerCell:nth-child(1),
+.complainTable_cell:nth-child(1) {
+    width: 3%;
+}
+
+/* 첫번째 열 */
+.complain-headerCell:nth-child(2),
+.complainTable_cell:nth-child(2) {
+    width: 12%;
+}
+
+/* 두번째 열 */
+.complain-headerCell:nth-child(3),
+.complainTable_cell:nth-child(3) {
+    width: 13%;
+}
+
+/* 세번째 열 */
+.complain-headerCell:nth-child(4),
+.complainTable_cell:nth-child(4) {
+    width: 17%;
+}
+
+/* 네번째 열 */
+.complain-headerCell:nth-child(5),
+.complainTable_cell:nth-child(5) {
+    width: 17%;
+}
+
+/* 다섯번째 열 */
+.complain-headerCell:nth-child(6),
+.complainTable_cell:nth-child(6) {
+    width: 11%;
+}
+
+/* 여섯번째 열 */
+.complain-headerCell:nth-child(7),
+.complainTable_cell:nth-child(7) {
+    width: 11%;
+}
+
+/* 일곱 열 */
+.complain-headerCell:nth-child(8),
+.complainTable_cell:nth-child(8) {
+    width: 6%;
+}
+/* 마지막 열 */
+.complain-headerCell:nth-child(9),
+.complainTable_cell:nth-child(9) {
+    width: 8%;
 }
 
 /* section style 끝 */

@@ -4454,14 +4454,14 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                class="sort-filter-option selected"
+                                                class="sort-filter-option complainSort selected" data-type="recent"
                                                 >최신순</span
                                             >
-                                            <span class="sort-filter-option"
-                                                >포지션 예정</span
+                                            <span class="sort-filter-option complainSort" data-type="complainReceived"
+                                                >신고 접수</span
                                             >
-                                            <span class="sort-filter-option"
-                                                >포지션 수료</span
+                                            <span class="sort-filter-option complainSort" data-type="complainCompleted"
+                                                >처리 완료</span
                                             >
                                         </div>
                                         <!-- Action Buttons -->
@@ -4470,6 +4470,7 @@
                                                 type="text"
                                                 class="Filter_searchInput"
                                                 placeholder="검색어 입력"
+                                                id="complainSearchInput"
                                             />
                                             <button
                                                 id="addServiceBtn"
@@ -4662,7 +4663,7 @@
                                     </div>
                                 </div>
                                 <nav class="pagination">
-                                    <ul class="pagination-list">
+                                    <ul class="pagination-list complain">
                                         <!-- 처음 페이지로 이동하는 버튼 -->
                                         <li class="pagination-first">
                                             <a

@@ -24,6 +24,7 @@ public class InquiryDTO {
     // 관리자 문의 작성 페이지 추가 필드
     private String memberName;
     private String corporationName;
+    private String corporationEmail;
     private String inquiryStatus;
 
     public InquiryVO toVO() {

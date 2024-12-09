@@ -31,8 +31,24 @@ select
 from
     tbl_inquiry i
         join tbl_member m
-             on i.member_id = m.id;
+             on i.member_id = m.id
+where
+    i.inquiry_type = '개인';
 
+select
+    i.inquiry_category,
+    i.created_date,
+    i.inquiry_title,
+    i.inquiry_content,
+    c.corporation_name,
+    c.corporation_email,
+    i.inquiry_status
+from
+    tbl_inquiry i
+        join tbl_corporation c
+             on i.member_id = c.id
+where
+    i.inquiry_type = '기업';
 
 ALTER TABLE tbl_inquiry
     MODIFY created_date DATETIME DEFAULT CURRENT_TIMESTAMP;

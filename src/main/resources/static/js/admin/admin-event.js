@@ -31,6 +31,12 @@ reviewService.fetchEvaluationCorporation(1, EvaluationCorporationKeywordInput.va
 // 문의 관리
 // 일반 회원 문의 작성 관리 데이터 불러오기 및 표시
 inquiryService.fetchMemberInquiry(1, MemberInquiryKeywordInput.value, memberInquirySelectSort, showMemberInquiryList);
+// 기업 회원 문의 작성 관리 데이터 불러오기 및 표시
+inquiryService.fetchCorporationInquiry(1, CorporationInquiryKeywordInput.value, corporationInquirySelectSort, showCorporationInquiryList);
+
+// 기업 후기 신고 관리
+// 기업 후기 신고 작성 관리 데이터 불러오기 및 표시
+complainService.fetchComplain(1, ComplainKeywordInput.value, complainSelectedSort, showComplainList);
 
 
 

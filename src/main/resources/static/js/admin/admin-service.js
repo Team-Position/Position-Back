@@ -364,67 +364,52 @@ const inquiryService = (() => {
 
 // 신고 관리
 // 기업 후기 신고
-
 const complainService = (() => {
-    // 후기 신고 데이터를 서버에서 가져오는 비동기 함수
-    const fetchComplain = async (callback) => {
+    // 기업 후기 신고 데이터를 서버에서 가져오는 비동기 함수
+    const fetchComplain = async (page, keyword = "", sortType = "", callback) => {
         try {
-            // /position/complain 경로로 GET 요청
-            const response = await fetch('/position/complain');
+            page = page || 1;
+            // /admin/position/complain 경로로 요청
+            const response = await fetch(`/admin/position/complain/${page}?keyword=${keyword}&types=${sortType}`);
 
             // 응답 실패 상태일 경우 에러 메시지
-            if (!response.ok) throw new Error('후기 신고 fetch 실패');
+            if (!response.ok) throw new error(`회원 정보 fetch 실패`);
 
-            // 응답 데이터를 JSON으로 변환
-            const complainData = await response.json();
+            // 응답 데이터를 JSON으로 받음
+            const data = await response.json();
 
-            // 콜백 함수가 있을 경우 데이터를 콜백 함수에 전달
-            if (callback) {
-                callback(complainData);
+            // 데이터가 유효한 경우 콜백 호출
+            if (callback && data.complains && data.pagination) {
+                callback({ complains: data.complains, pagination: data.pagination });
+            } else {
+                console.error("응답 데이터 형식이 올바르지 않습니다");
             }
         } catch (error) {
-            // 오류가 발생할 경우 에러 메시지 출력
+            // 오류가 발생할 경우 에러 메시지를 출력
             console.error("오류입니다:", error);
         }
     };
 
-    return {
-        fetchComplain: fetchComplain,
-    };
+    return { fetchComplain: fetchComplain };
 })();
 
-// 후기 신고 데이터를 표시하는 함수
-const displayComplains = (complains) => {
-    // 후기 신고가 표시될 컨테이너 선택
-    const complainListDiv = document.querySelector('#Complain-section .complainTable_container');
 
-    // 기존 데이터 제거 (헤더 행 제외)
-    const existingRows = complainListDiv.querySelectorAll('.complainTable_row:not(.complainTable_header)');
-    existingRows.forEach(row => row.remove());
 
-    // `complains` 배열 내의 각 신고 데이터를 반복하여 새 행 생성
-    complains.forEach(complain => {
-        const complainRow = document.createElement('div');
-        complainRow.classList.add('complainTable_row');
 
-        // 각 신고 데이터 (기업명, 신고일, 후기 내용, 신고자, 상태)를 포함하는 HTML 작성
-        complainRow.innerHTML = `
-            <div class="complainTable_cell"><input type="checkbox" class="complainCheckbox" /></div>
-            <div class="complainTable_cell">${complain.corporationName || ''}</div>
-            <div class="complainTable_cell">${complain.complainDate || ''}</div>
-            <div class="complainTable_cell">${complain.reviewContent || ''}</div>
-            <div class="complainTable_cell">${complain.complainantName || ''}</div>
-            <div class="complainTable_cell">${complain.complainStatus || ''}</div>
-            <div class="complainTable_cell"><button class="editBtn">처리</button></div>
-        `;
 
-        // 새로 생성한 신고 행을 컨테이너에 추가
-        complainListDiv.appendChild(complainRow);
-    });
-};
 
-// 후기 신고 데이터를 가져와 화면에 표시
-complainService.fetchComplain(displayComplains);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

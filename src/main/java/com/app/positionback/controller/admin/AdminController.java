@@ -72,11 +72,11 @@ public class AdminController {
     @PostMapping("/position/members/updateStatus")
     @ResponseBody
     public ResponseEntity<String> updateMemberStatus(@RequestBody Map<String, Object> request) {
-        log.info("요청 데이터: {}", request);
+//        log.info("요청 데이터: {}", request);
 
         // 요청 데이터 검증
         if (!request.containsKey("memberId") || !request.containsKey("status")) {
-            log.error("memberId 또는 status가 누락되었습니다.");
+//            log.error("memberId 또는 status가 누락되었습니다.");
             return ResponseEntity.badRequest().body("memberId 또는 status가 누락되었습니다.");
         }
 
@@ -88,7 +88,6 @@ public class AdminController {
         adminService.updateMemberStatus(memberId, status);
         return ResponseEntity.ok("회원 상태가 성공적으로 변경되었습니다.");
     }
-
 
     // 기업 회원 정보 조회
     @GetMapping("/position/corporation-members/{page}")
