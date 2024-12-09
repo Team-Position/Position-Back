@@ -21,3 +21,32 @@ noticeService.fetchNotice(1, NoticeKeywordInput.value, noticeSelectSort, showNot
 postService.fetchPost(1, PostKeywordInput.value, postSelectSort, showPostList);
 // 댓글 작성 관리 데이터 불러오기 및 표시
 replyService.fetchReply(1, ReplyKeywordInput.value, showReplyList);
+
+// 후기관리
+// 면접 후기 작성 관리 데이터 불러오기 및 표시
+reviewService.fetchInterviewReview(1, InterviewReviewKeywordInput.value, interviewReviewSelectedSort, showInterviewReviewList);
+// 포지션(인턴십) 후기 작성 관리 데이터 불러오기 및 표시
+reviewService.fetchEvaluationCorporation(1, EvaluationCorporationKeywordInput.value, showEvaluationCorporationList);
+
+// 문의 관리
+// 일반 회원 문의 작성 관리 데이터 불러오기 및 표시
+inquiryService.fetchMemberInquiry(1, MemberInquiryKeywordInput.value, memberInquirySelectSort, showMemberInquiryList);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

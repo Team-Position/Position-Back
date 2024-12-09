@@ -17,6 +17,23 @@ from tbl_inquiry;
 
 use test;
 
+# 문의 분류, 작성일, 문의 제목, 문의 내용, 작성자, 이메일, 상태
+# i.inquiry_type, i.created_date, i.inquiry_title, i.inquiry_content, m.member_name, m.member_email, i.inquiry_status
+
+select
+    i.inquiry_category,
+    i.created_date,
+    i.inquiry_title,
+    i.inquiry_content,
+    m.member_name,
+    coalesce(m.member_email, m.member_kakao_email) as email,
+    i.inquiry_status
+from
+    tbl_inquiry i
+        join tbl_member m
+             on i.member_id = m.id;
+
+
 ALTER TABLE tbl_inquiry
     MODIFY created_date DATETIME DEFAULT CURRENT_TIMESTAMP;
 

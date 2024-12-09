@@ -491,13 +491,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 상태 변경 버튼 클릭 이벤트
     modal.addEventListener('click', (event) => {
         if (event.target.classList.contains('memberStatusChangeBtn')) {
-            const newStatus = event.target.getAttribute('data-status'); // 선택한 상태
+            const newStatus = event.target.getAttribute('data-status'); // 버튼의 상태 값 가져오기
+            const userId = currentStatusCell.closest('.UserTable_row').dataset.userId; // 행의 사용자 ID 가져오기
 
             if (currentStatusCell) {
-                currentStatusCell.textContent = newStatus; // 상태 셀 업데이트
-
-                // 서버로 상태 변경 요청 (선택 사항)
-                updateStatusOnServer(currentStatusCell.closest('.UserTable_row').dataset.userId, newStatus);
+                currentStatusCell.textContent = newStatus; // UI 업데이트
+                updateStatusOnServer(userId, newStatus);  // 서버로 상태 변경 요청
             }
 
             // 모달 닫기
@@ -520,16 +519,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 서버 요청 함수 (선택 사항)
     function updateStatusOnServer(userId, status) {
-        fetch(`/updateStatus`, {
+        console.log("전송 데이터:", { memberId: userId, status: status }); // 전송 데이터 확인
+
+        fetch('/admin/position/members/updateStatus', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId, status }),
+            body: JSON.stringify({
+                memberId: userId, // 'memberId'는 서버에서 사용하는 키 이름
+                status: status    // 'status'는 서버에서 사용하는 키 이름
+            }),
         })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('상태 변경 실패');
                 }
-                console.log('상태가 성공적으로 업데이트되었습니다.');
+                return response.json(); // 성공 응답
+            })
+            .then((data) => {
+                console.log('상태가 성공적으로 업데이트되었습니다:', data);
             })
             .catch((error) => {
                 console.error('상태 변경 오류:', error);

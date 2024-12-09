@@ -3,6 +3,7 @@ package com.app.positionback.service.admin;
 
 import com.app.positionback.domain.apply.ApplyListDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
+import com.app.positionback.domain.complain.ComplainListDTO;
 import com.app.positionback.domain.corporation.CorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationListDTO;
@@ -62,6 +63,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int getTotalWithMemberSearch(Search search) {
         return adminDAO.getTotalWithMemberSearch(search);
+    }
+
+    // 일반 회원 상태 변경
+    @Override
+    public void updateMemberStatus(Long memberId, String status) {
+        adminDAO.updateMemberStatus(memberId, status);
     }
 
     // 기업 회원 정보 조회
@@ -354,11 +361,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public InquiryListDTO getMemberInquiry(int page, Pagination pagination, Search search) {
         InquiryListDTO inquiryDTO = new InquiryListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getMemberInquiryTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         inquiryListDTO.setPagination(pagination);
         inquiryListDTO.setInquiries(adminDAO.memberInquiry(pagination, search));
+
         return inquiryListDTO;
     }
 
@@ -378,11 +389,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public InquiryListDTO getCorporationInquiry(int page, Pagination pagination, Search search) {
         InquiryListDTO inquiryDTO = new InquiryListDTO();
+
+        // Pagination 설정
         pagination.setPage(page);
-        pagination.setTotal(adminDAO.getCorporationInquiryTotal());
         pagination.progress();
+
+        // 데이터 가져오기
         inquiryListDTO.setPagination(pagination);
         inquiryListDTO.setInquiries(adminDAO.corporationInquiry(pagination, search));
+
         return inquiryListDTO;
     }
 
@@ -401,7 +416,29 @@ public class AdminServiceImpl implements AdminService {
 
     // 신고 관리
     // 기업 후기 신고
-    public List<ComplainDTO> getComplains() {
-        return adminDAO.complainInformation();
+    @Override
+    public ComplainListDTO getComplains(int page, Pagination pagination, Search search) {
+        ComplainListDTO complainListDTO = new ComplainListDTO();
+
+        // Pagination 설정
+        pagination.setPage(page);
+        pagination.progress();
+
+        // 데이터 가져오기
+        complainListDTO.setPagination(pagination);
+        complainListDTO.setComplains(adminDAO.complainInformation(pagination, search));
+
+        return complainListDTO;
+    }
+
+    // 기업 후기 신고 전체 신고 수
+    public int getComplainTotal() {
+        return adminDAO.getComplainTotal();
+    }
+
+    // 기업 후기 신고 검색 후 신고 수
+    @Override
+    public int getTotalWithComplainSearch(Search search) {
+        return adminDAO.getTotalWithComplainSearch(search);
     }
 }

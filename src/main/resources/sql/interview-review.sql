@@ -44,6 +44,7 @@ from tbl_interview_review;
 
 select
     c.corporation_name,     -- 기업명
+    r. created_date,        -- 작성 날짜
     i.interview_date,       -- 면접 날짜
     n.notice_title,         -- 공고 제목
     m.member_name,          -- 작성자 이름
@@ -167,6 +168,18 @@ INSERT INTO tbl_interview_review (
       (6, 54, 1, '2023-01-18', '화상 면접', '자신감 있게!', '불합격'),
       (51, 38, 1, '2023-03-14', '화상 면접', '자신감 있게!', '불합격'),
       (27, 42, 1, '2023-01-22', '대면 면접', '자신감 있게!', '불합격');
+
+UPDATE tbl_interview_review
+SET interview_passed = CASE
+                           WHEN interview_passed = '합격' THEN '면접 합격'
+                           WHEN interview_passed = '불합격' THEN '면접 불합격'
+                           WHEN interview_passed = '보류' THEN '면접 합격'
+                           ELSE interview_passed
+    END
+WHERE interview_passed IN ('합격', '불합격', '보류');
+
+
+
 
 
 

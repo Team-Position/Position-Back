@@ -3,6 +3,7 @@ package com.app.positionback.service.admin;
 import com.app.positionback.domain.apply.ApplyDTO;
 import com.app.positionback.domain.apply.ApplyListDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
+import com.app.positionback.domain.complain.ComplainListDTO;
 import com.app.positionback.domain.corporation.CorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationListDTO;
@@ -34,6 +35,7 @@ public interface AdminService {
     public MemberListDTO getMembers(int page, Pagination pagination, Search search);
     public int getMemberTotal();
     public int getTotalWithMemberSearch(Search search);
+    public void updateMemberStatus(Long memberId, String status);
     // 기업 회원 목록
     public CorporationListDTO getCorporationMembers(int page, Pagination pagination, Search search);
     public int getCorporationTotal();
@@ -91,6 +93,9 @@ public interface AdminService {
     public InquiryListDTO getCorporationInquiry(int page, Pagination pagination, Search search);
     public int getCorporationInquiryTotal();
     public int getTotalWithCorporationInquirySearch(Search search);
+
     // 신고 관리
-    List<ComplainDTO> getComplains();
+    public ComplainListDTO getComplains(int page, Pagination pagination, Search search);
+    public int getComplainTotal();
+    public int getTotalWithComplainSearch(Search search);
 }

@@ -2,6 +2,7 @@ package com.app.positionback.controller.admin;
 
 import com.app.positionback.domain.apply.ApplyListDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
+import com.app.positionback.domain.complain.ComplainListDTO;
 import com.app.positionback.domain.corporation.CorporationListDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationListDTO;
@@ -21,10 +22,12 @@ import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/*")
@@ -64,6 +67,28 @@ public class AdminController {
         // 검색 조건에 맞는 목록 반환
         return adminService.getMembers(page, pagination, search);
     }
+
+    // 일반 회원 상태 변경
+    @PostMapping("/position/members/updateStatus")
+    @ResponseBody
+    public ResponseEntity<String> updateMemberStatus(@RequestBody Map<String, Object> request) {
+        log.info("요청 데이터: {}", request);
+
+        // 요청 데이터 검증
+        if (!request.containsKey("memberId") || !request.containsKey("status")) {
+            log.error("memberId 또는 status가 누락되었습니다.");
+            return ResponseEntity.badRequest().body("memberId 또는 status가 누락되었습니다.");
+        }
+
+        // 값 추출
+        Long memberId = Long.valueOf(request.get("memberId").toString());
+        String status = request.get("status").toString();
+
+        // 서비스 호출
+        adminService.updateMemberStatus(memberId, status);
+        return ResponseEntity.ok("회원 상태가 성공적으로 변경되었습니다.");
+    }
+
 
     // 기업 회원 정보 조회
     @GetMapping("/position/corporation-members/{page}")
@@ -212,10 +237,7 @@ public class AdminController {
     @GetMapping("/position/evaluation-corporation/{page}")
     @ResponseBody
     public EvaluationCorporationListDTO getEvaluationCorporations(@PathVariable("page") Integer page, Pagination pagination, Search search) {
-        if (search.getTypes() == null || search.getTypes().length == 0) {
-            search.setTypes(new String[]{"recent"});
-        }
-        if (search.getKeyword() != null || search.getTypes() != null) {
+        if (search.getKeyword() != null) {
             pagination.setTotal(adminService.getTotalWithEvaluationCorporationSearch(search));
         } else {
             pagination.setTotal(adminService.getEvaluationCorporationTotal());
@@ -223,6 +245,18 @@ public class AdminController {
         pagination.progress();
         return adminService.getEvaluationCorporations(page, pagination, search);
     }
+//    public EvaluationCorporationListDTO getEvaluationCorporations(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+//        if (search.getTypes() == null || search.getTypes().length == 0) {
+//            search.setTypes(new String[]{"recent"});
+//        }
+//        if (search.getKeyword() != null || search.getTypes() != null) {
+//            pagination.setTotal(adminService.getTotalWithEvaluationCorporationSearch(search));
+//        } else {
+//            pagination.setTotal(adminService.getEvaluationCorporationTotal());
+//        }
+//        pagination.progress();
+//        return adminService.getEvaluationCorporations(page, pagination, search);
+//    }
 
     // 문의 관리
     // 일반 회원 문의 정보 조회
@@ -261,10 +295,18 @@ public class AdminController {
     // 기업 후기 신고
     @GetMapping("/position/complain/{page}")
     @ResponseBody
-    public List<ComplainDTO> getComplains() {
-        return adminService.getComplains();
+    public ComplainListDTO getComplains(@PathVariable("page") Integer page, Pagination pagination, Search search) {
+        if (search.getTypes() == null || search.getTypes().length == 0) {
+            search.setTypes(new String[]{"recent"});
+        }
+        if (search.getKeyword() != null || search.getTypes() != null) {
+            pagination.setTotal(adminService.getTotalWithComplainSearch(search));
+        } else {
+            pagination.setTotal(adminService.getComplainTotal());
+        }
+        pagination.progress();
+        return adminService.getComplains(page, pagination, search);
     }
-
 
 
 

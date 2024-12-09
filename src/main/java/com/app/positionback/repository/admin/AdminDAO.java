@@ -44,6 +44,11 @@ public class AdminDAO {
         return adminMapper.selectTotalWithMemberSearch(search);
     }
 
+    // 일반 회원 상태 변경
+    public void updateMemberStatus(Long memberId, String status) {
+        adminMapper.updateMemberStatus(memberId, status);
+    }
+
     // 기업 회원 조회
     public List<CorporationDTO> corporationInformation(Pagination pagination, Search search) {
         return adminMapper.selectAllCorporationMembers(pagination, search);
@@ -231,8 +236,18 @@ public class AdminDAO {
     }
 
     // 신고 관리
-    // 기업 후기 신고
-    public List<ComplainDTO> complainInformation() {
-        return adminMapper.selectAllComplain();
+    // 기업 후기 신고 조회
+    public List<ComplainDTO> complainInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllComplain(pagination, search);
+    }
+
+    // 기업 후기 신고 전체 조회 수
+    public int getComplainTotal() {
+        return adminMapper.selectComplainTotal();
+    }
+
+    // 기업 후기 신고 검색 결과 전체 조회
+    public int getTotalWithComplainSearch(Search search) {
+        return adminMapper.selectTotalWithComplainSearch(search);
     }
 }

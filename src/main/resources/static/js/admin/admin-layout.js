@@ -1234,7 +1234,7 @@ ReplyKeywordInput.addEventListener("input", () => {
 
 // 페이지 이동 - fetchAndShowReply 호출
 function goToReplyPage(page) {
-    fetchAndShowReply(1);
+    fetchAndShowReply(page);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1247,7 +1247,7 @@ const fetchAndShowReply = async (page) => {
 
     try {
         // 데이터를 서버에서 가져오는 요청
-        const response = await fetch(`/admin/position/reply/${page}?keyword=${keyword}`)
+        const response = await fetch(`/admin/position/reply/${page}?keyword=${keyword}`);
         const data = await response.json();
 
         // 페이지 데이터와 댓글 데이터를 표시하는 함수 호출
@@ -1349,9 +1349,464 @@ const showReplyList = ({ replies, pagination }) => {
     ReplyListPaging.innerHTML = pagingText;
 };
 
+// 후기 관리
+// 면접 후기 & 포지션(인턴십) 후기(기업)
+const InterviewReviewListLayout = document.querySelector(".interviewReviewTable_container"); // 면접 후기 목록 표시
+const InterviewReviewListPaging = document.querySelector(".pagination-list.interviewReview"); // 페이지네이션 요소
+const InterviewReviewKeywordInput = document.getElementById("interviewReviewSearchInput"); // 검색어 입력 필드
+const InterviewReviewSortOptions = document.querySelectorAll(".sort-filter-option.interviewReviewSort"); // 정렬 옵션
+const EvaluationCorporationListLayout = document.querySelector(".evaluationCorporationTable_container"); // 포지션 후기 목록 표시
+const EvaluationCorporationListPaging = document.querySelector(".pagination-list.evaluationCorporation"); // 페이지네이션 요소
+const EvaluationCorporationKeywordInput = document.getElementById("evaluationCorporationSearchInput"); // 검색어 입력 필드
 
+// 면접 후기
+let interviewReviewSelectedSort = "최신순"; // 기본 정렬 설정
 
+// 정렬 옵션 이벤트 설정
+InterviewReviewSortOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+        // 선택한 옵션의 data-type 속성을 가져와서 interviewReviewSelectedSort에 저장
+        interviewReviewSelectedSort = option.getAttribute("data-type");
 
+        // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
+        InterviewReviewSortOptions.forEach((option) => option.classList.remove("selected"));
+        option.classList.add("selected");
+
+        // 검색어와 정렬 기준을 사용하여 면접 후기 작성 목록 새로고침
+        fetchAndShowInterviewReview(1);
+    });
+});
+
+// 검색어 초기화
+InterviewReviewKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
+
+// 검색어 입력시 검색 실행
+InterviewKeywordInput.addEventListener("input", () => {
+    fetchAndShowInterviewReview(1);
+});
+
+// 페이지 이동 - fetchAndShowInterviewReview 호출
+function goToInterviewReviewPage(page) {
+    fetchAndShowInterviewReview(page);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    goToInterviewReviewPage(1);
+});
+
+// 면접 후기 작성 목록을 서버에서 가져오고 화면에 표시
+const fetchAndShowInterviewReview = async (page) => {
+    const keyword = InterviewReviewKeywordInput.value;
+    const sortType = interviewReviewSelectedSort;
+
+    try {
+        // 데이터를 서버에서 가져오는 요청
+        const response = await fetch(`/admin/position/interview-review/${page}?keyword=${keyword}&types=${sortType}`);
+        const data = await response.json();
+
+        // 페이지 데이터와 면접 후기 데이터를 표시하는 함수 호출
+        data.pagination.currentPage = page;
+        showInterviewReviewList(data);
+    } catch (error) {
+        console.error(`페이지 ${page} 로딩 중 오류 발생:`, error);
+    }
+};
+
+// 면접 후기 목록과 페이지네이션을 표시하는 함수
+const showInterviewReviewList = ({ interviewReviews, pagination }) => {
+    let text = `
+        <div class="interviewReviewTable_row interviewReviewTable_header">
+            <div class="interviewReviewTable_cell"><input type="checkbox" id="selectAll"></div>
+            <div class="interviewReviewTable_cell">기업명</div>
+            <div class="interviewReviewTable_cell">작성일</div>
+            <div class="interviewReviewTable_cell">면접 날짜</div>
+            <div class="interviewReviewTable_cell">공고 제목</div>
+            <div class="interviewReviewTable_cell">작성자</div>
+            <div class="interviewReviewTable_cell">전화번호</div>
+            <div class="interviewReviewTable_cell">지원 분야</div>
+            <div class="interviewReviewTable_cell">상태</div>
+            <div class="interviewReviewTable_cell">Action</div>
+        </div>
+    `;
+
+    interviewReviews.forEach((interviewReview) => {
+        text += `
+            <div class="interviewReviewTable_row">
+                <div class="interviewReviewTable_cell"><input type="checkbox" id="selectAll"></div>
+                <div class="interviewReviewTable_cell">${interviewReview.corporationName}</div>
+                <div class="interviewReviewTable_cell">${interviewReview.createdDate}</div>
+                <div class="interviewReviewTable_cell">${interviewReview.interviewDate}</div>
+                <div class="interviewReviewTable_cell">${interviewReview.noticeTitle}</div>
+                <div class="interviewReviewTable_cell">${interviewReview.memberName}</div>
+                <div class="interviewReviewTable_cell">${interviewReview.memberPhone}</div>
+                <div class="interviewReviewTable_cell">${interviewReview.applyType}</div>
+                <div class="interviewReviewTable_cell">${interviewReview.interviewPassed}</div>
+                <div class="interviewReviewTable_cell">
+                    <button class="editBtn">수정</button>
+                </div>
+            </div>
+        `;
+    });
+
+    InterviewReviewListLayout.innerHTML = text;
+
+    // 동적으로 totalPages 계산
+    const interviewReviewTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = interviewReviewTotalPages;
+
+    // 페이지 버튼 생성
+    let pagingText = '';
+
+    // 처음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-first-link" onclick="goToInterviewReviewPage(1)" rel="nofollow">
+                <span class="pagination-first-icon" aria-hidden="true">«</span>
+            </a>
+        </li>
+    `;
+
+    // 이전 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToInterviewReviewPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
+                <span class="pagination-prev-icon" aria-hidden="true">‹</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지 번호 버튼
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        pagingText += `
+            <li class="pagination-page ${i === pagination.currentPage ? 'active' : ''}">
+                <a href="#" class="pagination-page-link" onclick="goToInterviewReviewPage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // 다음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToInterviewReviewPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
+                <span class="pagination-next-icon" aria-hidden="true">›</span>
+            </a>
+        </li>
+    `;
+
+    // 마지막 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToInterviewReviewPage(${pagination.realEnd})`}" 
+               rel="nofollow">
+                <span class="pagination-last-icon" aria-hidden="true">»</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지네이션을 동적으로 추가
+    InterviewReviewListPaging.innerHTML = pagingText;
+};
+
+// 포지션(인턴십) 후기(기업)
+// 검색어 초기화
+EvaluationCorporationKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
+
+// 검색어 입력 시 검색 실행
+EvaluationCorporationKeywordInput.addEventListener("input", () => {
+    fetchAndShowEvaluationCorporation(1);
+});
+
+// 페이지 이동 - fetchAndShowEvaluationCorporation 호출
+function gotoEvaluationCorporationPage(page) {
+    fetchAndShowEvaluationCorporation(page);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    gotoEvaluationCorporationPage(1);
+});
+
+// 포지션(인턴십) 후기(기업) 작성 목록과 페이지네이션을 표시하는 함수
+const fetchAndShowEvaluationCorporation = async (page) => {
+    const keyword = EvaluationCorporationKeywordInput.value;
+
+    try {
+        // 데이터를 서버에서 가져오는 요청
+        const response = await fetch(`/admin/position/evaluation-corporation/${page}?keyword=${keyword}`);
+        const data = await response.json();
+
+        // 페이지 데이터와 포지션(인턴십) 후기(기업) 작성 데이터를 표시하는 함수 호출
+        data.pagination.currentPage = page;
+        showEvaluationCorporationList(data);
+    } catch (error) {
+        console.error(`페이지 ${page} 로딩 중 오류 발생:`, error);
+    }
+};
+
+// 포지션(인턴십) 후기(기업) 작성 목록과 페이지네이션을 표시하는 함수
+const showEvaluationCorporationList = ({ evaluationCorporations, pagination }) => {
+    let text = `
+        <div class="evaluationCorporationTable_row evaluationCorporationTable_header">
+            <div class="evaluationCorporationTable_cell"><input type="checkbox" id="selectAll"></div>
+            <div class="evaluationCorporationTable_cell">기업명</div>
+            <div class="evaluationCorporationTable_cell">작성일</div>
+            <div class="evaluationCorporationTable_cell">포지션 근무일</div>
+            <div class="evaluationCorporationTable_cell">공고 제목</div>
+            <div class="evaluationCorporationTable_cell">근무자</div>
+            <div class="evaluationCorporationTable_cell">전화번호</div>
+            <div class="evaluationCorporationTable_cell">지원 분야</div>
+            <div class="evaluationCorporationTable_cell">상태</div>
+            <div class="evaluationCorporationTable_cell">Action</div>
+        </div>
+    `;
+
+    evaluationCorporations.forEach((evaluationCorporation) => {
+        text += `
+            <div class=evaluationCorporationTable_row>
+                <div class="evaluationCorporationTable_cell"><input type="checkbox" id="selectAll"></div>
+                <div class="evaluationCorporationTable_cell">${evaluationCorporation.corporationName}</div>
+                <div class="evaluationCorporationTable_cell">${evaluationCorporation.createdDate}</div>
+                <div class="evaluationCorporationTable_cell">${evaluationCorporation.noticeWorkStartDate}</div>
+                <div class="evaluationCorporationTable_cell">${evaluationCorporation.noticeTitle}</div>
+                <div class="evaluationCorporationTable_cell">${evaluationCorporation.memberName}</div>
+                <div class="evaluationCorporationTable_cell">${evaluationCorporation.memberPhone}</div>
+                <div class="evaluationCorporationTable_cell">${evaluationCorporation.applyType}</div>
+                <div class="evaluationCorporationTable_cell">${evaluationCorporation.positionStatus}</div>
+                <div class="evaluationCorporationTable_cell">
+                    <button class="editBtn">수정</button>
+                </div>
+            </div>
+        `;
+    });
+
+    EvaluationCorporationListLayout.innerHTML = text;
+
+    // 동적으로 totalPages 계산
+    const EvaluationCorporationTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = EvaluationCorporationTotalPages;
+
+    // 페이지 버튼 생성
+    let pagingText = '';
+
+    // 처음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-first-link" onclick="gotoEvaluationCorporationPage(1)" rel="nofollow">
+                <span class="pagination-first-icon" aria-hidden="true">«</span>
+            </a>
+        </li>
+    `;
+
+    // 이전 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `gotoEvaluationCorporationPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
+                <span class="pagination-prev-icon" aria-hidden="true">‹</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지 번호 버튼
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        pagingText += `
+            <li class="pagination-page ${i === pagination.currentPage ? 'active' : ''}">
+                <a href="#" class="pagination-page-link" onclick="gotoEvaluationCorporationPage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // 다음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `gotoEvaluationCorporationPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
+                <span class="pagination-next-icon" aria-hidden="true">›</span>
+            </a>
+        </li>
+    `;
+
+    // 마지막 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `gotoEvaluationCorporationPage(${pagination.realEnd})`}" 
+               rel="nofollow">
+                <span class="pagination-last-icon" aria-hidden="true">»</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지네이션을 동적으로 추가
+    EvaluationCorporationListPaging.innerHTML = pagingText;
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const MemberInquiryListLayout = document.querySelector(".memberInquiryTable_container"); // 일반 회원 문의 목록 표시
+const MemberInquiryListPaging = document.querySelector(".pagination-list.memberInquiry"); // 페이지네이션 요소
+const MemberInquiryKeywordInput = document.getElementById("memberInquirySearchInput"); // 검색어 입력 필드
+const MemberInquirySortOptions = document.querySelectorAll(".sort-filter-option.memberInquirySort"); // 정렬 옵션
+const CorporationInquiryListLayout = document.querySelector(".corporationInquiryTable_container"); // 기업 회원 문의 목록 표시
+const CorporationInquiryListPaging = document.querySelector(".pagination-list.corporationInquiry"); // 페이지네이션 요소
+const CorporationInquiryKeywordInput = document.getElementById("corporationInquirySearchInput"); // 검색어 입력 필드
+const CorporationInquirySortOptions = document.querySelectorAll(".sort-filter-option.corporationInquirySort") // 정렬 옵션
+
+// 일반 회원 문의
+let memberInquirySelectSort = "최신순"; // 기본 정렬 설정
+
+MemberInquirySortOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+        // 선택한 옵션의 data-type 속성을 가져와서 memberInquirySelectSort에 저장
+        memberInquirySelectSort = option.getAttribute("data-type");
+
+        // 기존 선택 해제하고 새로운 선택 항목에 selected 클래스 추가
+        MemberInquirySortOptions.forEach((option) => option.classList.remove("selected"));
+        option.classList.add("selected");
+
+        // 검색어와 정렬 기준을 사용하여 일반 회원 문의 목록 새로고침
+        fetchAndShowMemberInquiry(1);
+    });
+});
+
+// 검색어 초기화
+MemberInquiryKeywordInput.value = new URLSearchParams(window.location.search).get("keyword") || "";
+
+// 검색어 입력 시 검색 실행
+MemberInquiryKeywordInput.addEventListener("input", () => {
+    fetchAndShowMemberInquiry(1);
+});
+
+// 페이지 이동 - fetchAndShowMemberInquiry 호출
+function goToMemberInquiryPage(page) {
+    fetchAndShowMemberInquiry(page);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    goToMemberInquiryPage(1);
+});
+
+// 일반 회원 문의 목록을 서버에서 가져오고 화면에 표시
+const fetchAndShowMemberInquiry = async (page) => {
+    const keyword = MemberInquiryKeywordInput.value;
+    const sortType = memberInquirySelectSort;
+
+    try {
+        // 데이터를 서버에서 가져오는 요청
+        const response = await fetch(`/admin/position/member-inquiry/${page}?keyword=${keyword}&types=${sortType}`);
+        const data = await response.json();
+
+        // 페이지 데이터와 일반 회원 문의 데이터를 표시하는 함수 호출
+        data.pagination.currentPage = page;
+        showMemberInquiryList(data);
+    } catch (error) {
+        console.error(`페이지 ${page} 로딩 중 오류 발생`, error);
+    }
+};
+
+// 일반 회원 문의 목록과 페이지네이션을 표시하는 함수
+const showMemberInquiryList = ({ inquiries, pagination }) => {
+    let text = `
+        <div class = "memberInquiryTable_row memberInquiryTable_header">
+            <div class="memberInquiryTable_cell"><input type="checkbox" id="selectAll"></div>
+            <div class="memberInquiryTable_cell">문의 분류</div>
+            <div class="memberInquiryTable_cell">작성일</div>
+            <div class="memberInquiryTable_cell">문의 제목</div>
+            <div class="memberInquiryTable_cell">문의 내용</div>
+            <div class="memberInquiryTable_cell">작성자</div>
+            <div class="memberInquiryTable_cell">이메일</div>
+            <div class="memberInquiryTable_cell">상태</div>
+            <div class="memberInquiryTable_cell">Action</div>
+        </div>
+    `;
+
+    inquiries.forEach((inquiry) => {
+        text += `
+            <div class="memberInquiryTable_row">
+                <div class="memberInquiryTable_cell"><input type="checkbox" id="selectAll"></div>
+                <div class="memberInquiryTable_cell">${inquiry.inquiryCategory || ''}</div>
+                <div class="memberInquiryTable_cell">${inquiry.createdDate || ''}</div>
+                <div class="memberInquiryTable_cell">${inquiry.inquiryTitle || ''}</div>
+                <div class="memberInquiryTable_cell">${inquiry.inquiryContent || ''}</div>
+                <div class="memberInquiryTable_cell">${inquiry.memberName || ''}</div>
+                <div class="memberInquiryTable_cell">${inquiry.memberEmail || ''}</div>
+                <div class="memberInquiryTable_cell">${inquiry.inquiryStatus || ''}</div>
+                <div class="memberInquiryTable_cell">
+                    <button class="editBtn">수정</button>
+                </div>
+            </div>
+        `;
+    });
+
+    MemberInquiryListLayout.innerHTML = text;
+
+    // 동적으로 totalPages 계산
+    const memberInquiryTotalPages = Math.ceil(pagination.total / pagination.rowCount);
+    pagination.totalPages = memberInquiryTotalPages;
+
+    // 페이지 버튼 생성
+    let pagingText = '';
+
+    // 처음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-first ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-first-link" onclick="goToMemberInquiryPage(1)" rel="nofollow">
+                <span class="pagination-first-icon" aria-hidden="true">«</span>
+            </a>
+        </li>
+    `;
+
+    // 이전 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-prev ${pagination.currentPage === 1 ? 'disabled' : ''}">
+            <a href="#" class="pagination-prev-link" 
+               onclick="${pagination.currentPage === 1 ? 'return false;' : `goToMemberInquiryPage(${pagination.currentPage - 1})`}" 
+               rel="prev nofollow">
+                <span class="pagination-prev-icon" aria-hidden="true">‹</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지 번호 버튼
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        pagingText += `
+            <li class="pagination-page ${i === pagination.currentPage ? 'active' : ''}">
+                <a href="#" class="pagination-page-link" onclick="goToMemberInquiryPage(${i})">${i}</a>
+            </li>
+        `;
+    }
+
+    // 다음 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-next ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-next-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToMemberInquiryPage(${pagination.currentPage + 1})`}" 
+               rel="next nofollow">
+                <span class="pagination-next-icon" aria-hidden="true">›</span>
+            </a>
+        </li>
+    `;
+
+    // 마지막 페이지로 이동하는 버튼
+    pagingText += `
+        <li class="pagination-last ${pagination.currentPage === pagination.totalPages ? 'disabled' : ''}">
+            <a href="#" class="pagination-last-link" 
+               onclick="${pagination.currentPage === pagination.totalPages ? 'return false;' : `goToMemberInquiryPage(${pagination.realEnd})`}" 
+               rel="nofollow">
+                <span class="pagination-last-icon" aria-hidden="true">»</span>
+            </a>
+        </li>
+    `;
+
+    // 페이지네이션을 동적으로 추가
+    MemberInquiryListPaging.innerHTML = pagingText;
+};
 
 
 

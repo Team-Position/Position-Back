@@ -28,6 +28,7 @@ public interface AdminMapper {
     public List<MemberDTO> selectAllMembers(@Param("pagination") Pagination pagination, @Param("search")Search search);
     public int selectMemberTotal();
     public int selectTotalWithMemberSearch(@Param("search")Search search);
+    public void updateMemberStatus(@Param("memberId") Long memberId, @Param("status") String status);
     // 기업 회원
     public List<CorporationDTO> selectAllCorporationMembers(@Param("pagination") Pagination pagination, @Param("search")Search search);
     public int selectCorporationTotal();
@@ -87,5 +88,7 @@ public interface AdminMapper {
     public int selectTotalWithCorporationInquirySearch(@Param("search")Search search);
 
     // 신고 관리
-    List<ComplainDTO> selectAllComplain();
+    public List<ComplainDTO> selectAllComplain(@Param("pagination") Pagination pagination, @Param("search")Search search);
+    public int selectComplainTotal();
+    public int selectTotalWithComplainSearch(@Param("search")Search search);
 }
