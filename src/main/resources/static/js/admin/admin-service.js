@@ -1,5 +1,5 @@
 // 관리자 회원 관리
-
+// 일반 회원 정보 & 기업 회원 정보
 const memberService = (() => {
     const fetchMembers = async (page, keyword = "", sortType = "", callback) => {
         try {

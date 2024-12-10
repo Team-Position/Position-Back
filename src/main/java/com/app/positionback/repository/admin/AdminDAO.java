@@ -4,7 +4,6 @@ import com.app.positionback.domain.apply.ApplyDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
 import com.app.positionback.domain.corporation.CorporationDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationDTO;
-import com.app.positionback.domain.evaluation.EvaluationPositionerDTO;
 import com.app.positionback.domain.inquiry.InquiryDTO;
 import com.app.positionback.domain.interview.InterviewDTO;
 import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
@@ -18,7 +17,6 @@ import com.app.positionback.mapper.admin.AdminMapper;
 import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
