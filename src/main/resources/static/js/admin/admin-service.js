@@ -14,8 +14,7 @@ const memberService = (() => {
             console.error("오류:", error);
         }
     };
-
-
+    
     const fetchCorporationMembers = async (page, keyword="",callback) => {
         try {
             page = page || 1;
