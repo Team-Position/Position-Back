@@ -21,3 +21,19 @@ use test;
 
 create database test;
 
+# member_name, created_date, post_title, post_content, post_read_count
+
+select
+    m.member_name,         -- 회원 이름
+    p.created_date,                -- 게시글 작성일
+    p.post_title,         -- 게시글 제목
+    p.post_content,     -- 게시글 내용
+    p.post_read_count -- 게시글 조회수
+from
+    tbl_member m
+        join
+    tbl_post p
+    on
+        m.id = p.member_id;
+
+

@@ -20,6 +20,11 @@ public class ComplainDTO {
     private String createdDate;
     private String updatedDate;
 
+    // 관리자 기업 후기 신고 페이지 추가
+    private String corporationName;
+    private String memberName;
+    private int complainCount;
+
     public ComplainVO toVO() {
         return new ComplainVO(id,complainTitle,complainContent,complainStatus,complainType,corporationId,memberId,createdDate, updatedDate);
     }

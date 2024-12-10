@@ -28,6 +28,9 @@ public class PostDTO {
     private Pagination pagination;
     private Integer total;
 
+    // 관리자 페이지 게시글 작성 관리 부분 추가
+    private String memberName;
+
     public PostVO toVO() {
         return new PostVO(id, memberId,memberNickname,postTitle, postContent, postReadCount, createdDate, updatedDate);
     }

@@ -62,7 +62,7 @@ infoButton.addEventListener("click", () => {
                             <img src="https://static.wadiz.kr/studio/funding/static/media/default-zingugi.de76a099.svg" />
                         </span>
                     </span>
-                    <span class="ProjectInfo_makerName">하민지</span>
+                    <span class="ProjectInfo_makerName">김성수</span>
                 </dd>
                 <dt class="BlindText_textHidden">상태</dt>
                 <dd class="ProjectInfo_content ProjectInfo_stateBox">
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 활동중, 탈퇴함 글자 색
     document.querySelectorAll(".UserTable_row").forEach((row) => {
-        const statusCell = row.querySelector(".UserTable_cell:nth-child(8)");
+        const statusCell = row.querySelector(".UserTable_cell:nth-child(7)");
         if (statusCell) {
             const statusText = statusCell.textContent.trim();
 
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 case "활동중":
                     statusCell.style.color = "var(--blue90)";
                     break;
-                case "탈퇴함":
+                case "탈퇴":
                     statusCell.style.color = "var(--gray50)";
                     break;
                 default:
@@ -459,6 +459,158 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// 일반회원 상태 변경 모달창 자바스크립트
+// document.addEventListener('DOMContentLoaded', () => {
+//     const tableContainer = document.querySelector('.UserTable_container'); // 수정 버튼이 포함된 부모 컨테이너
+//     const modal = document.getElementById('memberStatusModal'); // 모달 창
+//     const overlay = document.createElement('div'); // 배경 흐림 효과
+//     overlay.className = 'modal-overlay';
+//     document.body.appendChild(overlay);
+//
+//     let currentStatusCell = null; // 현재 상태 셀 참조 변수
+//
+//     // 부모 컨테이너에 이벤트 위임
+//     tableContainer.addEventListener('click', (event) => {
+//         // 클릭된 요소가 수정 버튼인지 확인
+//         if (event.target.classList.contains('editBtn')) {
+//             const currentRow = event.target.closest('.UserTable_row'); // 클릭된 버튼의 행
+//             currentStatusCell = currentRow.querySelector('.UserTable_cell:nth-child(7)'); // 상태 셀
+//
+//             console.log('수정 버튼 클릭!'); // 디버깅 메시지
+//             console.log('현재 상태:', currentStatusCell.textContent); // 상태 확인
+//
+//             // 모달 열기
+//             modal.style.display = 'block';
+//
+//             // 배경 열기
+//             overlay.style.display = 'block';
+//         }
+//     });
+//
+//     // 상태 변경 버튼 클릭 이벤트
+//     modal.addEventListener('click', (event) => {
+//         if (event.target.classList.contains('memberStatusChangeBtn')) {
+//             const newStatus = event.target.getAttribute('data-status'); // 버튼의 상태 값 가져오기
+//             const userId = currentStatusCell.closest('.UserTable_row').dataset.userId; // 행의 사용자 ID 가져오기
+//
+//             if (currentStatusCell) {
+//                 currentStatusCell.textContent = newStatus; // UI 업데이트
+//                 updateStatusOnServer(userId, newStatus);  // 서버로 상태 변경 요청
+//             }
+//
+//             // 모달 닫기
+//             modal.style.display = 'none';
+//             overlay.style.display = 'none';
+//         }
+//     });
+//
+//     // 모달 닫기 버튼
+//     modal.querySelector('.memberCloseModal').addEventListener('click', () => {
+//         modal.style.display = 'none'; // 모달 닫기
+//         overlay.style.display = 'none'; // 배경 닫기
+//     });
+//
+//     // 모달 외부 클릭 시 닫기
+//     overlay.addEventListener('click', () => {
+//         modal.style.display = 'none';
+//         overlay.style.display = 'none';
+//     });
+//
+//     // 서버 요청 함수 (선택 사항)
+//     function updateStatusOnServer(userId, status) {
+//         console.log("전송 데이터:", { memberId: userId, status: status }); // 전송 데이터 확인
+//
+//         fetch('/admin/position/members/updateStatus', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({
+//                 memberId: userId, // 'memberId'는 서버에서 사용하는 키 이름
+//                 status: status    // 'status'는 서버에서 사용하는 키 이름
+//             }),
+//         })
+//             .then((response) => {
+//                 if (!response.ok) {
+//                     throw new Error('상태 변경 실패');
+//                 }
+//                 return response.json(); // 성공 응답
+//             })
+//             .then((data) => {
+//                 console.log('상태가 성공적으로 업데이트되었습니다:', data);
+//             })
+//             .catch((error) => {
+//                 console.error('상태 변경 오류:', error);
+//             });
+//     }
+// });
+document.addEventListener('DOMContentLoaded', () => {
+    const tableContainer = document.querySelector('.UserTable_container'); // 수정 버튼의 부모 컨테이너
+    const modal = document.getElementById('memberStatusModal'); // 모달 창
+    const overlay = document.createElement('div'); // 모달창 배경 흐림 효과
+    overlay.className = 'modal-overlay';
+    document.body.appendChild(overlay);
+
+    let currentStatusCell = null; // 현재 상태 셀
+    let currentUserId = null; // 현재 사용자 ID
+
+    // 테이블에서 수정 버튼 클릭 이벤트
+    tableContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('editBtn')) {
+            const currentRow = event.target.closest('.UserTable_row');
+            currentStatusCell = currentRow.querySelector('.UserTable_cell:nth-child(7)'); // 상태 셀
+            currentUserId = currentRow.dataset.userId; // 사용자 ID 가져오기 (data-user-id 필요)
+
+            modal.style.display = 'block'; // 모달 열기
+            overlay.style.display = 'block'; // 배경 활성화
+        }
+    });
+
+    // 상태 변경 버튼 클릭 이벤트
+    modal.addEventListener('click', (event) => {
+        if (event.target.classList.contains('memberStatusChangeBtn')) {
+            const newStatus = event.target.getAttribute('data-status'); // 클릭한 버튼의 상태값
+            if (currentStatusCell) {
+                currentStatusCell.textContent = newStatus; // UI 업데이트
+                updateStatusOnServer(currentUserId, newStatus); // 서버로 상태 변경 요청
+            }
+
+            // 모달 닫기
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+    });
+
+    // 모달 닫기 버튼
+    modal.querySelector('.memberCloseModal').addEventListener('click', () => {
+        modal.style.display = 'none'; // 모달 닫기
+        overlay.style.display = 'none'; // 배경 닫기
+    });
+
+    // 배경 클릭 시 모달 닫기
+    overlay.addEventListener('click', () => {
+        modal.style.display = 'none';
+        overlay.style.display = 'none';
+    });
+
+    // 서버로 상태 변경 요청
+    async function updateStatusOnServer(userId, status) {
+        try {
+            const response = await fetch('/admin/position/members/updateStatus', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ memberId: userId, status: status }),
+            });
+
+            if (!response.ok) throw new Error('상태 변경 실패');
+
+            const result = await response.json();
+            console.log('상태가 성공적으로 업데이트되었습니다:', result);
+        } catch (error) {
+            console.error('상태 변경 요청 중 오류:', error);
+        }
+    }
+});
+
 
 
 

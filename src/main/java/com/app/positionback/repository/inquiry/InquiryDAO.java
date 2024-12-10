@@ -1,7 +1,6 @@
 package com.app.positionback.repository.inquiry;
 
 import com.app.positionback.domain.inquiry.InquiryDTO;
-import com.app.positionback.domain.inquiry.InquiryVO;
 import com.app.positionback.mapper.inquiry.InquiryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

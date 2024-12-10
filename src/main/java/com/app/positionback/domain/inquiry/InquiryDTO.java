@@ -21,6 +21,12 @@ public class InquiryDTO {
     private String filePath; // 업로드된 파일 경로
     private String fileSize; // 업로드된 파일 크기
 
+    // 관리자 문의 작성 페이지 추가 필드
+    private String memberName;
+    private String corporationName;
+    private String corporationEmail;
+    private String inquiryStatus;
+
     public InquiryVO toVO() {
         return new InquiryVO(id, inquiryType, inquiryCategory, inquiryTitle, inquiryContent, createdDate, updatedDate, memberId, memberEmail);
     }

@@ -4,7 +4,6 @@ import com.app.positionback.domain.apply.ApplyDTO;
 import com.app.positionback.domain.complain.ComplainDTO;
 import com.app.positionback.domain.corporation.CorporationDTO;
 import com.app.positionback.domain.evaluation.EvaluationCorporationDTO;
-import com.app.positionback.domain.evaluation.EvaluationPositionerDTO;
 import com.app.positionback.domain.inquiry.InquiryDTO;
 import com.app.positionback.domain.interview.InterviewDTO;
 import com.app.positionback.domain.interviewreview.InterviewReviewDTO;
@@ -18,7 +17,6 @@ import com.app.positionback.mapper.admin.AdminMapper;
 import com.app.positionback.utill.Pagination;
 import com.app.positionback.utill.Search;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,6 +40,11 @@ public class AdminDAO {
     // 일반 회원 검색 결과 전체 조회
     public int getTotalWithMemberSearch(Search search) {
         return adminMapper.selectTotalWithMemberSearch(search);
+    }
+
+    // 일반 회원 상태 변경
+    public void updateMemberStatus(Long memberId, String status) {
+        adminMapper.updateMemberStatus(memberId, status);
     }
 
     // 기업 회원 조회
@@ -169,17 +172,35 @@ public class AdminDAO {
 
     // 후기 관리
     // 면접 후기
-    public List<InterviewReviewDTO> InterviewReviewInformation() {
-        return adminMapper.selectAllInterviewReview();
+    public List<InterviewReviewDTO> InterviewReviewInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllInterviewReview(pagination, search);
     }
-    // 인턴십 후기(기업)
-    public List<EvaluationCorporationDTO> EvaluationCorporationInformation() {
-        return adminMapper.selectAllEvaluationCorporation();
+
+    // 면접 후기 작성 현황 전체 갯수 조회
+    public int getInterviewReviewTotal() {
+        return adminMapper.selectInterviewReviewTotal();
     }
-    // 인턴십 후기(인턴)
-    public List<EvaluationPositionerDTO> EvaluationPositionerInformation() {
-        return adminMapper.selectAllEvaluationPositioner();
+
+    // 면접 후기 작성 검색 결과 전체 조회
+    public int getTotalWithInterviewReviewSearch(Search search) {
+        return adminMapper.selectTotalWithInterviewReviewSearch(search);
     }
+
+    // 포지션(인턴십) 후기(기업)
+    public List<EvaluationCorporationDTO> EvaluationCorporationInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllEvaluationCorporation(pagination, search);
+    }
+
+    // 포지션(인턴십) 후기(기업) 작성 현황 전체 갯수 조회
+    public int getEvaluationCorporationTotal() {
+        return adminMapper.selectEvaluationCorporationTotal();
+    }
+
+    // 포지션(인턴십) 후기(기업) 작성 검색 결과 전체 조회
+    public int getTotalWithEvaluationCorporationSearch(Search search) {
+        return adminMapper.selectTotalWithEvaluationCorporationSearch(search);
+    }
+
 
     // 문의 관리
     // 일반 회원 문의 조회
@@ -213,8 +234,18 @@ public class AdminDAO {
     }
 
     // 신고 관리
-    // 기업 후기 신고
-    public List<ComplainDTO> complainInformation() {
-        return adminMapper.selectAllComplain();
+    // 기업 후기 신고 조회
+    public List<ComplainDTO> complainInformation(Pagination pagination, Search search) {
+        return adminMapper.selectAllComplain(pagination, search);
+    }
+
+    // 기업 후기 신고 전체 조회 수
+    public int getComplainTotal() {
+        return adminMapper.selectComplainTotal();
+    }
+
+    // 기업 후기 신고 검색 결과 전체 조회
+    public int getTotalWithComplainSearch(Search search) {
+        return adminMapper.selectTotalWithComplainSearch(search);
     }
 }

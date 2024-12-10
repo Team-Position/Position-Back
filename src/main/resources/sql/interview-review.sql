@@ -20,3 +20,47 @@ create table tbl_interview_review (
 select *
 from tbl_interview_review;
 
+# 기업명 / 면접 날짜 / 공고 제목 / 작성자 / 전화 번호 / 지원 분야 / 면접 합격 여부
+# c.corporation_name / i.interview_date / n.notice_title / m.member_name / m.member_phone / a.apply_type / i.interview_status
+
+# select
+#     c.corporation_name,
+#     i.interview_date,
+#     n.notice_title,
+#     m.member_name,
+#     m.member_phone,
+#     a.apply_type,
+#     i.interview_status
+# from
+#     tbl_interview_review i
+#         join
+#     tbl_interview i on c.corporation_id = i.id
+#         join
+#     tbl_notice n on i.notice_id = n.notice_id
+#         join
+#     tbl_member m on i.member_id = m.member_id
+#         join
+#     tbl_apply a on i.apply_id = a.apply_id;
+
+select
+    c.corporation_name,     -- 기업명
+    r. created_date,        -- 작성 날짜
+    i.interview_date,       -- 면접 날짜
+    n.notice_title,         -- 공고 제목
+    m.member_name,          -- 작성자 이름
+    m.member_phone,         -- 전화번호
+    a.apply_type,           -- 지원 상태
+    r.interview_passed      -- 합격 여부
+from
+    tbl_interview_review r
+    join tbl_corporation c on r.corporation_id = c.id
+    join tbl_member m on r.member_id = m.id
+    join tbl_interview i on r.id = i.id
+    join tbl_apply a on i.resume_id = a.resume_id
+    join tbl_notice n on a.notice_id = n.id;
+
+
+
+
+
+

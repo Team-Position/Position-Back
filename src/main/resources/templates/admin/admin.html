@@ -687,6 +687,15 @@
                                         </li>
                                     </ul>
                                 </nav>
+                                <div id="memberStatusModal" class="member-modal modal" style="display: none;">
+                                    <div class="member-modal-content">
+                                        <h2>상태 변경</h2>
+                                        <button class="memberStatusChangeBtn" data-status="활동중">활동중</button>
+                                        <button class="memberStatusChangeBtn" data-status="정지">정지</button>
+                                        <button class="memberStatusChangeBtn" data-status="탈퇴">탈퇴</button>
+                                        <button id="memberCloseModal" class="memberCloseModal">닫기</button>
+                                    </div>
+                                </div>
                             </section>
                             <!-- section2: 기업회원 -->
                             <section
@@ -1964,13 +1973,13 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                class="sort-filter-option paymentSort selected"
+                                                class="sort-filter-option paymentSort selected" data-type="recent"
                                                 >최신순</span
                                             >
-                                            <span class="sort-filter-option paymentSort"
+                                            <span class="sort-filter-option paymentSort" data-type="paymentcomplete"
                                                 >결제 완료</span
                                             >
-                                            <span class="sort-filter-option paymentSort"
+                                            <span class="sort-filter-option paymentSort" data-type="paymentcancel"
                                                 >결제 취소</span
                                             >
                                         </div>
@@ -2274,13 +2283,13 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                    class="sort-filter-option noticeSort selected"
+                                                    class="sort-filter-option noticeSort selected" data-type="recent"
                                             >포지션 근무일순</span
                                             >
-                                            <span class="sort-filter-option noticeSort"
+                                            <span class="sort-filter-option noticeSort" data-type="hiring"
                                             >채용중</span
                                             >
-                                            <span class="sort-filter-option noticeSort"
+                                            <span class="sort-filter-option noticeSort" data-type="hiringClosed"
                                             >채용 마감</span
                                             >
                                         </div>
@@ -2581,14 +2590,11 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                class="sort-filter-option selected"
+                                                class="sort-filter-option postSort selected" data-type="recent"
                                                 >최신순</span
                                             >
-                                            <span class="sort-filter-option"
-                                                >인기순</span
-                                            >
-                                            <span class="sort-filter-option"
-                                                >채용 마감</span
+                                            <span class="sort-filter-option postSort" data-type="views"
+                                                >조회수 순</span
                                             >
                                         </div>
                                         <!-- Action Buttons -->
@@ -2597,16 +2603,17 @@
                                                 type="text"
                                                 class="Filter_searchInput"
                                                 placeholder="검색어 입력"
+                                                id="postSearchInput"
                                             />
                                         </div>
                                     </div>
                                     <!--게시글 내역 테이블 -->
-                                    <div class="PostTable_container">
+                                    <div class="postTable_container">
                                         <div
-                                            class="PostTable_row PostTable_header"
+                                            class="postTable_row postTable_header"
                                         >
                                             <div
-                                                class="PostTable_cell Post-headerCell selectAllCell"
+                                                class="postTable_cell post-headerCell selectAllCell"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -2614,69 +2621,69 @@
                                                 />
                                             </div>
                                             <div
-                                                class="PostTable_cell Post-headerCell"
+                                                class="postTable_cell post-headerCell"
                                             >
                                                 커뮤니티 분류
                                             </div>
                                             <div
-                                                class="PostTable_cell Post-headerCell"
+                                                class="postTable_cell post-headerCell"
                                             >
                                                 작성일
                                             </div>
                                             <div
-                                                class="PostTable_cell Post-headerCell"
+                                                class="postTable_cell post-headerCell"
                                             >
                                                 게시글 제목
                                             </div>
 
                                             <div
-                                                class="PostTable_cell Post-headerCell"
+                                                class="postTable_cell post-headerCell"
                                             >
                                                 게시글 내용
                                             </div>
                                             <div
-                                                class="PostTable_cell Post-headerCell"
+                                                class="postTable_cell post-headerCell"
                                             >
                                                 작성자
                                             </div>
                                             <div
-                                                class="PostTable_cell Post-headerCell"
+                                                class="postTable_cell post-headerCell"
                                             >
                                                 댓글
                                             </div>
                                             <!-- <div
-                                            class="PostTable_cell Post-headerCell"
+                                            class="postTable_cell post-headerCell"
                                         >
                                             상태
                                         </div> -->
                                             <div
-                                                class="PostTable_cell Post-headerCell"
+                                                class="postTable_cell post-headerCell"
                                             >
                                                 Action
                                             </div>
                                         </div>
 
                                         <!-- Example row (Initial data) -->
-                                        <div class="PostTable_row">
-                                            <div class="PostTable_cell">
+                                        <div class="postTable_row">
+                                            <div class="postTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="PostCheckbox"
+                                                    class="postCheckbox"
                                                 />
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 취준생
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 회사에서 신입이 먼저 인사하는
                                                 이유가 뭔가요? 꼭그래야만
                                                 하나요?
                                             </div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 궁금하네요. 인사 안하면 예의
                                                 없는 건가요..? 중고 신입인데
                                                 연봉은 해당 직종 처음이라 신입
@@ -2685,36 +2692,36 @@
                                                 제가 대우받고 싶으면 저도 남을
                                                 대우해야겠죠..?
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 불만제로
                                             </div>
-                                            <div class="PostTable_cell">30</div>
+                                            <div class="postTable_cell">30</div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="PostTable_row">
-                                            <div class="PostTable_cell">
+                                        <div class="postTable_row">
+                                            <div class="postTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="PostCheckbox"
+                                                    class="postCheckbox"
                                                 />
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 취준생
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 2024-10-15
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 중소기업 신입 연봉 관련
                                                 질문드립니다
                                             </div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 이제 5년차 된 수산 관련 회사이고
                                                 여러 나라와 정부에 투자를 많이
                                                 받은 회사입니다 제가 받은 초봉은
@@ -2727,75 +2734,75 @@
                                                 많은건가요 적당한건가요
                                                 작은건가요?
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 고민중독
                                             </div>
-                                            <div class="PostTable_cell">23</div>
+                                            <div class="postTable_cell">23</div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="PostTable_row">
-                                            <div class="PostTable_cell">
+                                        <div class="postTable_row">
+                                            <div class="postTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="PostCheckbox"
+                                                    class="postCheckbox"
                                                 />
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 멘토&취준생
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 스펙 어디까지 준비해야 대기업
                                                 들어갈 수 있나요?
                                             </div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 제곧내
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 사용자1
                                             </div>
-                                            <div class="PostTable_cell">5</div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">5</div>
+                                            <div class="postTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="PostTable_row">
-                                            <div class="PostTable_cell">
+                                        <div class="postTable_row">
+                                            <div class="postTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="PostCheckbox"
+                                                    class="postCheckbox"
                                                 />
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 취준생
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 2024년도 kepco 연구직 채용공고
                                                 다들 보셨나요?
                                             </div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 kepco 준비시는 분들께 여쭙고
                                                 싶습니다
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">
                                                 피카츄
                                             </div>
-                                            <div class="PostTable_cell">17</div>
-                                            <div class="PostTable_cell">
+                                            <div class="postTable_cell">17</div>
+                                            <div class="postTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
@@ -2804,7 +2811,7 @@
                                     </div>
                                 </div>
                                 <nav class="pagination">
-                                    <ul class="pagination-list">
+                                    <ul class="pagination-list post">
                                         <!-- 처음 페이지로 이동하는 버튼 -->
                                         <li class="pagination-first">
                                             <a
@@ -2893,12 +2900,6 @@
                                                     class="sort-filter-option selected"
                                             >최신순</span
                                             >
-                                            <span class="sort-filter-option"
-                                            >인기순</span
-                                            >
-                                            <span class="sort-filter-option"
-                                            >채용 마감</span
-                                            >
                                         </div>
                                         <!-- Action Buttons -->
                                         <div class="action-buttons">
@@ -2906,16 +2907,17 @@
                                                     type="text"
                                                     class="Filter_searchInput"
                                                     placeholder="검색어 입력"
+                                                    id="replySearchInput"
                                             />
                                         </div>
                                     </div>
-                                    <!--게시글 내역 테이블 -->
-                                    <div class="PostTable_container">
+                                    <!-- 댓글 내역 테이블 -->
+                                    <div class="replyTable_container">
                                         <div
-                                                class="PostTable_row PostTable_header"
+                                                class="replyTable_row replyTable_header"
                                         >
                                             <div
-                                                    class="PostTable_cell Post-headerCell selectAllCell"
+                                                    class="replyTable_cell reply-headerCell selectAllCell"
                                             >
                                                 <input
                                                         type="checkbox"
@@ -2923,64 +2925,64 @@
                                                 />
                                             </div>
                                             <div
-                                                    class="PostTable_cell Post-headerCell"
+                                                    class="replyTable_cell reply-headerCell"
                                             >
                                                 커뮤니티 분류
                                             </div>
                                             <div
-                                                    class="PostTable_cell Post-headerCell"
+                                                    class="replyTable_cell reply-headerCell"
                                             >
                                                 작성일
                                             </div>
                                             <div
-                                                    class="PostTable_cell Post-headerCell"
+                                                    class="replyTable_cell reply-headerCell"
                                             >
                                                 게시글 제목
                                             </div>
 
                                             <div
-                                                    class="PostTable_cell Post-headerCell"
+                                                    class="replyTable_cell reply-headerCell"
                                             >
                                                 댓글 내용
                                             </div>
                                             <div
-                                                    class="PostTable_cell Post-headerCell"
+                                                    class="replyTable_cell reply-headerCell"
                                             >
                                                 작성자
                                             </div>
                                             <!-- <div
-                                            class="PostTable_cell Post-headerCell"
+                                            class="replyTable_cell reply-headerCell"
                                         >
                                             상태
                                         </div> -->
                                             <div
-                                                    class="PostTable_cell Post-headerCell"
+                                                    class="replyTable_cell reply-headerCell"
                                             >
                                                 Action
                                             </div>
                                         </div>
 
                                         <!-- Example row (Initial data) -->
-                                        <div class="PostTable_row">
-                                            <div class="PostTable_cell">
+                                        <div class="replyTable_row">
+                                            <div class="replyTable_cell">
                                                 <input
                                                         type="checkbox"
-                                                        class="PostCheckbox"
+                                                        class="replyCheckbox"
                                                 />
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 취준생
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 회사에서 신입이 먼저 인사하는
                                                 이유가 뭔가요? 꼭그래야만
                                                 하나요?
                                             </div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 궁금하네요. 인사 안하면 예의
                                                 없는 건가요..? 중고 신입인데
                                                 연봉은 해당 직종 처음이라 신입
@@ -2989,34 +2991,34 @@
                                                 제가 대우받고 싶으면 저도 남을
                                                 대우해야겠죠..?
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 불만제로
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="PostTable_row">
-                                            <div class="PostTable_cell">
+                                        <div class="replyTable_row">
+                                            <div class="replyTable_cell">
                                                 <input
                                                         type="checkbox"
-                                                        class="PostCheckbox"
+                                                        class="replyCheckbox"
                                                 />
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 취준생
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 2024-10-15
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 중소기업 신입 연봉 관련
                                                 질문드립니다
                                             </div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 이제 5년차 된 수산 관련 회사이고
                                                 여러 나라와 정부에 투자를 많이
                                                 받은 회사입니다 제가 받은 초봉은
@@ -3029,71 +3031,71 @@
                                                 많은건가요 적당한건가요
                                                 작은건가요?
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 고민중독
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="PostTable_row">
-                                            <div class="PostTable_cell">
+                                        <div class="replyTable_row">
+                                            <div class="replyTable_cell">
                                                 <input
                                                         type="checkbox"
-                                                        class="PostCheckbox"
+                                                        class="replyCheckbox"
                                                 />
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 멘토&취준생
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 스펙 어디까지 준비해야 대기업
                                                 들어갈 수 있나요?
                                             </div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 제곧내
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 사용자1
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="PostTable_row">
-                                            <div class="PostTable_cell">
+                                        <div class="replyTable_row">
+                                            <div class="replyTable_cell">
                                                 <input
                                                         type="checkbox"
-                                                        class="PostCheckbox"
+                                                        class="replyCheckbox"
                                                 />
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 취준생
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 2024년도 kepco 연구직 채용공고
                                                 다들 보셨나요?
                                             </div>
 
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 kepco 준비시는 분들께 여쭙고
                                                 싶습니다
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 피카츄
                                             </div>
-                                            <div class="PostTable_cell">
+                                            <div class="replyTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
@@ -3102,7 +3104,7 @@
                                     </div>
                                 </div>
                                 <nav class="pagination">
-                                    <ul class="pagination-list">
+                                    <ul class="pagination-list reply">
                                         <!-- 처음 페이지로 이동하는 버튼 -->
                                         <li class="pagination-first">
                                             <a
@@ -3191,13 +3193,13 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                class="sort-filter-option selected"
+                                                class="sort-filter-option interviewReviewSort selected" data-type="recent"
                                                 >최신순</span
                                             >
-                                            <span class="sort-filter-option"
+                                            <span class="sort-filter-option interviewReviewSort" data-type="interviewPass"
                                                 >면접 합격</span
                                             >
-                                            <span class="sort-filter-option"
+                                            <span class="sort-filter-option interviewReviewSort" data-type="interviewFail"
                                                 >면접 불합격</span
                                             >
                                         </div>
@@ -3207,6 +3209,7 @@
                                                 type="text"
                                                 class="Filter_searchInput"
                                                 placeholder="검색어 입력"
+                                                id="interviewReviewSearchInput"
                                             />
                                             <!-- <button
                                             id="addServiceBtn"
@@ -3223,12 +3226,12 @@
                                         </div>
                                     </div>
                                     <!-- 면접 내역 테이블 -->
-                                    <div class="ApplyTable_container">
+                                    <div class="interviewReviewTable_container">
                                         <div
-                                            class="ApplyTable_row ApplyTable_header"
+                                            class="interviewReviewTable_row interviewReviewTable_header"
                                         >
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell selectAllCell"
+                                                class="interviewReviewTable_cell interviewReview-headerCell selectAllCell"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -3236,183 +3239,183 @@
                                                 />
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="interviewReviewTable_cell interviewReview-headerCell"
                                             >
                                                 기업명
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="interviewReviewTable_cell interviewReview-headerCell"
                                             >
                                                 면접 날짜
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="interviewReviewTable_cell interviewReview-headerCell"
                                             >
                                                 공고 제목
                                             </div>
 
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="interviewReviewTable_cell interviewReview-headerCell"
                                             >
                                                 작성자
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="interviewReviewTable_cell interviewReview-headerCell"
                                             >
                                                 전화번호
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="interviewReviewTable_cell interviewReview-headerCell"
                                             >
                                                 지원 분야
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="interviewReviewTable_cell interviewReview-headerCell"
                                             >
                                                 상태
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="interviewReviewTable_cell interviewReview-headerCell"
                                             >
                                                 Action
                                             </div>
                                         </div>
 
                                         <!-- Example row (Initial data) -->
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="interviewReviewTable_row">
+                                            <div class="interviewReviewTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="interviewReviewCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 쿠팡(주)
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 [쿠팡CPLB]리테일상품검수/모니터링담당(단순사무/재택근무가능)
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 홍길동
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 010-1234-1234
                                             </div>
-                                            <div class="ApplyTable_cell">-</div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">-</div>
+                                            <div class="interviewReviewTable_cell">
                                                 면접 합격
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="interviewReviewTable_row">
+                                            <div class="interviewReviewTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="interviewReviewCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 롯데자인언츠(주)
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 1982-02-12
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 [신입모집] 마케팅 및 디자인 담당
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 하민지
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 010-1234-1234
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 디자인
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 면접 불합격
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="interviewReviewTable_row">
+                                            <div class="interviewReviewTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="interviewReviewCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 챔프스터디(주)
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 2024년 해커스 교육그룹
                                                 [신입/경력] 각 부문별 채용공고
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 안수진
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 010-1234-1234
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 연구
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 면접 합격
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="interviewReviewTable_row">
+                                            <div class="interviewReviewTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="interviewReviewCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 한국전력공사
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 2024년도 연구직 채용공고
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 석상훈
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 010-1234-1234
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 전력시장분석
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 면접 불합격
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="interviewReviewTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
@@ -3421,7 +3424,7 @@
                                     </div>
                                 </div>
                                 <nav class="pagination">
-                                    <ul class="pagination-list">
+                                    <ul class="pagination-list interviewReview">
                                         <!-- 처음 페이지로 이동하는 버튼 -->
                                         <li class="pagination-first">
                                             <a
@@ -3510,7 +3513,7 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                class="sort-filter-option selected"
+                                                class="sort-filter-option selected" data-type="recent"
                                                 >최신순</span
                                             >
                                         </div>
@@ -3520,6 +3523,7 @@
                                                 type="text"
                                                 class="Filter_searchInput"
                                                 placeholder="검색어 입력"
+                                                id="evaluationCorporationSearchInput"
                                             />
                                             <!-- <button
                                             id="addServiceBtn"
@@ -3535,13 +3539,13 @@
                                         </button> -->
                                         </div>
                                     </div>
-                                    <!-- 면접 내역 테이블 -->
-                                    <div class="ApplyTable_container">
+                                    <!-- 포지션 후기(기업) 내역 테이블 -->
+                                    <div class="evaluationCorporationTable_container">
                                         <div
-                                            class="ApplyTable_row ApplyTable_header"
+                                            class="evaluationCorporationTable_row evaluationCorporationTable_header"
                                         >
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell selectAllCell"
+                                                class="evaluationCorporationTable_cell evaluationCorporation-headerCell selectAllCell"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -3549,183 +3553,183 @@
                                                 />
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="evaluationCorporationTable_cell evaluationCorporation-headerCell"
                                             >
                                                 기업명
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="evaluationCorporationTable_cell evaluationCorporation-headerCell"
                                             >
                                                 포지션 근무일
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="evaluationCorporationTable_cell evaluationCorporation-headerCell"
                                             >
                                                 공고 제목
                                             </div>
 
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="evaluationCorporationTable_cell evaluationCorporation-headerCell"
                                             >
                                                 근무자
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="evaluationCorporationTable_cell evaluationCorporation-headerCell"
                                             >
                                                 전화번호
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="evaluationCorporationTable_cell evaluationCorporation-headerCell"
                                             >
                                                 지원 분야
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="evaluationCorporationTable_cell evaluationCorporation-headerCell"
                                             >
                                                 상태
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="evaluationCorporationTable_cell evaluationCorporation-headerCell"
                                             >
                                                 Action
                                             </div>
                                         </div>
 
                                         <!-- Example row (Initial data) -->
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="evaluationCorporationTable_row">
+                                            <div class="evaluationCorporationTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="evaluationCorporationCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 쿠팡(주)
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 [쿠팡CPLB]리테일상품검수/모니터링담당(단순사무/재택근무가능)
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 홍길동
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 010-1234-1234
                                             </div>
-                                            <div class="ApplyTable_cell">-</div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">-</div>
+                                            <div class="evaluationCorporationTable_cell">
                                                 포지션 수료
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="evaluationCorporationTable_row">
+                                            <div class="evaluationCorporationTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="evaluationCorporationCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 롯데자인언츠(주)
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 1982-02-12
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 [신입모집] 마케팅 및 디자인 담당
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 하민지
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 010-1234-1234
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 디자인
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 포지션 수료
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="evaluationCorporationTable_row">
+                                            <div class="evaluationCorporationTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="evaluationCorporationCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 챔프스터디(주)
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 2024년 해커스 교육그룹
                                                 [신입/경력] 각 부문별 채용공고
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 안수진
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 010-1234-1234
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 연구
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 포지션 수료
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="evaluationCorporationTable_row">
+                                            <div class="evaluationCorporationTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="evaluationCorporationCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 한국전력공사
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 2024년도 연구직 채용공고
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 석상훈
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 010-1234-1234
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 전력시장분석
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 포지션 수료
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="evaluationCorporationTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
@@ -3734,7 +3738,7 @@
                                     </div>
                                 </div>
                                 <nav class="pagination">
-                                    <ul class="pagination-list">
+                                    <ul class="pagination-list evaluationCorporation">
                                         <!-- 처음 페이지로 이동하는 버튼 -->
                                         <li class="pagination-first">
                                             <a
@@ -3823,13 +3827,13 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                class="sort-filter-option selected"
+                                                class="sort-filter-option memberInquirySort selected" data-type="recent"
                                                 >최신순</span
                                             >
-                                            <span class="sort-filter-option"
-                                                >답변 대기</span
+                                            <span class="sort-filter-option memberInquirySort" data-type="replyWait"
+                                                >답변 예정</span
                                             >
-                                            <span class="sort-filter-option"
+                                            <span class="sort-filter-option memberInquirySort" data-type="replyComplete"
                                                 >답변 완료</span
                                             >
                                         </div>
@@ -3839,16 +3843,17 @@
                                                 type="text"
                                                 class="Filter_searchInput"
                                                 placeholder="검색어 입력"
+                                                id="memberInquirySearchInput"
                                             />
                                         </div>
                                     </div>
                                     <!--게시글 내역 테이블 -->
-                                    <div class="memberinquiryTable_container">
+                                    <div class="memberInquiryTable_container">
                                         <div
-                                            class="inquiryTable_row inquiryTable_header"
+                                            class="memberInquiryTable_row memberInquiryTable_header"
                                         >
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell selectAllCell"
+                                                class="memberInquiryTable_cell memberInquiry-headerCell selectAllCell"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -3856,64 +3861,64 @@
                                                 />
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="memberInquiryTable_cell memberInquiry-headerCell"
                                             >
                                                 문의 분류
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="memberInquiryTable_cell memberInquiry-headerCell"
                                             >
                                                 작성일
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="memberInquiryTable_cell memberInquiry-headerCell"
                                             >
                                                 문의 제목
                                             </div>
 
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="memberInquiryTable_cell memberInquiry-headerCell"
                                             >
                                                 문의 내용
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="memberInquiryTable_cell memberInquiry-headerCell"
                                             >
                                                 이메일
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="memberInquiryTable_cell memberInquiry-headerCell"
                                             >
                                                 상태
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="memberInquiryTable_cell memberInquiry-headerCell"
                                             >
                                                 Action
                                             </div>
                                         </div>
 
                                         <!-- Example row (Initial data) -->
-                                        <div class="inquiryTable_row">
-                                            <div class="inquiryTable_cell">
+                                        <div class="memberInquiryTable_row">
+                                            <div class="memberInquiryTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="inquiryCheckbox"
+                                                    class="memberInquiryCheckbox"
                                                 />
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 기타
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 회사에서 신입이 먼저 인사하는
                                                 이유가 뭔가요? 꼭그래야만
                                                 하나요?
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 궁금하네요. 인사 안하면 예의
                                                 없는 건가요..? 중고 신입인데
                                                 연봉은 해당 직종 처음이라 신입
@@ -3922,38 +3927,38 @@
                                                 제가 대우받고 싶으면 저도 남을
                                                 대우해야겠죠..?
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 test@gmail.com
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 답변 예정
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="inquiryTable_row">
-                                            <div class="inquiryTable_cell">
+                                        <div class="memberInquiryTable_row">
+                                            <div class="memberInquiryTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="inquiryCheckbox"
+                                                    class="memberInquiryCheckbox"
                                                 />
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 이력서 문의
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 2024-10-15
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 중소기업 신입 연봉 관련
                                                 질문드립니다
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 이제 5년차 된 수산 관련 회사이고
                                                 여러 나라와 정부에 투자를 많이
                                                 받은 회사입니다 제가 받은 초봉은
@@ -3966,81 +3971,81 @@
                                                 많은건가요 적당한건가요
                                                 작은건가요?
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 test@gmail.com
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 답변 완료
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="inquiryTable_row">
-                                            <div class="inquiryTable_cell">
+                                        <div class="memberInquiryTable_row">
+                                            <div class="memberInquiryTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="inquiryCheckbox"
+                                                    class="memberInquiryCheckbox"
                                                 />
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 기업 문의
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 스펙 어디까지 준비해야 대기업
                                                 들어갈 수 있나요?
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 제곧내
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 test@gmail.com
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 답변 예정
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="inquiryTable_row">
-                                            <div class="inquiryTable_cell">
+                                        <div class="memberInquiryTable_row">
+                                            <div class="memberInquiryTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="inquiryCheckbox"
+                                                    class="memberInquiryCheckbox"
                                                 />
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 기업 정보
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 2024년도 kepco 연구직 채용공고
                                                 다들 보셨나요?
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 kepco 준비시는 분들께 여쭙고
                                                 싶습니다
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 test@gmail.com
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 답변 완료
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="memberInquiryTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
@@ -4049,7 +4054,7 @@
                                     </div>
                                 </div>
                                 <nav class="pagination">
-                                    <ul class="pagination-list">
+                                    <ul class="pagination-list memberInquiry">
                                         <!-- 처음 페이지로 이동하는 버튼 -->
                                         <li class="pagination-first">
                                             <a
@@ -4138,13 +4143,13 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                class="sort-filter-option selected"
+                                                class="sort-filter-option corporationInquirySort selected" data-type="recent"
                                                 >최신순</span
                                             >
-                                            <span class="sort-filter-option"
+                                            <span class="sort-filter-option corporationInquirySort" data-type="replyWait"
                                                 >답변 대기</span
                                             >
-                                            <span class="sort-filter-option"
+                                            <span class="sort-filter-option corporationInquirySort" data-type="replyComplete"
                                                 >답변 완료</span
                                             >
                                         </div>
@@ -4154,16 +4159,17 @@
                                                 type="text"
                                                 class="Filter_searchInput"
                                                 placeholder="검색어 입력"
+                                                id="corporationInquirySearchInput"
                                             />
                                         </div>
                                     </div>
                                     <!--게시글 내역 테이블 -->
-                                    <div class="corporationinquiryTable_container">
+                                    <div class="corporationInquiryTable_container">
                                         <div
-                                            class="inquiryTable_row inquiryTable_header"
+                                            class="corporationInquiryTable_row corporationInquiryTable_header"
                                         >
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell selectAllCell"
+                                                class="corporationInquiryTable_cell corporationInquiry-headerCell selectAllCell"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -4171,186 +4177,186 @@
                                                 />
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="corporationInquiryTable_cell corporationInquiry-headerCell"
                                             >
                                                 문의 분류
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="corporationInquiryTable_cell corporationInquiry-headerCell"
                                             >
                                                 작성일
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="corporationInquiryTable_cell corporationInquiry-headerCell"
                                             >
                                                 문의 제목
                                             </div>
 
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="corporationInquiryTable_cell corporationInquiry-headerCell"
                                             >
                                                 문의 내용
                                             </div>
                                             <div
-                                                    class="inquiryTable_cell inquiry-headerCell"
+                                                    class="corporationInquiryTable_cell corporationInquiry-headerCell"
                                             >
                                                 회사명
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="corporationInquiryTable_cell corporationInquiry-headerCell"
                                             >
                                                 이메일
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="corporationInquiryTable_cell corporationInquiry-headerCell"
                                             >
                                                 상태
                                             </div>
                                             <div
-                                                class="inquiryTable_cell inquiry-headerCell"
+                                                class="corporationInquiryTable_cell corporationInquiry-headerCell"
                                             >
                                                 Action
                                             </div>
                                         </div>
 
                                         <!-- Example row (Initial data) -->
-                                        <div class="inquiryTable_row">
-                                            <div class="inquiryTable_cell">
+                                        <div class="corporationInquiryTable_row">
+                                            <div class="corporationInquiryTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="inquiryCheckbox"
+                                                    class="corporationInquiryCheckbox"
                                                 />
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 기타
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 문의 제목
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 문의 내용
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 쿠팡(주)
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 test@gmail.com
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 답변 예정
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="inquiryTable_row">
-                                            <div class="inquiryTable_cell">
+                                        <div class="corporationInquiryTable_row">
+                                            <div class="corporationInquiryTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="inquiryCheckbox"
+                                                    class="corporationInquiryCheckbox"
                                                 />
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 이력서 문의
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 2024-10-15
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 문의 제목
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 문의 내용
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 롯데자이언츠(주)
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 test@gmail.com
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 답변 완료
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="inquiryTable_row">
-                                            <div class="inquiryTable_cell">
+                                        <div class="corporationInquiryTable_row">
+                                            <div class="corporationInquiryTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="inquiryCheckbox"
+                                                    class="corporationInquiryCheckbox"
                                                 />
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 기업 문의
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 문의 제목
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 문의 내용
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 아모레퍼시픽(주)
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 test@gmail.com
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 답변 예정
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="inquiryTable_row">
-                                            <div class="inquiryTable_cell">
+                                        <div class="corporationInquiryTable_row">
+                                            <div class="corporationInquiryTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="inquiryCheckbox"
+                                                    class="corporationInquiryCheckbox"
                                                 />
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 기업 정보
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 문의 제목
                                             </div>
 
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 문의 내용
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 한국전력공사
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 test@gmail.com
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 답변 완료
                                             </div>
-                                            <div class="inquiryTable_cell">
+                                            <div class="corporationInquiryTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
@@ -4359,7 +4365,7 @@
                                     </div>
                                 </div>
                                 <nav class="pagination">
-                                    <ul class="pagination-list">
+                                    <ul class="pagination-list corporationInquiry">
                                         <!-- 처음 페이지로 이동하는 버튼 -->
                                         <li class="pagination-first">
                                             <a
@@ -4448,14 +4454,14 @@
                                     <div class="filter_wrap">
                                         <div class="SortFilterOptions">
                                             <span
-                                                class="sort-filter-option selected"
+                                                class="sort-filter-option complainSort selected" data-type="recent"
                                                 >최신순</span
                                             >
-                                            <span class="sort-filter-option"
-                                                >포지션 예정</span
+                                            <span class="sort-filter-option complainSort" data-type="complainReceived"
+                                                >신고 접수</span
                                             >
-                                            <span class="sort-filter-option"
-                                                >포지션 수료</span
+                                            <span class="sort-filter-option complainSort" data-type="complainCompleted"
+                                                >처리 완료</span
                                             >
                                         </div>
                                         <!-- Action Buttons -->
@@ -4464,6 +4470,7 @@
                                                 type="text"
                                                 class="Filter_searchInput"
                                                 placeholder="검색어 입력"
+                                                id="complainSearchInput"
                                             />
                                             <button
                                                 id="addServiceBtn"
@@ -4480,12 +4487,12 @@
                                         </div>
                                     </div>
                                     <!-- 면접 내역 테이블 -->
-                                    <div class="ApplyTable_container">
+                                    <div class="complainTable_container">
                                         <div
-                                            class="ApplyTable_row ApplyTable_header"
+                                            class="complainTable_row complainTable_header"
                                         >
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell selectAllCell"
+                                                class="complainTable_cell complain-headerCell selectAllCell"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -4493,161 +4500,161 @@
                                                 />
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="complainTable_cell complain-headerCell"
                                             >
                                                 기업명
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="complainTable_cell complain-headerCell"
                                             >
                                                 신고일
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="complainTable_cell complain-headerCell"
                                             >
                                                 신고 내용
                                             </div>
 
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="complainTable_cell complain-headerCell"
                                             >
                                                 피신고인
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="complainTable_cell complain-headerCell"
                                             >
                                                 누적횟수
                                             </div>
 
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="complainTable_cell complain-headerCell"
                                             >
                                                 상태
                                             </div>
                                             <div
-                                                class="ApplyTable_cell Apply-headerCell"
+                                                class="complainTable_cell complain-headerCell"
                                             >
                                                 Action
                                             </div>
                                         </div>
 
                                         <!-- Example row (Initial data) -->
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="complainTable_row">
+                                            <div class="complainTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="complainCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 쿠팡(주)
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 잘못된 정보의 후기
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 홍길동
                                             </div>
-                                            <div class="ApplyTable_cell">1</div>
+                                            <div class="complainTable_cell">1</div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 신고 접수
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="complainTable_row">
+                                            <div class="complainTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="complainCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 롯데자인언츠(주)
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 1982-02-12
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 욕설 / 비난 신고
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 하민지
                                             </div>
-                                            <div class="ApplyTable_cell">3</div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">3</div>
+                                            <div class="complainTable_cell">
                                                 처리 완료
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="complainTable_row">
+                                            <div class="complainTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="complainCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 챔프스터디(주)
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 허위사실 유포
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 안수진
                                             </div>
-                                            <div class="ApplyTable_cell">5</div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">5</div>
+                                            <div class="complainTable_cell">
                                                 신고 접수
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ApplyTable_row">
-                                            <div class="ApplyTable_cell">
+                                        <div class="complainTable_row">
+                                            <div class="complainTable_cell">
                                                 <input
                                                     type="checkbox"
-                                                    class="ApplyCheckbox"
+                                                    class="complainCheckbox"
                                                 />
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 한국전력공사
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 2024-01-01
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 2024년도 연구직 채용공고
                                             </div>
 
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 석상훈
                                             </div>
-                                            <div class="ApplyTable_cell">4</div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">4</div>
+                                            <div class="complainTable_cell">
                                                 신고 접수
                                             </div>
-                                            <div class="ApplyTable_cell">
+                                            <div class="complainTable_cell">
                                                 <button class="editBtn">
                                                     수정
                                                 </button>
@@ -4656,7 +4663,7 @@
                                     </div>
                                 </div>
                                 <nav class="pagination">
-                                    <ul class="pagination-list">
+                                    <ul class="pagination-list complain">
                                         <!-- 처음 페이지로 이동하는 버튼 -->
                                         <li class="pagination-first">
                                             <a
